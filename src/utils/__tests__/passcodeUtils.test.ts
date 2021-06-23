@@ -55,7 +55,7 @@ describe('passcodeUtils', () => {
             const stringResult = result.toString();
             expect(Number(stringResult.charAt(0))).toEqual(firstDigit);
             expect(stringResult).toHaveLength(length);
-            expect(stringResult.substring(1)).toEqual('0'.repeat(length - 1));
+            expect(stringResult.substring(1)).toEqual('9'.repeat(length - 1));
         });
         it('should get a minimum boundary value', () => {
             const result = getBoundary(length, firstDigit, boundaryType);

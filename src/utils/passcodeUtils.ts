@@ -31,7 +31,7 @@ export const getBoundary = (
             boundary =
                 length === MAXIMUM_PASSCODE_LENGTH
                     ? Number.MAX_SAFE_INTEGER
-                    : Number(`${firstDigit}${'0'.repeat(length - 1)}`);
+                    : Number(`${firstDigit}${'9'.repeat(length - 1)}`);
             break;
         }
         default:
