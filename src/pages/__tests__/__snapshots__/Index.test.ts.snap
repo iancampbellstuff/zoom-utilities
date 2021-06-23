@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Index should render correctly 1`] = `
+<q-page-stub
+  class="row items-center justify-evenly"
+  id="index"
+>
+  <img
+    alt="Zoom Utilities"
+    id="logo"
+    src="../assets/quasar-logo-vertical.svg"
+  />
+</q-page-stub>
+`;

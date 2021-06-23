@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Passcode should render correctly 1`] = `
+<q-page-stub
+  class="row items-center justify-evenly"
+  id="passcode"
+>
+  <q-form-stub
+    class="q-gutter-sm"
+    greedy=""
+    id="form"
+  >
+    <q-toolbar-title-stub
+      class="text-center"
+    >
+      Generate a Passcode
+    </q-toolbar-title-stub>
+     
+    <q-input-stub
+      dense=""
+      hint="(optional)"
+      label="Length"
+      max="16"
+      min="4"
+      outlined=""
+      standout=""
+      type="number"
+    />
+     
+    <q-input-stub
+      dense=""
+      hint="(optional)"
+      label="First Digit"
+      max="9"
+      min="1"
+      outlined=""
+      standout=""
+      type="number"
+    />
+     
+    <q-btn-group-stub
+      spread=""
+    >
+      <q-btn-stub
+        color="primary"
+        label="Submit"
+        no-caps=""
+        type="submit"
+      />
+       
+      <q-btn-stub
+        class="q-ml-sm"
+        color="primary"
+        flat=""
+        label="Reset"
+        no-caps=""
+        type="reset"
+      />
+    </q-btn-group-stub>
+     
+    <q-btn-group-stub
+      spread=""
+    >
+      <q-input-stub
+        dense=""
+        filled=""
+        label="Passcode"
+        outlined=""
+        readonly=""
+        standout=""
+      />
+       
+      <q-btn-stub
+        color="secondary"
+        no-caps=""
+      >
+        <q-icon-stub
+          name="file_copy"
+        />
+         
+        <q-tooltip-stub
+          transition-hide="jump-down"
+          transition-show="scale"
+        >
+          Copy passcode
+        </q-tooltip-stub>
+        
+                Copy
+            
+      </q-btn-stub>
+    </q-btn-group-stub>
+  </q-form-stub>
+</q-page-stub>
+`;

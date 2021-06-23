@@ -1,6 +1,6 @@
+import { Notify } from 'quasar';
 // code under test
 import { ELogLevel, getToastOptions, toast } from '../messageUtils';
-import { Notify } from 'quasar';
 
 describe('messageUtils', () => {
     describe('getToastOptions', () => {

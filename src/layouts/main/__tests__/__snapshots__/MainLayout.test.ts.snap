@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainLayout should render correctly 1`] = `
+<q-layout-stub
+  id="main-layout"
+  view="lHh Lpr lFf"
+>
+  <q-header-stub
+    elevated=""
+  >
+    <q-toolbar-stub>
+      <q-toolbar-title-stub>
+        
+                Zoom Utilities
+            
+      </q-toolbar-title-stub>
+       
+      <q-tabs-stub
+        value=""
+      >
+        <q-route-tab-stub
+          exact=""
+          icon="home"
+          label="Home"
+          name="home"
+          no-caps=""
+          to="/home"
+        />
+        <q-route-tab-stub
+          exact=""
+          icon="lock"
+          label="Passcode"
+          name="passcode"
+          no-caps=""
+          to="/passcode"
+        />
+         
+        <q-tab-stub
+          icon="clear"
+          label="Clear All"
+          name="clearAll"
+          no-caps=""
+        />
+      </q-tabs-stub>
+    </q-toolbar-stub>
+  </q-header-stub>
+   
+  <q-page-container-stub>
+    <router-view-stub />
+  </q-page-container-stub>
+   
+  <q-footer-stub
+    elevated=""
+    id="footer"
+  >
+    <q-toolbar-stub>
+      <q-toolbar-title-stub
+        id="footer-text"
+      >
+        <a
+          href="https://github.com/icampbell2"
+          title="https://github.com/icampbell2"
+        >
+          https://github.com/icampbell2
+        </a>
+      </q-toolbar-title-stub>
+    </q-toolbar-stub>
+  </q-footer-stub>
+</q-layout-stub>
+`;
