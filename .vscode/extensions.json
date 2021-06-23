@@ -6,6 +6,7 @@
     "hollowtree.vue-snippets",
     "ionutvmi.path-autocomplete",
     "octref.vetur",
+    "orta.vscode-jest",
     "pflannery.vscode-versionlens"
   ],
   "unwantedRecommendations": [

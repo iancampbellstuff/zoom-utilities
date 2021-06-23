@@ -44,7 +44,15 @@ module.exports = {
 
         // https://github.com/prettier/eslint-config-prettier#installation
         // usage with Prettier, provided by 'eslint-config-prettier'.
-        'prettier'
+        'prettier',
+
+        // Removes 'no-undef' lint errors for Jest global functions (`describe`, `it`, etc),
+        //  add Jest-specific lint rules and Jest plugin
+        // See https://github.com/jest-community/eslint-plugin-jest#recommended
+        'plugin:jest/recommended',
+
+        // Uncomment following line to apply style rules
+        'plugin:jest/style'
     ],
 
     plugins: [
@@ -77,9 +85,12 @@ module.exports = {
         quotes: ['warn', 'single', { avoidEscape: true }],
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-empty-function': 'off',
+        '@typescript-eslint/no-explicit-any': 'off',
         '@typescript-eslint/no-unsafe-assignment': 'off',
         '@typescript-eslint/no-unsafe-call': 'off',
         '@typescript-eslint/no-unsafe-member-access': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
         '@typescript-eslint/no-var-requires': 'off',
         '@typescript-eslint/no-unsafe-return': 'off',
         '@typescript-eslint/restrict-template-expressions': 'off',
