@@ -8,13 +8,15 @@
   "scripts": {
     "build": "npx --no-install quasar build -m electron -T all -t mat",
     "clean": "npx --no-install quasar clean && npx --no-install rimraf .quasar dist src-electron",
-    "lint": "eslint --fix --ext .js,.ts,.vue ./",
+    "lint-fix": "npm run lint -- --fix",
+    "lint": "eslint --ext .js,.ts,.vue ./",
     "prebuild": "npm run lint && npm run clean",
     "pretest": "npm run lint && npx --no-install rimraf coverage",
     "start": "npx --no-install quasar dev -m electron -t mat",
-    "test-only": "jest --updateSnapshot --colors",
+    "test-only": "jest --colors",
     "test-watch": "npm test -- --watchAll",
-    "test": "npm run test-only"
+    "test": "npm run test-only",
+    "update-snapshots": "npm test -- --updateSnapshot"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
