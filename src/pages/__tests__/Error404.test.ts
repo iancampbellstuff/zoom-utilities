@@ -3,7 +3,7 @@ import { mount, Wrapper } from '@vue/test-utils';
 import Error404 from '../Error404.vue';
 
 describe('Error404', () => {
-    let wrapper: Wrapper<Error404>;
+    let wrapper: Wrapper<any>;
     beforeEach(() => {
         wrapper = mount(Error404, {
             stubs: ['q-btn', 'router-view']

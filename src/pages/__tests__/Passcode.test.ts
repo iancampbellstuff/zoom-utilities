@@ -9,7 +9,7 @@ localVue.use(Vuex);
 
 describe('Passcode', () => {
     let store;
-    let wrapper: Wrapper<Passcode>;
+    let wrapper: Wrapper<any>;
     beforeEach(() => {
         store = new Vuex.Store({
             modules: {

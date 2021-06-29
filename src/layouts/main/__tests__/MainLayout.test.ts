@@ -3,7 +3,7 @@ import { mount, Wrapper } from '@vue/test-utils';
 import MainLayout from '../MainLayout.vue';
 
 describe('MainLayout', () => {
-    let wrapper: Wrapper<MainLayout>;
+    let wrapper: Wrapper<any>;
     beforeEach(() => {
         wrapper = mount(MainLayout, {
             stubs: [

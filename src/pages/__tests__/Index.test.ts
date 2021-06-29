@@ -3,7 +3,7 @@ import { mount, Wrapper } from '@vue/test-utils';
 import Index from '../Index.vue';
 
 describe('Index', () => {
-    let wrapper: Wrapper<Index>;
+    let wrapper: Wrapper<any>;
     beforeEach(() => {
         wrapper = mount(Index, {
             stubs: ['q-page', 'router-view']

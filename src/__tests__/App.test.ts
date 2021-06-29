@@ -3,7 +3,7 @@ import { mount, Wrapper } from '@vue/test-utils';
 import App from '../App.vue';
 
 describe('App', () => {
-    let wrapper: Wrapper<App>;
+    let wrapper: Wrapper<any>;
     beforeEach(() => {
         wrapper = mount(App, {
             stubs: ['router-view']
