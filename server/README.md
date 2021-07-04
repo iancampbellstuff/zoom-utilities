@@ -1,6 +1,6 @@
-# zoom-utilities
+# @zoom-utilities/server
 
-An app for simplifying Zoom tasks.
+An Express app for simplifying Zoom tasks.
 
 ## Project setup
 
@@ -10,11 +10,11 @@ An app for simplifying Zoom tasks.
 
 3. [Install VSCode](https://code.visualstudio.com 'https://code.visualstudio.com')
 
-4. In a command-line and in the project root directory, open VSCode with **`code main.code-workspace`**
+4. In a command-line and in the project root directory, open VSCode with **`code server.code-workspace`**
 
 5. Install VSCode Extension Recommendations
 
-![VSCode extension recommendations](./documentation/vscode-extension-recommendations.png)
+![VSCode extension recommendations](../documentation/vscode-extension-recommendations.png)
 
 ---
 
@@ -39,6 +39,30 @@ Run unit tests
 
 ```bash
 npm test
+```
+
+Run linting
+
+```bash
+npm run lint
+```
+
+</p>
+</details>
+
+<details>
+<summary>Deployment</summary>
+<p>
+Build the app for production
+
+```bash
+npm run build
+```
+
+Delete the build
+
+```bash
+npm run clean
 ```
 
 </p>

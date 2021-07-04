@@ -16,6 +16,21 @@
         "isDefault": true
       },
       "script": "test"
+    },
+    {
+      "type": "npm",
+      "label": "lint",
+      "group": "test",
+      "script": "lint"
+    },
+    {
+      "type": "npm",
+      "label": "build",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "script": "build"
     }
   ]
 }

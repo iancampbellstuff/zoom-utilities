@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "types": ["jest", "node"],
+    "typeRoots": ["./@types", "./node_modules/@types"]
+  }
+}

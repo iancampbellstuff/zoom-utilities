@@ -1,0 +1,21 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.rulers": [130],
+  "editor.snippetSuggestions": "top",
+  "eslint.validate": ["javascript", "typescript"],
+  "files.exclude": {
+    "coverage": true,
+    "node_modules": true
+  },
+  "jest.rootPath": "./",
+  "search.exclude": {
+    "coverage": true,
+    "node_modules": true,
+    "package-lock.json": true
+  },
+  "telemetry.enableCrashReporter": false,
+  "telemetry.enableTelemetry": false,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "workbench.iconTheme": "vs-minimal"
+}

@@ -18,11 +18,11 @@ module.exports = {
     coverageReporters: ['html', 'lcov', 'json', 'text'],
     coverageDirectory: '<rootDir>/coverage',
     collectCoverageFrom: [
-        '<rootDir>/src/**/*.vue',
         '<rootDir>/src/**/*.js',
-        '<rootDir>/src/**/*.ts',
         '<rootDir>/src/**/*.jsx',
-        '<rootDir>/src/**/*.tsx'
+        '<rootDir>/src/**/*.ts',
+        '<rootDir>/src/**/*.tsx',
+        '<rootDir>/src/**/*.vue'
     ],
     coveragePathIgnorePatterns: [
         '/node_modules/',

@@ -4,7 +4,8 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
-    "types": ["jest"]
+    "types": ["jest", "node"],
+    "typeRoots": ["./@types", "./node_modules/@types"]
   },
   "extends": "@quasar/app/tsconfig-preset"
 }
