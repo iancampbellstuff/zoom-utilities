@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "ionutvmi.path-autocomplete",
+    "orta.vscode-jest",
+    "pflannery.vscode-versionlens"
+  ],
+  "unwantedRecommendations": [
+    "dbaeumer.jshint",
+    "hookyqr.beautify",
+    "ms-vscode.vscode-typescript-tslint-plugin"
+  ]
+}

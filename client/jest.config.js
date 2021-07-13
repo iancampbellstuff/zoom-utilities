@@ -25,7 +25,11 @@ module.exports = {
         '<rootDir>/src/**/*.vue'
     ],
     coveragePathIgnorePatterns: [
-        '/node_modules/',
+        '.quasar',
+        'coverage',
+        'dist',
+        'node_modules',
+        'src-electron',
         '.d.ts$',
         'index.js',
         'index.ts'

@@ -178,7 +178,7 @@ module.exports = configure(function(/* ctx */) {
             builder: {
                 // https://www.electron.build/configuration/configuration
 
-                appId: '@zoom-utilities/client'
+                appId: 'zoom-utilities-client'
             },
 
             // More info: https://v1.quasar.dev/quasar-cli/developing-electron-apps/node-integration

@@ -3,8 +3,20 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "outDir": "dist",
+    "paths": {
+      "zoom-utilities-common/*": ["../common/src/*"]
+    },
     "strictPropertyInitialization": false,
-    "types": ["jest", "node"],
-    "typeRoots": ["./@types", "./node_modules/@types"]
-  }
+    "typeRoots": ["@types", "node_modules/@types"],
+    "types": [
+      "axios",
+      "compression",
+      "express",
+      "express-validator",
+      "jest",
+      "node"
+    ]
+  },
+  "include": ["src"]
 }

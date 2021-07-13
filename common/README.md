@@ -1,6 +1,6 @@
-# zoom-utilities-server
+# zoom-utilities-common
 
-An Express app for simplifying Zoom tasks.
+A common package for simplifying Zoom tasks.
 
 ## Project setup
 
@@ -10,7 +10,7 @@ An Express app for simplifying Zoom tasks.
 
 3. [Install VSCode](https://code.visualstudio.com 'https://code.visualstudio.com')
 
-4. In a command-line and in the project root directory, open VSCode with **`code server.code-workspace`**
+4. In a command-line and in the project root directory, open VSCode with **`code common.code-workspace`**
 
 5. Install VSCode Extension Recommendations
 

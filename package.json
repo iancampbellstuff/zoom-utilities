@@ -8,12 +8,14 @@
   "private": true,
   "workspaces": [
     "client",
+    "common",
     "server"
   ],
   "scripts": {
-    "install-all": "npm ci && cd client && npm ci && cd ../server && npm ci",
-    "start": "npm start --workspaces",
-    "test": "npm test --workspaces"
+    "preinstall-all": "npm ci",
+    "install-all": "lerna run ci --scope={client,common,server}",
+    "start": "lerna run start --scope={client,server}",
+    "test": "lerna run test --scope={client,common,server}"
   },
   "devDependencies": {
     "husky": "7.0.0"

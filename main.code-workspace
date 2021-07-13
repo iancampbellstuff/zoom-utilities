@@ -7,12 +7,14 @@
       "path": "server"
     },
     {
+      "path": "common"
+    },
+    {
       "name": "main",
       "path": "."
     }
   ],
   "settings": {
-    "jest.disabledWorkspaceFolders": ["main"],
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
     "workbench.iconTheme": "vs-minimal"

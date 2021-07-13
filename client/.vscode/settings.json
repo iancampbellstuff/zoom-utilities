@@ -11,7 +11,7 @@
     "node_modules": true,
     "src-electron": true
   },
-  "jest.rootPath": "./",
+  "jest.rootPath": ".",
   "search.exclude": {
     ".quasar": true,
     "coverage": true,
