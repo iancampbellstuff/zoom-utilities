@@ -1,4 +1,4 @@
-# zoom-utilities-common
+# @zoom-utilities/common
 
 A common package for simplifying Zoom tasks.
 

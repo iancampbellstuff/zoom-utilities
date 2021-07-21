@@ -1,4 +1,4 @@
-# zoom-utilities-client
+# @zoom-utilities/client
 
 A Quasar app for simplifying Zoom tasks.
 

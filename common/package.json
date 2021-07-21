@@ -1,5 +1,5 @@
 {
-  "name": "zoom-utilities-common",
+  "name": "@zoom-utilities/common",
   "description": "A common package for simplifying Zoom tasks.",
   "productName": "Zoom Utilities Common",
   "author": "icampbell2",

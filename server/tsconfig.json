@@ -5,7 +5,7 @@
     "experimentalDecorators": true,
     "outDir": "dist",
     "paths": {
-      "zoom-utilities-common/*": ["../common/src/*"]
+      "@zoom-utilities/common/*": ["../common/src/*"]
     },
     "strictPropertyInitialization": false,
     "typeRoots": ["@types", "node_modules/@types"],

@@ -1,5 +1,5 @@
 {
-  "name": "zoom-utilities-client",
+  "name": "@zoom-utilities/client",
   "description": "A Quasar app for simplifying Zoom tasks",
   "productName": "Zoom Utilities Client",
   "author": "icampbell2",

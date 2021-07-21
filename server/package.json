@@ -1,5 +1,5 @@
 {
-  "name": "zoom-utilities-server",
+  "name": "@zoom-utilities/server",
   "description": "An Express app for simplifying Zoom tasks.",
   "productName": "Zoom Utilities Server",
   "author": "icampbell2",

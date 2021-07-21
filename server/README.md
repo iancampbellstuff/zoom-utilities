@@ -1,4 +1,4 @@
-# zoom-utilities-server
+# @zoom-utilities/server
 
 An Express app for simplifying Zoom tasks.
 
