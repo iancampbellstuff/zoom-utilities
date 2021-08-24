@@ -2,7 +2,7 @@
 import { IZoomMeeting, IZoomMeetingPatchRequestPayload } from '../types';
 
 export const mapToPatchRequestPayload = (
-    meeting: IZoomMeeting
+    meeting: IZoomMeeting = {} as IZoomMeeting
 ): IZoomMeetingPatchRequestPayload => {
     const {
         agenda,
@@ -41,14 +41,14 @@ export const mapToPatchRequestPayload = (
             use_pmi,
             waiting_room,
             watermark
-        },
+        } = {},
         start_time,
         timezone,
         topic,
         type
     } = meeting;
     const patchRequestPayload: IZoomMeetingPatchRequestPayload = {
-        id: id.toString(),
+        id: id?.toString(),
         data: {
             agenda,
             duration,

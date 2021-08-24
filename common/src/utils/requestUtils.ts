@@ -7,12 +7,18 @@ import { IRequestOptions } from '../types';
  * @link https://github.com/axios/axios/blob/master/lib/helpers/combineURLs.js
  */
 export const combineURLs = (baseURL: string, relativeURL: string) => {
-    return relativeURL
-        ? baseURL.replace(/\/+$/, '') + '/' + relativeURL.replace(/^\/+/, '')
-        : baseURL;
+    let url = '';
+    if (baseURL) {
+        url = relativeURL
+            ? baseURL.replace(/\/+$/, '') +
+              '/' +
+              relativeURL.replace(/^\/+/, '')
+            : baseURL;
+    }
+    return url;
 };
 export const getRequestConfig = (requestOptions: IRequestOptions) => {
-    const { data, method, token, url } = requestOptions;
+    const { data, method, token, url } = requestOptions || {};
     const requestConfig: AxiosRequestConfig = {
         data,
         headers: {

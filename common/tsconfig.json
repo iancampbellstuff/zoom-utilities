@@ -5,7 +5,6 @@
     "experimentalDecorators": true,
     "outDir": "dist",
     "strictPropertyInitialization": false,
-    "typeRoots": ["@types", "node_modules/@types"],
     "types": ["jest", "node"]
   },
   "include": ["src"]

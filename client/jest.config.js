@@ -25,21 +25,22 @@ module.exports = {
         '<rootDir>/src/**/*.vue'
     ],
     coveragePathIgnorePatterns: [
+        '.d.ts$',
         '.quasar',
         'coverage',
         'dist',
+        'index.js',
+        'index.ts',
         'node_modules',
         'src-electron',
-        '.d.ts$',
-        'index.js',
-        'index.ts'
+        'src/boot'
     ],
     coverageThreshold: {
         global: {
-            statements: 80,
-            branches: 77,
-            functions: 61,
-            lines: 79
+            statements: 63,
+            branches: 65.05,
+            functions: 40.45,
+            lines: 62.09
         }
     },
     testMatch: ['<rootDir>/src/**/__tests__/**/*.(spec|test).+(ts|js)?(x)'],

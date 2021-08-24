@@ -10,11 +10,11 @@ export const getUrl = (path: string) => {
     return url;
 };
 export const handleError = (axiosError: AxiosError, res: Response) => {
-    if (axiosError.response) {
+    if (axiosError?.response) {
         const { data, status } = axiosError.response;
-        res.status(status).send(data);
+        res?.status(status).send(data);
     } else {
-        const message = axiosError.message || 'An unknown error occurred!';
-        res.status(500).send(message);
+        const message = axiosError?.message || 'An unknown error occurred!';
+        res?.status(500).send(message);
     }
 };

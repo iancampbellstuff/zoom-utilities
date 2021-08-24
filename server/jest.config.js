@@ -15,6 +15,7 @@ module.exports = {
     coverageDirectory: '<rootDir>/coverage',
     collectCoverageFrom: ['<rootDir>/src/**/*.js', '<rootDir>/src/**/*.ts'],
     coveragePathIgnorePatterns: [
+        'constants',
         'coverage',
         'dist',
         'node_modules',
@@ -24,10 +25,10 @@ module.exports = {
     ],
     coverageThreshold: {
         global: {
-            statements: 50,
-            branches: 50,
-            functions: 50,
-            lines: 50
+            statements: 84,
+            branches: 93.88,
+            functions: 77.5,
+            lines: 83.21
         }
     },
     testMatch: ['<rootDir>/src/**/__tests__/**/*.(spec|test).+(ts|js)'],

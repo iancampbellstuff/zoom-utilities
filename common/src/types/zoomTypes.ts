@@ -76,6 +76,7 @@ export interface IZoomMeeting {
     join_url: string;
     occurrences?: IZoomMeetingOccurrence[];
     password?: string;
+    pre_schedule?: boolean;
     pstn_password?: string;
     recurrence?: IZoomMeetingRecurrence;
     registration_url?: string;

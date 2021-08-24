@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Meetings should render correctly 1`] = `
+<q-page-stub
+  class="row items-start justify-evenly"
+  id="meetings"
+>
+  <q-form-stub
+    class="q-gutter-lg"
+    id="form"
+  >
+    <q-toolbar-title-stub
+      class="text-center"
+    >
+      Meetings
+    </q-toolbar-title-stub>
+     
+    <q-table-stub
+      color="grey-8"
+      columns="[object Object],[object Object],[object Object]"
+      columnsortorder="ad"
+      data=""
+      filter="[object Object]"
+      filtermethod="[Function]"
+      outlined=""
+      pagination="[object Object]"
+      rowkey="name"
+      rowsperpageoptions="5,7,10,15,20,25,50,0"
+      selected=""
+      selection="none"
+      separator="horizontal"
+      sortmethod="[Function]"
+      standout=""
+      title="Meetings"
+    />
+  </q-form-stub>
+</q-page-stub>
+`;
