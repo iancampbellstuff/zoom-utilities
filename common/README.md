@@ -1,8 +1,8 @@
 # @zoom-utilities/common
 
-A common package for simplifying Zoom tasks.
+A common package for simplifying Zoom tasks in the [`@zoom-utilities`](../README.md) monorepo.
 
-## Project setup
+## Workspace Setup
 
 1. [Install NodeJS](https://nodejs.org/en/download/ 'https://nodejs.org/en/download/')
 
@@ -19,18 +19,6 @@ A common package for simplifying Zoom tasks.
 ---
 
 ## Commands
-
-<details>
-<summary>Local Testing</summary>
-<p>
-Start the application in development mode (hot-code reloading, error reporting, etc.)
-
-```bash
-npm start
-```
-
-</p>
-</details>
 
 <details>
 <summary>QA</summary>

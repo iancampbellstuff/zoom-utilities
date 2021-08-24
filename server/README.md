@@ -1,8 +1,8 @@
 # @zoom-utilities/server
 
-An Express app for simplifying Zoom tasks.
+An Express app for simplifying Zoom tasks in the [`@zoom-utilities`](../README.md) monorepo.
 
-## Project setup
+## Worspace Setup
 
 1. [Install NodeJS](https://nodejs.org/en/download/ 'https://nodejs.org/en/download/')
 
@@ -15,6 +15,16 @@ An Express app for simplifying Zoom tasks.
 5. Install VSCode Extension Recommendations
 
 ![VSCode extension recommendations](../documentation/vscode-extension-recommendations.png)
+
+## Project Setup
+
+1. Follow the [Zoom documentation for "Using JWT"](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis#using-jwt 'https://marketplace.zoom.us/docs/api-reference/using-zoom-apis#using-jwt') to create and register a JWT Zoom app.
+
+2. Copy your API key and secret from your JWT Zoom app, and paste those values into [`config.json`](./config.json).
+
+> :warning: **Do not commit changes to this file!** :warning:
+>
+> See [`config.example.json`](./config.example.json) for example formatting to follow.
 
 ---
 

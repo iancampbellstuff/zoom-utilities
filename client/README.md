@@ -1,8 +1,8 @@
 # @zoom-utilities/client
 
-A Quasar app for simplifying Zoom tasks.
+A Quasar app for simplifying Zoom tasks in the [`@zoom-utilities`](../README.md) monorepo.
 
-## Project setup
+## Workspace Setup
 
 1. [Install NodeJS](https://nodejs.org/en/download/ 'https://nodejs.org/en/download/')
 

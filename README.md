@@ -2,7 +2,7 @@
 
 An app for simplifying Zoom tasks.
 
-## Project setup
+## Workspace Setup
 
 1. [Install NodeJS](https://nodejs.org/en/download/ 'https://nodejs.org/en/download/')
 
@@ -16,12 +16,24 @@ An app for simplifying Zoom tasks.
 
 ![VSCode extension recommendations](./documentation/vscode-extension-recommendations.png)
 
+## Project Setup
+
+See the [server `README.md` documentation](./server/README.md).
+
 ---
 
 ## Commands
 
 <details>
 <summary>Local Testing</summary>
+<p>
+Install dependencies
+
+```bash
+npm run install-all
+```
+
+</p>
 <p>
 Start the application in development mode (hot-code reloading, error reporting, etc.)
 
