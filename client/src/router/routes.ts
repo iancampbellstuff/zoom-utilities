@@ -13,6 +13,10 @@ const routes: RouteConfig[] = [
             {
                 path: '/passcode',
                 component: () => import('pages/Passcode.vue')
+            },
+            {
+                path: '/meetings',
+                component: () => import('pages/Meetings.vue')
             }
         ]
     }

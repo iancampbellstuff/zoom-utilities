@@ -1,8 +1,8 @@
 <template>
-    <q-page id="passcode" class="row items-center justify-evenly">
+    <q-page id="passcode" class="row items-start justify-evenly">
         <q-form
             id="form"
-            class="q-gutter-sm"
+            class="q-gutter-lg"
             @change="onChange"
             @submit="onSubmit"
             @reset="onReset"
@@ -72,6 +72,9 @@
 <style lang="scss" scoped>
 #passcode {
     #form {
+        .q-toolbar__title {
+            padding: 15px;
+        }
     }
 }
 </style>

@@ -2,11 +2,11 @@
 
 exports[`Passcode should render correctly 1`] = `
 <q-page-stub
-  class="row items-center justify-evenly"
+  class="row items-start justify-evenly"
   id="passcode"
 >
   <q-form-stub
-    class="q-gutter-sm"
+    class="q-gutter-lg"
     greedy=""
     id="form"
   >

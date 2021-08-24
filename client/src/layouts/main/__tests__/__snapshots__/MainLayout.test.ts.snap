@@ -34,6 +34,14 @@ exports[`MainLayout should render correctly 1`] = `
           no-caps=""
           to="/passcode"
         />
+        <q-route-tab-stub
+          exact=""
+          icon="groups"
+          label="Meetings"
+          name="meetings"
+          no-caps=""
+          to="/meetings"
+        />
          
         <q-tab-stub
           icon="clear"

@@ -17,5 +17,11 @@ export const tabs: ITab[] = [
         label: 'Passcode',
         name: 'passcode',
         route: '/passcode'
+    },
+    {
+        icon: 'groups',
+        label: 'Meetings',
+        name: 'meetings',
+        route: '/meetings'
     }
 ];
