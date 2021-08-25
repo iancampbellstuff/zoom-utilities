@@ -43,7 +43,7 @@ describe('dateUtils', () => {
         it('should handle a falsy timestamp', () => {
             date = null;
             const result = isExpired(date);
-            expect(result).toBe(true);
+            expect(result).toBe(false);
         });
     });
 });

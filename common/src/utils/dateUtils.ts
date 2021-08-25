@@ -4,7 +4,7 @@ export const getNowTimestamp = () => {
     return timestamp;
 };
 export const isExpired = (timestamp?: Date | string) => {
-    let isExpired = true;
+    let isExpired = false;
     if (timestamp) {
         const nowTimestamp = getNowTimestamp();
         const now = Date.parse(nowTimestamp);
