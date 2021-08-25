@@ -1,6 +1,6 @@
 # zoom-utilities
 
-An app for simplifying Zoom tasks.
+A monorepo app for simplifying Zoom tasks.
 
 ## Workspace Setup
 
