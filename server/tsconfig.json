@@ -9,6 +9,7 @@
       "@zoom-utilities/common/*": ["../common/src/*"]
     },
     "resolveJsonModule": true,
+    "sourceMap": true,
     "strictPropertyInitialization": false,
     "typeRoots": ["@types", "node_modules/@types"],
     "types": [

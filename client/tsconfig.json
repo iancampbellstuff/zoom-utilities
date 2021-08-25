@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "sourceMap": true,
     "strictPropertyInitialization": false,
     "typeRoots": ["@types", "node_modules/@types"],
     "types": ["jest", "node"]
