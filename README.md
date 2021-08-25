@@ -18,7 +18,7 @@ A monorepo app for simplifying Zoom tasks.
 
 ## Project Setup
 
-See the [server `README.md` documentation](./server/README.md).
+See the [client `README.md`](./client/README.md) and [server `README.md`](./server/README.md) documentation.
 
 ---
 
