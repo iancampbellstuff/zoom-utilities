@@ -1,6 +1,9 @@
+// externals
 import { store } from 'quasar/wrappers';
 import Vuex from 'vuex';
 
+// modules
+import { IMeetingsState, meetingsModule } from './meetings';
 import { IPasscodeState, passcodeModule } from './passcode';
 
 /*
@@ -11,6 +14,7 @@ import { IPasscodeState, passcodeModule } from './passcode';
 export interface IStore {
     // Define your own store structure, using submodules if needed
     // Declared as unknown to avoid linting issue. Best to strongly type as per the line above.
+    meetings: IMeetingsState;
     passcode: IPasscodeState;
 }
 
@@ -19,6 +23,7 @@ export default store(function({ Vue }) {
 
     const Store = new Vuex.Store<IStore>({
         modules: {
+            meetingsModule,
             passcodeModule
         },
 

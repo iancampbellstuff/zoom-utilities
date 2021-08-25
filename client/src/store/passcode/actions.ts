@@ -2,10 +2,6 @@ import { ActionTree } from 'vuex';
 import { IStore } from '../index';
 import { IPasscodeState } from './state';
 
-const actions: ActionTree<IPasscodeState, IStore> = {
-    someAction(/* context */) {
-        // your code
-    }
-};
+const actions: ActionTree<IPasscodeState, IStore> = {};
 
 export default actions;

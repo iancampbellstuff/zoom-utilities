@@ -42,6 +42,7 @@
                                 color="primary"
                                 debounce="100"
                                 v-model="search"
+                                @keyup="onSearch"
                             >
                                 <template v-slot:append>
                                     <q-icon name="search" />
@@ -151,19 +152,29 @@ interface IZoomMeetingRowProps {
 export default Vue.extend({
     name: 'Meetings',
     beforeMount() {
-        this.errorOccurred = false;
-        this.$q.loading.show();
-        getUserIds()
-            .then((userIds: string[]) => {
-                this.userIds = userIds;
-            })
-            .catch(error => {
-                this.errorOccurred = true;
-                this.showErrorMessage();
-            })
-            .finally(() => {
-                this.$q.loading.hide();
-            });
+        // TODO: getters aren't working
+        // this.userIds = this.$store.getters['meetingsModule/getUserIds'];
+        const { userIds } = this.$store.state.meetingsModule;
+        this.userIds = userIds;
+        if (!userIds?.length) {
+            this.errorOccurred = false;
+            this.$q.loading.show();
+            getUserIds()
+                .then((userIds: string[]) => {
+                    this.userIds = userIds;
+                    this.$store.commit(
+                        'meetingsModule/setUserIds',
+                        this.userIds
+                    );
+                })
+                .catch(error => {
+                    this.errorOccurred = true;
+                    this.showErrorMessage();
+                })
+                .finally(() => {
+                    this.$q.loading.hide();
+                });
+        }
     },
     data(): IData {
         return {
@@ -246,16 +257,15 @@ export default Vue.extend({
             );
             return filteredRows;
         },
-        showErrorMessage() {
-            if (this.errorOccurred) {
-                toast('An error occurred!', ELogLevel.ERROR);
-            }
-        },
         onChangeUserId() {
             this.errorOccurred = false;
             this.$q.loading.show();
             setCurrentUserId(this.currentUserId)
                 .then(() => {
+                    this.$store.commit(
+                        'meetingsModule/setCurrentUserId',
+                        this.currentUserId
+                    );
                     return getMeetings({
                         hasPassword: true,
                         isNotExpired: true
@@ -263,6 +273,7 @@ export default Vue.extend({
                 })
                 .then(meetings => {
                     this.data = meetings;
+                    this.$store.commit('meetingsModule/setMeetings', meetings);
                 })
                 .catch(error => {
                     this.errorOccurred = true;
@@ -282,6 +293,10 @@ export default Vue.extend({
                 })
                     .then(meetings => {
                         this.data = meetings;
+                        this.$store.commit(
+                            'meetingsModule/setMeetings',
+                            meetings
+                        );
                     })
                     .catch(error => {
                         this.errorOccurred = true;
@@ -313,7 +328,29 @@ export default Vue.extend({
                 .finally(() => {
                     this.$q.loading.hide();
                 });
+        },
+        onSearch() {
+            this.$store.commit('meetingsModule/setSearch', this.search);
+        },
+        showErrorMessage() {
+            if (this.errorOccurred) {
+                toast('An error occurred!', ELogLevel.ERROR);
+            }
         }
+    },
+    mounted: function() {
+        // TODO: getters aren't working
+        // this.currentUserId = this.$store.getters['meetingsModule/getCurrentUserId'];
+        // this.data = this.$store.getters['meetingsModule/getMeetings'];
+        // this.search = this.$store.getters['meetingsModule/getSearch'];
+        const {
+            currentUserId,
+            meetings,
+            search
+        } = this.$store.state.meetingsModule;
+        this.currentUserId = currentUserId;
+        this.data = meetings;
+        this.search = search;
     }
 });
 </script>

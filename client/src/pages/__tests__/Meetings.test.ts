@@ -5,6 +5,7 @@ import Quasar from 'quasar';
 import Vuex from 'vuex';
 // code under test
 import Meetings from '../Meetings.vue';
+import getters from '../../store/passcode/getters';
 
 const localVue = createLocalVue();
 localVue.use(Quasar);
@@ -17,7 +18,7 @@ describe('Meetings', () => {
         store = new Vuex.Store({
             modules: {
                 meetingsModule: {
-                    getters: {},
+                    getters,
                     state: {}
                 }
             }

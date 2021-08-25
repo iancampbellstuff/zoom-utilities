@@ -74,6 +74,7 @@ export default Vue.extend({
     methods: {
         onClearAllClick() {
             this.$store.commit('passcodeModule/resetAll');
+            this.$store.commit('meetingsModule/resetAll');
             const { path } = this.$router.currentRoute;
             if (path !== '/' && path !== '/home') {
                 //TODO: Promises must be handled appropriately or explicitly marked as ignored with the `void` operator.eslint@typescript-eslint/no-floating-promises

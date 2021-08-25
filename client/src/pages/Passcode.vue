@@ -140,9 +140,18 @@ export default Vue.extend({
         }
     },
     mounted: function() {
-        this.length = this.$store.getters['passcodeModule/getLength'];
-        this.firstDigit = this.$store.getters['passcodeModule/getFirstDigit'];
-        this.passcode = this.$store.getters['passcodeModule/getPasscode'];
+        // TODO: getters aren't working
+        // this.length = this.$store.getters['passcodeModule/getLength'];
+        // this.firstDigit = this.$store.getters['passcodeModule/getFirstDigit'];
+        // this.passcode = this.$store.getters['passcodeModule/getPasscode'];
+        const {
+            length,
+            firstDigit,
+            passcode
+        } = this.$store.state.passcodeModule;
+        this.length = length;
+        this.firstDigit = firstDigit;
+        this.passcode = passcode;
     }
 });
 </script>
