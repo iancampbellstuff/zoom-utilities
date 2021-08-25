@@ -16,6 +16,15 @@ A Quasar app for simplifying Zoom tasks in the [`@zoom-utilities`](../README.md)
 
 ![VSCode extension recommendations](../documentation/vscode-extension-recommendations.png)
 
+## Project Setup
+
+1. Change the `npm start` target script in [`package.json`](./package.json) to one of these options:
+
+| Script           | Description               |
+| ---------------- | ------------------------- |
+| `start-electron` | Starts an electron client |
+| `start-pwa`      | Starts a web client       |
+
 ---
 
 ## Commands

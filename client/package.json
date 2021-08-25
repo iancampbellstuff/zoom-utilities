@@ -7,12 +7,14 @@
   "private": true,
   "scripts": {
     "build": "npx --no-install quasar build -m electron -T all -t mat",
-    "clean": "npx --no-install quasar clean && npx --no-install rimraf .quasar dist src-electron",
+    "clean": "npx --no-install quasar clean && npx --no-install rimraf .quasar dist src-electron src-pwa",
     "lint-fix": "npm run lint -- --fix",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue ./",
     "prebuild": "npm run lint && npm run clean",
     "pretest": "npm run lint && npx --no-install rimraf coverage",
-    "start": "npx --no-install quasar dev -m electron -t mat",
+    "start-electron": "npx --no-install quasar dev -m electron -t mat",
+    "start-pwa": "npx --no-install quasar dev -m pwa -t mat",
+    "start": "npm run start-electron",
     "test-only": "jest --colors",
     "test-watch": "npm test -- --watchAll",
     "test": "npm run test-only",
@@ -43,7 +45,8 @@
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-vue": "^7.7.0",
     "jest-serializer-vue": "2.0.2",
-    "typescript": "4.3.4"
+    "typescript": "4.3.4",
+    "workbox-webpack-plugin": "5.1.4"
   },
   "browserslist": [
     "last 10 Chrome versions",

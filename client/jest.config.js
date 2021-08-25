@@ -33,6 +33,7 @@ module.exports = {
         'index.ts',
         'node_modules',
         'src-electron',
+        'src-pwa',
         'src/boot'
     ],
     coverageThreshold: {

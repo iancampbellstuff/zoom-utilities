@@ -10,4 +10,5 @@ src-bexwww
 src-capacitor
 src-cordova
 src-electron
+src-pwa
 src-ssr
