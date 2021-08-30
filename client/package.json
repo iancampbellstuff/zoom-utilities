@@ -6,7 +6,9 @@
   "license": "ISC",
   "private": true,
   "scripts": {
-    "build": "npx --no-install quasar build -m electron -T all -t mat",
+    "build-electron": "npx --no-install quasar build -m electron -T all -t mat",
+    "build-pwa": "npx --no-install quasar build -m pwa -T all -t mat",
+    "build": "npm run build-electron",
     "clean": "npx --no-install quasar clean && npx --no-install rimraf .quasar dist src-electron src-pwa",
     "lint-fix": "npm run lint -- --fix",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx,.vue ./",
