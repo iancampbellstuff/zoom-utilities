@@ -5,8 +5,9 @@ describe('routes', () => {
     describe('getRouterMap', () => {
         it('should get a router map', () => {
             const result = getRouterMap();
-            expect(result['/users']).toBeDefined();
             expect(result['/meetings']).toBeDefined();
+            expect(result['/recordings']).toBeDefined();
+            expect(result['/users']).toBeDefined();
         });
     });
 });

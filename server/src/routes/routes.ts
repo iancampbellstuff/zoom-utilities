@@ -1,8 +1,9 @@
 // externals
 import { Router } from 'express';
 // routes
-import { getUserRoutes } from './userRoutes';
 import { getMeetingRoutes } from './meetingRoutes';
+import { getRecordingRoutes } from './recordingRoutes';
+import { getUserRoutes } from './userRoutes';
 
 export interface IRouterMap {
     [key: string]: Router;
@@ -10,8 +11,9 @@ export interface IRouterMap {
 
 export const getRouterMap = () => {
     const routerMap: IRouterMap = {
-        '/users': getUserRoutes(),
-        '/meetings': getMeetingRoutes()
+        '/meetings': getMeetingRoutes(),
+        '/recordings': getRecordingRoutes(),
+        '/users': getUserRoutes()
     };
     return routerMap;
 };
