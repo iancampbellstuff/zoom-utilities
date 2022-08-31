@@ -22,8 +22,6 @@
     "src-electron": true,
     "src-pwa": true
   },
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "vetur.experimental.templateInterpolationService": true,
   "vetur.format.enable": false,
