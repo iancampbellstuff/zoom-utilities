@@ -5,7 +5,8 @@ import express from 'express';
 import {
     IZoomMeeting,
     IZoomMeetingPatch,
-    IZoomMeetingPatchRequestPayload
+    IZoomMeetingPatchRequestPayload,
+    IZoomMeetingRecording
 } from '../../../common/src';
 // utils
 import { getRequest } from '../../../common/src';
@@ -35,25 +36,46 @@ export const getMeetings = async (
     try {
         const token = accountHelper.getToken();
         const userId = accountHelper.getCurrentUserId();
-        const meetingResponse = await getRequest<{ meetings: IZoomMeeting[] }>({
-            method: 'GET',
-            token,
-            url: getUrl(`users/${userId}/meetings`)
-        });
-        const meetingRequests = meetingResponse.data.meetings.map(meeting => {
-            // TODO: reuse getMeeting if possible
-            const meetingRequest = getRequest({
+        const meetingsResponse = await getRequest<{ meetings: IZoomMeeting[] }>(
+            {
                 method: 'GET',
                 token,
-                url: getUrl(`meetings/${meeting.id}`)
-            });
-            return meetingRequest;
-        });
+                url: getUrl(`users/${userId}/meetings`)
+            }
+        );
+        const meetingRequests = meetingsResponse.data.meetings.map(
+            (meeting) => {
+                // TODO: reuse getMeeting if possible
+                const meetingRequest = getRequest({
+                    method: 'GET',
+                    token,
+                    url: getUrl(`meetings/${meeting.id}`)
+                });
+                return meetingRequest;
+            }
+        );
         const meetingResponses = await Promise.all<any>(meetingRequests);
-        const meetings = meetingResponses.map(meetingResponse => {
+        const meetings = meetingResponses.map((meetingResponse) => {
             return meetingResponse.data;
         }) as IZoomMeeting[];
         res.send(meetings);
+    } catch (error) {
+        handleError(error, res);
+    }
+};
+export const getMeetingRecordings = async (
+    req: Request<{ meetingId: string }>,
+    res: Response<IZoomMeetingRecording[]>
+) => {
+    try {
+        const { meetingId } = req.params;
+        const token = accountHelper.getToken();
+        const meetingRecordings = await getRequest<IZoomMeetingRecording[]>({
+            method: 'GET',
+            token,
+            url: getUrl(`meetings/${meetingId}/recordings`)
+        });
+        res.send(meetingRecordings.data);
     } catch (error) {
         handleError(error, res);
     }
@@ -85,16 +107,18 @@ export const patchMeetings = async (
     try {
         const meetingsInfo = req.body;
         const token = accountHelper.getToken();
-        const meetingRequests = meetingsInfo.map(meetingPatchRequestPayload => {
-            // TODO: reuse patchMeeting if possible
-            const meetingRequest = getRequest({
-                data: meetingPatchRequestPayload.data,
-                method: 'PATCH',
-                token,
-                url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
-            });
-            return meetingRequest;
-        });
+        const meetingRequests = meetingsInfo.map(
+            (meetingPatchRequestPayload) => {
+                // TODO: reuse patchMeeting if possible
+                const meetingRequest = getRequest({
+                    data: meetingPatchRequestPayload.data,
+                    method: 'PATCH',
+                    token,
+                    url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
+                });
+                return meetingRequest;
+            }
+        );
         await Promise.all<any>(meetingRequests);
         res.sendStatus(200);
     } catch (error) {
@@ -107,6 +131,11 @@ export const getMeetingRoutes = () => {
         '/:meetingId',
         (req: Request<{ meetingId: string }>, res: Response) =>
             void getMeeting(req, res)
+    );
+    router.get(
+        '/:meetingId/recordings',
+        (req: Request<{ meetingId: string }>, res: Response) =>
+            void getMeetingRecordings(req, res)
     );
     router.get(
         '/',

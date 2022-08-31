@@ -63,31 +63,33 @@ export interface IZoomMeetingSettings {
     waiting_room: boolean;
     watermark: boolean;
 }
-export interface IZoomMeeting {
-    agenda: string;
-    assistant_id: string;
-    created_at: string;
+export interface IZoomMeetingBase {
     duration?: number;
-    encrypted_password?: string;
-    h323_password?: string;
     host_email: string;
     host_id: string;
     id: number;
+    password?: string;
+    start_time?: string;
+    timezone: string;
+    topic: string;
+    type: number;
+    uuid: string;
+}
+export interface IZoomMeeting extends IZoomMeetingBase {
+    agenda: string;
+    assistant_id: string;
+    created_at: string;
+    encrypted_password?: string;
+    h323_password?: string;
     join_url: string;
     occurrences?: IZoomMeetingOccurrence[];
-    password?: string;
     pre_schedule?: boolean;
     pstn_password?: string;
     recurrence?: IZoomMeetingRecurrence;
     registration_url?: string;
     settings: IZoomMeetingSettings;
-    start_time?: string;
     start_url: string;
     status: TZoomMeetingStatus;
-    timezone: string;
-    topic: string;
-    type: number;
-    uuid: string;
 }
 //#endregion IZoomMeeting
 
@@ -200,3 +202,29 @@ export interface IZoomMeetingPatchRequestPayload {
     data: IZoomMeetingPatch;
 }
 //#endregion IZoomMeetingPatch
+
+//#region IZoomMeetingRecording
+export type TZoomMeetingRecordingFileType = 'MP4';
+export type TZoomMeetingRecordingFileStatus = 'completed';
+export type TZoomMeetingRecordingType = 'shared_screen_with_speaker_view';
+export interface IZoomMeetingRecordingFile {
+    download_url: string;
+    file_extension: TZoomMeetingRecordingFileType;
+    file_size: number;
+    file_type: TZoomMeetingRecordingFileType;
+    id: string;
+    meeting_id: string;
+    play_url: string;
+    recording_end: string;
+    recording_start: string;
+    recording_type: TZoomMeetingRecordingType;
+    status: TZoomMeetingRecordingFileStatus;
+}
+export interface IZoomMeetingRecording extends IZoomMeetingBase {
+    account_id: string;
+    recording_count: number;
+    recording_files: IZoomMeetingRecordingFile[];
+    share_url: string;
+    total_size: number;
+}
+//#endregion IZoomMeetingRecording

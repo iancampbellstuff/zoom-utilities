@@ -16,8 +16,6 @@
     "node_modules": true,
     "package-lock.json": true
   },
-  "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.iconTheme": "vs-minimal"
 }

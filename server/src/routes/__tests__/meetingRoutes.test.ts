@@ -7,14 +7,16 @@ import {
     getMeetings,
     patchMeeting,
     patchMeetings,
-    getMeetingRoutes
+    getMeetingRoutes,
+    getMeetingRecordings
 } from '../meetingRoutes';
 
 // types
 import {
     IZoomMeeting,
     IZoomMeetingPatch,
-    IZoomMeetingPatchRequestPayload
+    IZoomMeetingPatchRequestPayload,
+    IZoomMeetingRecording
 } from '../../../../common/src';
 
 // utils
@@ -59,6 +61,32 @@ describe('meetingRoutes', () => {
         });
         it('should handle a request error', async () => {
             await getMeeting(request, response);
+            expect(handleError).toHaveBeenCalledWith(
+                expect.any(Error),
+                response
+            );
+        });
+    });
+    describe('getMeetingRecordings', () => {
+        let meetingId: string;
+        let request: Request<{ meetingId: string }>;
+        let send: jest.SpyInstance;
+        let status: jest.SpyInstance;
+        let response: Response<IZoomMeetingRecording[]>;
+        beforeEach(() => {
+            meetingId = 'test meeting ID';
+            request = { params: { meetingId } } as any;
+            send = jest.fn();
+            status = jest.fn(() => ({ send }));
+            response = {
+                status
+            } as any;
+        });
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
+        it('should handle a request error', async () => {
+            await getMeetingRecordings(request, response);
             expect(handleError).toHaveBeenCalledWith(
                 expect.any(Error),
                 response
@@ -138,10 +166,11 @@ describe('meetingRoutes', () => {
         });
     });
     describe('getMeetingRoutes', () => {
-        it('should get user routes', () => {
+        it('should get meeting routes', () => {
             const result = getMeetingRoutes();
             expect(result.get('/:meetingId')).toBeDefined();
             expect(result.get('/')).toBeDefined();
+            expect(result.get('/recordings')).toBeDefined();
             expect(result.patch('/:meetingId')).toBeDefined();
             expect(result.patch('/')).toBeDefined();
         });

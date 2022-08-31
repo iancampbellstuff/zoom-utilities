@@ -15,5 +15,6 @@
     "node_modules": true,
     "server": true,
     "package-lock.json": true
-  }
+  },
+  "workbench.iconTheme": "vs-minimal"
 }

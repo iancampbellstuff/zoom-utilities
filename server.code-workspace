@@ -6,8 +6,6 @@
   ],
   "settings": {
     "jest.rootPath": ".",
-    "telemetry.enableCrashReporter": false,
-    "telemetry.enableTelemetry": false,
     "typescript.tsdk": "node_modules/typescript/lib",
     "workbench.iconTheme": "vs-minimal"
   }
