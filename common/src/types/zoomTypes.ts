@@ -204,9 +204,11 @@ export interface IZoomMeetingPatchRequestPayload {
 //#endregion IZoomMeetingPatch
 
 //#region IZoomMeetingRecording
-export type TZoomMeetingRecordingFileType = 'MP4';
+export type TZoomMeetingRecordingFileType = 'M4A' | 'MP4';
 export type TZoomMeetingRecordingFileStatus = 'completed';
-export type TZoomMeetingRecordingType = 'shared_screen_with_speaker_view';
+export type TZoomMeetingRecordingType =
+    | 'audio_only'
+    | 'shared_screen_with_speaker_view';
 export interface IZoomMeetingRecordingFile {
     download_url: string;
     file_extension: TZoomMeetingRecordingFileType;
@@ -227,4 +229,16 @@ export interface IZoomMeetingRecording extends IZoomMeetingBase {
     share_url: string;
     total_size: number;
 }
+export interface IZoomMeetingEmptyRecording {
+    from: string;
+    meetings: any[];
+    next_page_token: string;
+    page_count: number;
+    page_size: number;
+    to: string;
+    total_records: number;
+}
+export type TZoomMeetingRecordingsResponse =
+    | IZoomMeetingRecording[]
+    | IZoomMeetingEmptyRecording;
 //#endregion IZoomMeetingRecording

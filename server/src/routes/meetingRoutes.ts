@@ -6,7 +6,7 @@ import {
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload,
-    IZoomMeetingRecording
+    TZoomMeetingRecordingsResponse
 } from '../../../common/src';
 // utils
 import { getRequest } from '../../../common/src';
@@ -43,19 +43,17 @@ export const getMeetings = async (
                 url: getUrl(`users/${userId}/meetings`)
             }
         );
-        const meetingRequests = meetingsResponse.data.meetings.map(
-            (meeting) => {
-                // TODO: reuse getMeeting if possible
-                const meetingRequest = getRequest({
-                    method: 'GET',
-                    token,
-                    url: getUrl(`meetings/${meeting.id}`)
-                });
-                return meetingRequest;
-            }
-        );
+        const meetingRequests = meetingsResponse.data.meetings.map(meeting => {
+            // TODO: reuse getMeeting if possible
+            const meetingRequest = getRequest({
+                method: 'GET',
+                token,
+                url: getUrl(`meetings/${meeting.id}`)
+            });
+            return meetingRequest;
+        });
         const meetingResponses = await Promise.all<any>(meetingRequests);
-        const meetings = meetingResponses.map((meetingResponse) => {
+        const meetings = meetingResponses.map(meetingResponse => {
             return meetingResponse.data;
         }) as IZoomMeeting[];
         res.send(meetings);
@@ -65,12 +63,14 @@ export const getMeetings = async (
 };
 export const getMeetingRecordings = async (
     req: Request<{ meetingId: string }>,
-    res: Response<IZoomMeetingRecording[]>
+    res: Response<TZoomMeetingRecordingsResponse>
 ) => {
     try {
         const { meetingId } = req.params;
         const token = accountHelper.getToken();
-        const meetingRecordings = await getRequest<IZoomMeetingRecording[]>({
+        const meetingRecordings = await getRequest<
+            TZoomMeetingRecordingsResponse
+        >({
             method: 'GET',
             token,
             url: getUrl(`meetings/${meetingId}/recordings`)
@@ -107,18 +107,16 @@ export const patchMeetings = async (
     try {
         const meetingsInfo = req.body;
         const token = accountHelper.getToken();
-        const meetingRequests = meetingsInfo.map(
-            (meetingPatchRequestPayload) => {
-                // TODO: reuse patchMeeting if possible
-                const meetingRequest = getRequest({
-                    data: meetingPatchRequestPayload.data,
-                    method: 'PATCH',
-                    token,
-                    url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
-                });
-                return meetingRequest;
-            }
-        );
+        const meetingRequests = meetingsInfo.map(meetingPatchRequestPayload => {
+            // TODO: reuse patchMeeting if possible
+            const meetingRequest = getRequest({
+                data: meetingPatchRequestPayload.data,
+                method: 'PATCH',
+                token,
+                url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
+            });
+            return meetingRequest;
+        });
         await Promise.all<any>(meetingRequests);
         res.sendStatus(200);
     } catch (error) {
