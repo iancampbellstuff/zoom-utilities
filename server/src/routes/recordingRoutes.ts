@@ -2,19 +2,21 @@
 import { Request, Response } from 'express';
 import express from 'express';
 // types
-import { IZoomMeetingRecording } from '../../../common/src';
+import { TZoomMeetingRecordingsResponse } from '../../../common/src';
 // utils
 import { getRequest } from '../../../common/src';
 import { accountHelper, getUrl, handleError } from '../utils';
 
 export const getRecordings = async (
     req: Request,
-    res: Response<IZoomMeetingRecording[]>
+    res: Response<TZoomMeetingRecordingsResponse>
 ) => {
     try {
         const token = accountHelper.getToken();
         const userId = accountHelper.getCurrentUserId();
-        const meetingRecordings = await getRequest<IZoomMeetingRecording[]>({
+        const meetingRecordings = await getRequest<
+            TZoomMeetingRecordingsResponse
+        >({
             method: 'GET',
             token,
             url: getUrl(`users/${userId}/recordings`)
@@ -26,7 +28,7 @@ export const getRecordings = async (
 };
 export const getRecordingsSinceDate = async (
     req: Request<{ year: string; month: string; day: string }>,
-    res: Response<IZoomMeetingRecording[]>
+    res: Response<TZoomMeetingRecordingsResponse>
 ) => {
     try {
         const { year, month, day } = req.params;
@@ -36,7 +38,9 @@ export const getRecordingsSinceDate = async (
         if (year && month && day) {
             url += `?from=${year}-${month}-${day}`;
         }
-        const meetingRecordings = await getRequest<IZoomMeetingRecording[]>({
+        const meetingRecordings = await getRequest<
+            TZoomMeetingRecordingsResponse
+        >({
             method: 'GET',
             token,
             url

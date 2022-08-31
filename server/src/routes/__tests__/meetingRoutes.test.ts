@@ -16,7 +16,7 @@ import {
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload,
-    IZoomMeetingRecording
+    TZoomMeetingRecordingsResponse
 } from '../../../../common/src';
 
 // utils
@@ -72,7 +72,7 @@ describe('meetingRoutes', () => {
         let request: Request<{ meetingId: string }>;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
-        let response: Response<IZoomMeetingRecording[]>;
+        let response: Response<TZoomMeetingRecordingsResponse>;
         beforeEach(() => {
             meetingId = 'test meeting ID';
             request = { params: { meetingId } } as any;

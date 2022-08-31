@@ -9,7 +9,7 @@ import {
 } from '../recordingRoutes';
 
 // types
-import { IZoomMeetingRecording } from '../../../../common/src';
+import { TZoomMeetingRecordingsResponse } from '../../../../common/src';
 
 // utils
 import { accountHelper } from '../../utils';
@@ -37,7 +37,7 @@ describe('recordingRoutes', () => {
         let request: Request;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
-        let response: Response<IZoomMeetingRecording[]>;
+        let response: Response<TZoomMeetingRecordingsResponse>;
         beforeEach(() => {
             request = {} as any;
             send = jest.fn();
@@ -61,7 +61,7 @@ describe('recordingRoutes', () => {
         let request: Request<{ year: string; month: string; day: string }>;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
-        let response: Response<IZoomMeetingRecording[]>;
+        let response: Response<TZoomMeetingRecordingsResponse>;
         beforeEach(() => {
             request = {
                 params: {
