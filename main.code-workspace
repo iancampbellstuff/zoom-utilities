@@ -15,8 +15,6 @@
     }
   ],
   "settings": {
-    "telemetry.enableCrashReporter": false,
-    "telemetry.enableTelemetry": false,
     "workbench.iconTheme": "vs-minimal"
   }
 }
