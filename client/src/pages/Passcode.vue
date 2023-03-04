@@ -13,8 +13,8 @@
             >
             <q-input
                 type="number"
-                :min="minimumPasscodeLength"
-                :max="maximumPasscodeLength"
+                :min="MINIMUM_PASSCODE_LENGTH"
+                :max="MAXIMUM_PASSCODE_LENGTH"
                 v-model="length"
                 label="Length"
                 hint="(optional)"
@@ -24,8 +24,8 @@
             />
             <q-input
                 type="number"
-                :min="minimumDigit"
-                :max="maximumDigit"
+                :min="MINIMUM_DIGIT"
+                :max="MAXIMUM_DIGIT"
                 v-model="firstDigit"
                 label="First Digit"
                 hint="(optional)"
@@ -48,7 +48,6 @@
                 <q-input
                     v-model="passcode"
                     label="Passcode"
-                    ref="passcode"
                     outlined
                     standout
                     dense
@@ -69,7 +68,7 @@
     </q-page>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 #passcode {
     #form {
         .q-toolbar__title {
@@ -79,8 +78,9 @@
 }
 </style>
 
-<script lang="ts">
-import Vue from 'vue';
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { usePasscodeStore } from '../stores';
 import {
     copyInput,
     getPasscode,
@@ -89,69 +89,40 @@ import {
     MINIMUM_DIGIT,
     MINIMUM_PASSCODE_LENGTH
 } from '../utils';
-interface IData {
-    firstDigit?: number;
-    length?: number;
-    maximumDigit: number;
-    maximumPasscodeLength: number;
-    minimumDigit: number;
-    minimumPasscodeLength: number;
-    passcode?: number;
-}
-export default Vue.extend({
-    name: 'Passcode',
-    data(): IData {
-        return {
-            firstDigit: undefined,
-            length: undefined,
-            maximumDigit: MAXIMUM_DIGIT,
-            maximumPasscodeLength: MAXIMUM_PASSCODE_LENGTH,
-            minimumDigit: MINIMUM_DIGIT,
-            minimumPasscodeLength: MINIMUM_PASSCODE_LENGTH,
-            passcode: undefined
-        };
-    },
-    methods: {
-        onChange() {
-            this.$store.commit('passcodeModule/setLength', this.length);
-            this.$store.commit('passcodeModule/setFirstDigit', this.firstDigit);
-            this.$store.commit('passcodeModule/setPasscode', this.passcode);
-        },
-        onCopy() {
-            const ref = this.$refs.passcode as HTMLInputElement;
-            if (ref && this.passcode) {
-                const message = `Passcode ${this.passcode} copied to the clipboard!`;
-                copyInput(ref, message);
-            }
-        },
-        onReset() {
-            this.length = undefined;
-            this.firstDigit = undefined;
-            this.passcode = undefined;
-            this.$store.commit('passcodeModule/resetLength');
-            this.$store.commit('passcodeModule/resetFirstDigit');
-            this.$store.commit('passcodeModule/resetPasscode');
-        },
-        onSubmit() {
-            this.passcode = getPasscode(this.length, this.firstDigit);
-            this.$store.commit('passcodeModule/setLength', this.length);
-            this.$store.commit('passcodeModule/setFirstDigit', this.firstDigit);
-            this.$store.commit('passcodeModule/setPasscode', this.passcode);
-        }
-    },
-    mounted: function() {
-        // TODO: getters aren't working
-        // this.length = this.$store.getters['passcodeModule/getLength'];
-        // this.firstDigit = this.$store.getters['passcodeModule/getFirstDigit'];
-        // this.passcode = this.$store.getters['passcodeModule/getPasscode'];
-        const {
-            length,
-            firstDigit,
-            passcode
-        } = this.$store.state.passcodeModule;
-        this.length = length;
-        this.firstDigit = firstDigit;
-        this.passcode = passcode;
-    }
+
+const store = usePasscodeStore();
+const firstDigit = ref<number>();
+const length = ref<number>();
+const passcode = ref<number>();
+
+onMounted(() => {
+    firstDigit.value = store.firstDigit;
+    length.value = store.length;
+    passcode.value = store.passcode;
 });
+const onChange = () => {
+    store.setFirstDigit(firstDigit.value);
+    store.setLength(length.value);
+    store.setPasscode(passcode.value);
+};
+const onCopy = () => {
+    if (passcode.value) {
+        const message = `Passcode ${passcode.value} copied to the clipboard!`;
+        copyInput(passcode.value, message);
+    }
+};
+const onReset = () => {
+    delete firstDigit.value;
+    delete length.value;
+    delete passcode.value;
+    store.resetFirstDigit();
+    store.resetLength();
+    store.resetPasscode();
+};
+const onSubmit = () => {
+    store.setFirstDigit(firstDigit.value);
+    store.setLength(length.value);
+    passcode.value = getPasscode(length.value, firstDigit.value);
+    store.setPasscode(passcode.value);
+};
 </script>

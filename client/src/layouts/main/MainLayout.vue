@@ -2,9 +2,7 @@
     <q-layout id="main-layout" view="lHh Lpr lFf">
         <q-header elevated>
             <q-toolbar>
-                <q-toolbar-title>
-                    Zoom Utilities
-                </q-toolbar-title>
+                <q-toolbar-title> Zoom Utilities </q-toolbar-title>
                 <q-tabs v-model="tabName">
                     <q-route-tab
                         v-for="t in tabs"
@@ -34,9 +32,9 @@
             <q-toolbar>
                 <q-toolbar-title id="footer-text">
                     <a
-                        title="https://github.com/icampbell2"
-                        href="https://github.com/icampbell2"
-                        >https://github.com/icampbell2</a
+                        title="https://github.com/iancampbellstuff"
+                        href="https://github.com/iancampbellstuff"
+                        >https://github.com/iancampbellstuff</a
                     >
                 </q-toolbar-title>
             </q-toolbar>
@@ -44,7 +42,7 @@
     </q-layout>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 #main-layout {
     #footer {
         text-align: center;
@@ -55,36 +53,34 @@
 }
 </style>
 
-<script lang="ts">
-import Vue from 'vue';
+<script setup lang="ts">
+import { onMounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { useMeetingsStore, usePasscodeStore } from '../../stores';
+import { tabs } from './mainTabs';
 import { toast } from '../../utils';
-import { ITab, tabs } from './mainTabs';
-interface IData {
-    tabName: string;
-    tabs: ITab[];
-}
-export default Vue.extend({
-    name: 'MainLayout',
-    data(): IData {
-        return {
-            tabName: '',
-            tabs
-        };
-    },
-    methods: {
-        onClearAllClick() {
-            this.$store.commit('passcodeModule/resetAll');
-            this.$store.commit('meetingsModule/resetAll');
-            const { path } = this.$router.currentRoute;
-            if (path !== '/' && path !== '/home') {
-                //TODO: Promises must be handled appropriately or explicitly marked as ignored with the `void` operator.eslint@typescript-eslint/no-floating-promises
-                void this.$router.push('home');
-            }
-            toast('All fields have been cleared.');
-        },
-        onTabClick(tabName: string) {
-            this.tabName = tabName;
-        }
-    }
+
+const router = useRouter();
+const meetingsStore = useMeetingsStore();
+const passcodeStore = usePasscodeStore();
+const tabName = ref(tabs[0].name);
+const path = ref<string>();
+
+onMounted(() => {
+    const route = useRoute();
+    path.value = route.path;
 });
+const onClearAllClick = () => {
+    meetingsStore.resetAll();
+    passcodeStore.resetAll();
+    const { value } = path;
+    if (value !== '/' && value !== '/home') {
+        //TODO: Promises must be handled appropriately or explicitly marked as ignored with the `void` operator.eslint@typescript-eslint/no-floating-promises
+        void router.push('home');
+    }
+    toast('All fields have been cleared.');
+};
+const onTabClick = (tabName: string) => {
+    tabName = tabName;
+};
 </script>

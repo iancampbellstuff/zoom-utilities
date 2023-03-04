@@ -5,13 +5,15 @@
     "esbenp.prettier-vscode",
     "hollowtree.vue-snippets",
     "ionutvmi.path-autocomplete",
-    "octref.vetur",
     "orta.vscode-jest",
-    "pflannery.vscode-versionlens"
+    "pflannery.vscode-versionlens",
+    "vue.volar",
+    "wayou.vscode-todo-highlight"
   ],
   "unwantedRecommendations": [
-    "dbaeumer.jshint",
+    "octref.vetur",
     "hookyqr.beautify",
+    "dbaeumer.jshint",
     "ms-vscode.vscode-typescript-tslint-plugin"
   ]
 }

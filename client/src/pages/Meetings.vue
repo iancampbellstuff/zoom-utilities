@@ -5,11 +5,11 @@
             <q-toolbar-title class="text-center">Meetings</q-toolbar-title>
             <q-table
                 :columns="columns"
-                :data="data"
-                :filter-method="customFilter"
+                :rows="data"
+                :filter-method="(customFilter as any)"
                 :filter="filter"
                 outlined
-                :pagination.sync="paginationOptions"
+                v-model:pagination="paginationOptions"
                 row-key="name"
                 standout
                 title="Meetings"
@@ -19,7 +19,7 @@
                         <div class="col-3">
                             <q-select
                                 :options="userIds"
-                                @input="onChangeUserId"
+                                @update:model-value="onChangeUserId"
                                 fill-input
                                 label="Select an Account:"
                                 v-model="currentUserId"
@@ -59,16 +59,17 @@
                                 buttons
                                 persistent
                                 @save="
-                                    (value, initialValue) =>
+                                    (value: string, initialValue: string) =>
                                         onSavePopup(value, initialValue, props)
                                 "
+                                v-slot="scope"
                                 v-model="props.row.topic"
                             >
                                 <q-input
                                     autofocus
                                     counter
                                     dense
-                                    v-model="props.row.topic"
+                                    v-model="scope.value"
                                 />
                             </q-popup-edit>
                         </q-td>
@@ -79,16 +80,17 @@
                                 buttons
                                 persistent
                                 @save="
-                                    (value, initialValue) =>
+                                    (value: string, initialValue: string) =>
                                         onSavePopup(value, initialValue, props)
                                 "
+                                v-slot="scope"
                                 v-model="props.row.password"
                             >
                                 <q-input
                                     autofocus
                                     counter
                                     dense
-                                    v-model="props.row.password"
+                                    v-model="scope.value"
                                 />
                             </q-popup-edit>
                         </q-td>
@@ -99,7 +101,7 @@
     </q-page>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 #meetings {
     #form {
         .q-toolbar__title {
@@ -117,13 +119,11 @@
 }
 </style>
 
-<script lang="ts">
-// externals
-import Vue from 'vue';
-// types
-import { IZoomMeeting } from '../../../common/src';
-// utils
-import { mapToPatchRequestPayload } from '../../../common/src';
+<script setup lang="ts">
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import { useQuasar } from 'quasar';
+import { useMeetingsStore } from '../stores';
+import { IZoomMeeting, mapToPatchRequestPayload } from '../../../common/src';
 import {
     ELogLevel,
     getMeetings,
@@ -132,225 +132,188 @@ import {
     toast,
     updateMeeting
 } from '../utils';
+
 interface IPaginationOptions {
     rowsPerPage: number;
-}
-interface IData {
-    columns: any[];
-    currentUserId: string;
-    data: IZoomMeeting[];
-    errorOccurred: boolean;
-    paginationOptions: IPaginationOptions;
-    search: string;
-    userIds: string[];
 }
 interface IZoomMeetingRowProps {
     key: keyof IZoomMeeting;
     row: IZoomMeeting;
     rowIndex: number;
 }
-export default Vue.extend({
-    name: 'Meetings',
-    beforeMount() {
-        // TODO: getters aren't working
-        // this.userIds = this.$store.getters['meetingsModule/getUserIds'];
-        const { userIds } = this.$store.state.meetingsModule;
-        this.userIds = userIds;
-        if (!userIds?.length) {
-            this.errorOccurred = false;
-            this.$q.loading.show();
-            getUserIds()
-                .then((userIds: string[]) => {
-                    this.userIds = userIds;
-                    this.$store.commit(
-                        'meetingsModule/setUserIds',
-                        this.userIds
-                    );
-                })
-                .catch(error => {
-                    this.errorOccurred = true;
-                    this.showErrorMessage();
-                })
-                .finally(() => {
-                    this.$q.loading.hide();
-                });
-        }
+
+const $q = useQuasar();
+const paginationOptions: IPaginationOptions = {
+    rowsPerPage: 10
+};
+const columns: any = [
+    {
+        align: 'left',
+        field: 'topic',
+        label: 'Meeting Name',
+        name: 'topic',
+        required: true,
+        sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+        sortable: true
     },
-    data(): IData {
-        return {
-            columns: [
-                {
-                    align: 'left',
-                    field: 'topic',
-                    label: 'Meeting Name',
-                    name: 'topic',
-                    required: true,
-                    sort: (a: string, b: string) =>
-                        parseInt(a, 10) - parseInt(b, 10),
-                    sortable: true
-                },
-                {
-                    align: 'left',
-                    field: 'id',
-                    label: 'Meeting ID',
-                    name: 'id',
-                    required: true
-                },
-                {
-                    align: 'left',
-                    field: 'password',
-                    format: (value: string | undefined) => value || '',
-                    label: 'Passcode',
-                    name: 'password',
-                    required: false
-                }
-            ],
-            currentUserId: '',
-            data: [],
-            errorOccurred: false,
-            paginationOptions: {
-                rowsPerPage: 10
-            },
-            search: '',
-            userIds: []
-        };
+    {
+        align: 'left',
+        field: 'id',
+        label: 'Meeting ID',
+        name: 'id',
+        required: true
     },
-    computed: {
-        filter(): { search: string } {
-            return {
-                search: this.search
-            };
-        }
-    },
-    methods: {
-        customFilter(rows: any[], terms: { search: string }) {
-            const searchValue = terms.search?.trim() || '';
-            const filteredRows = rows.filter(
-                (row: { [s: string]: unknown } | ArrayLike<unknown>) => {
-                    let resultFound = true;
-                    if (searchValue !== '') {
-                        const rowValues = Object.entries(row).reduce(
-                            (values: string[], [key, value]) => {
-                                switch (key) {
-                                    // case 'id':
-                                    // case 'password':
-                                    case 'topic': {
-                                        values.push((value as any).toString());
-                                        break;
-                                    }
-                                }
-                                return values;
-                            },
-                            []
-                        );
-                        resultFound = false;
-                        for (let i = 0; i < rowValues.length; i++) {
-                            const rowValue = rowValues[i];
-                            if (rowValue.includes(searchValue)) {
-                                resultFound = true;
+    {
+        align: 'left',
+        field: 'password',
+        format: (value: string) => value || '',
+        label: 'Passcode',
+        name: 'password',
+        required: false
+    }
+];
+const store = useMeetingsStore();
+const currentUserId = ref('');
+const data = ref<IZoomMeeting[]>([]);
+const errorOccurred = ref(false);
+const search = ref('');
+const userIds = ref<string[]>([]);
+
+onBeforeMount(() => {
+    userIds.value = store.userIds;
+    if (!userIds.value?.length) {
+        errorOccurred.value = false;
+        $q.loading.show();
+        getUserIds()
+            .then((ids: string[]) => {
+                userIds.value = ids;
+                store.setUserIds(userIds.value);
+            })
+            .catch((error) => {
+                errorOccurred.value = true;
+                showErrorMessage();
+            })
+            .finally(() => {
+                $q.loading.hide();
+            });
+    }
+});
+
+onMounted(() => {
+    currentUserId.value = store.currentUserId;
+    data.value = store.meetings;
+    search.value = store.search;
+});
+const filter = computed(() => {
+    return search.value;
+});
+
+const customFilter = (rows: any[], searchValue: string) => {
+    const filteredRows = rows.filter(
+        (row: { [s: string]: unknown } | ArrayLike<unknown>) => {
+            let resultFound = true;
+            if (searchValue !== '') {
+                const rowValues = Object.entries(row).reduce(
+                    (values: string[], [key, value]) => {
+                        switch (key) {
+                            // case 'id':
+                            // case 'password':
+                            case 'topic': {
+                                values.push((value as any).toString());
                                 break;
                             }
                         }
+                        return values;
+                    },
+                    []
+                );
+                resultFound = false;
+                for (let i = 0; i < rowValues.length; i++) {
+                    const rowValue = rowValues[i];
+                    if (rowValue.includes(searchValue)) {
+                        resultFound = true;
+                        break;
                     }
-                    return resultFound;
                 }
-            );
-            return filteredRows;
-        },
-        onChangeUserId() {
-            this.errorOccurred = false;
-            this.$q.loading.show();
-            setCurrentUserId(this.currentUserId)
-                .then(() => {
-                    this.$store.commit(
-                        'meetingsModule/setCurrentUserId',
-                        this.currentUserId
-                    );
-                    return getMeetings({
-                        hasPassword: true,
-                        isNotExpired: true
-                    });
-                })
-                .then(meetings => {
-                    this.data = meetings;
-                    this.$store.commit('meetingsModule/setMeetings', meetings);
-                })
-                .catch(error => {
-                    this.errorOccurred = true;
-                    this.showErrorMessage();
-                })
-                .finally(() => {
-                    this.$q.loading.hide();
-                });
-        },
-        onRefresh() {
-            if (this.currentUserId) {
-                this.errorOccurred = false;
-                this.$q.loading.show();
-                getMeetings({
-                    hasPassword: true,
-                    isNotExpired: true
-                })
-                    .then(meetings => {
-                        this.data = meetings;
-                        this.$store.commit(
-                            'meetingsModule/setMeetings',
-                            meetings
-                        );
-                    })
-                    .catch(error => {
-                        this.errorOccurred = true;
-                        this.showErrorMessage();
-                    })
-                    .finally(() => {
-                        this.$q.loading.hide();
-                    });
             }
-        },
-        onSavePopup(
-            value: string,
-            initialValue: string,
-            rowProps: IZoomMeetingRowProps
-        ) {
-            const { key, row, rowIndex } = rowProps;
-            (row as any)[key] = value;
-            const patchRequestPayload = mapToPatchRequestPayload(row);
-            this.errorOccurred = false;
-            this.$q.loading.show();
-            updateMeeting(patchRequestPayload)
-                .then(() => {
-                    toast('Data saved successfully.');
-                })
-                .catch(error => {
-                    this.errorOccurred = true;
-                    this.showErrorMessage();
-                })
-                .finally(() => {
-                    this.$q.loading.hide();
-                });
-        },
-        onSearch() {
-            this.$store.commit('meetingsModule/setSearch', this.search);
-        },
-        showErrorMessage() {
-            if (this.errorOccurred) {
-                toast('An error occurred!', ELogLevel.ERROR);
-            }
+            return resultFound;
         }
-    },
-    mounted: function() {
-        // TODO: getters aren't working
-        // this.currentUserId = this.$store.getters['meetingsModule/getCurrentUserId'];
-        // this.data = this.$store.getters['meetingsModule/getMeetings'];
-        // this.search = this.$store.getters['meetingsModule/getSearch'];
-        const {
-            currentUserId,
-            meetings,
-            search
-        } = this.$store.state.meetingsModule;
-        this.currentUserId = currentUserId;
-        this.data = meetings;
-        this.search = search;
+    );
+    return filteredRows;
+};
+const onChangeUserId = (currentUserId: string) => {
+    errorOccurred.value = false;
+    $q.loading.show();
+    setCurrentUserId(currentUserId)
+        .then(() => {
+            store.setCurrentUserId(currentUserId);
+            return getMeetings({
+                hasPassword: true,
+                isNotExpired: true
+            });
+        })
+        .then((meetings) => {
+            data.value = meetings;
+            store.setMeetings(meetings);
+        })
+        .catch((error) => {
+            errorOccurred.value = true;
+            showErrorMessage();
+        })
+        .finally(() => {
+            $q.loading.hide();
+        });
+};
+const onRefresh = () => {
+    if (currentUserId.value) {
+        errorOccurred.value = false;
+        $q.loading.show();
+        getMeetings({
+            hasPassword: true,
+            isNotExpired: true
+        })
+            .then((meetings) => {
+                data.value = meetings;
+                store.setMeetings(meetings);
+            })
+            .catch((error) => {
+                errorOccurred.value = true;
+                showErrorMessage();
+            })
+            .finally(() => {
+                $q.loading.hide();
+            });
     }
-});
+};
+const onSavePopup = (
+    value: string,
+    initialValue: string,
+    rowProps: IZoomMeetingRowProps
+) => {
+    const { row } = rowProps;
+    const patchRequestPayload = mapToPatchRequestPayload(row);
+    patchRequestPayload.data.password = value;
+    console.log(patchRequestPayload);
+    errorOccurred.value = false;
+    $q.loading.show();
+    updateMeeting(patchRequestPayload)
+        .then(() => {
+            toast('Data saved successfully.');
+        })
+        .catch((error) => {
+            errorOccurred.value = true;
+            showErrorMessage();
+        })
+        .finally(() => {
+            $q.loading.hide();
+        });
+};
+const onSearch = () => {
+    store.setSearch(search.value);
+};
+const showErrorMessage = () => {
+    if (errorOccurred.value) {
+        toast('An error occurred!', ELogLevel.ERROR);
+    }
+};
 </script>

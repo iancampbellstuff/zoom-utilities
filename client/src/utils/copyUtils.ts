@@ -1,14 +1,26 @@
 import { toast } from './messageUtils';
 
 export const copyInput = (
-    inputRef: HTMLInputElement | HTMLTextAreaElement,
+    value: string | number,
     message: string,
     callback: (message: string) => void = toast
 ) => {
-    if (inputRef && message) {
-        inputRef.select();
-        document.execCommand('copy');
-        inputRef.blur();
-        callback(message);
-    }
+    const textArea = document.createElement('textarea');
+    textArea.value = `${value}`;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    return new Promise<void>((resolve, reject) => {
+        const result = document.execCommand('copy');
+        textArea.remove();
+        if (result) {
+            callback(message);
+            resolve();
+        } else {
+            reject();
+        }
+    });
 };

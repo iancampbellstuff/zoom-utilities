@@ -24,7 +24,7 @@ describe('routes', () => {
                 ]
             },
             {
-                path: '*',
+                path: '/:catchAll(.*)*',
                 component: expect.any(Function)
             }
         ]);

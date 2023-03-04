@@ -3,13 +3,8 @@
         <router-view />
     </div>
 </template>
-<style lang="scss" scoped>
+
+<style scoped lang="scss">
 #q-app {
 }
 </style>
-<script lang="ts">
-import Vue from 'vue';
-export default Vue.extend({
-    name: 'App'
-});
-</script>

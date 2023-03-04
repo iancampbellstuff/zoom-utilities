@@ -1,78 +1,232 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MainLayout should render correctly 1`] = `
-<q-layout-stub
+<div
+  class="q-layout q-layout--standard"
   id="main-layout"
-  view="lHh Lpr lFf"
+  style="min-height: 768px;"
+  tabindex="-1"
 >
-  <q-header-stub
-    elevated=""
+  <!---->
+  <object
+    aria-hidden="true"
+    data="about:blank"
+    style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
+    tabindex="-1"
+    type="text/html"
+  />
+  <header
+    class="q-header q-layout__section--marginal fixed-top"
   >
-    <q-toolbar-stub>
-      <q-toolbar-title-stub>
-        
-                Zoom Utilities
-            
-      </q-toolbar-title-stub>
-       
-      <q-tabs-stub
-        value=""
+    <div
+      class="q-toolbar row no-wrap items-center"
+      role="toolbar"
+    >
+      <div
+        class="q-toolbar__title ellipsis"
       >
-        <q-route-tab-stub
-          exact=""
-          icon="home"
-          label="Home"
-          name="home"
-          no-caps=""
-          to="/home"
+         Zoom Utilities 
+      </div>
+      <div
+        class="q-tabs row no-wrap items-center q-tabs--not-scrollable q-tabs--horizontal q-tabs__arrows--inside q-tabs--mobile-without-arrows"
+        role="tablist"
+      >
+        <object
+          aria-hidden="true"
+          data="about:blank"
+          style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
+          tabindex="-1"
+          type="text/html"
         />
-        <q-route-tab-stub
-          exact=""
-          icon="lock"
-          label="Passcode"
-          name="passcode"
-          no-caps=""
-          to="/passcode"
-        />
-        <q-route-tab-stub
-          exact=""
-          icon="groups"
-          label="Meetings"
-          name="meetings"
-          no-caps=""
-          to="/meetings"
-        />
-         
-        <q-tab-stub
-          icon="clear"
-          label="Clear All"
-          name="clearAll"
-          no-caps=""
-        />
-      </q-tabs-stub>
-    </q-toolbar-stub>
-  </q-header-stub>
-   
-  <q-page-container-stub>
-    <router-view-stub />
-  </q-page-container-stub>
-   
-  <q-footer-stub
-    elevated=""
+        <div
+          class="q-tabs__content scroll--mobile row no-wrap items-center self-stretch hide-scrollbar relative-position q-tabs__content--align-justify"
+        >
+          
+          <div
+            aria-selected="true"
+            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--active q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            role="tab"
+            tabindex="0"
+          >
+            <div
+              class="q-focus-helper"
+              tabindex="-1"
+            />
+            <div
+              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
+            >
+              <i
+                aria-hidden="true"
+                class="q-icon notranslate material-icons q-tab__icon"
+                role="presentation"
+              >
+                home
+              </i>
+              <div
+                class="q-tab__label"
+              >
+                Home
+              </div>
+            </div>
+            <div
+              class="q-tab__indicator absolute-bottom"
+            />
+          </div>
+          <div
+            aria-selected="false"
+            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            role="tab"
+            tabindex="-1"
+          >
+            <div
+              class="q-focus-helper"
+              tabindex="-1"
+            />
+            <div
+              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
+            >
+              <i
+                aria-hidden="true"
+                class="q-icon notranslate material-icons q-tab__icon"
+                role="presentation"
+              >
+                lock
+              </i>
+              <div
+                class="q-tab__label"
+              >
+                Passcode
+              </div>
+            </div>
+            <div
+              class="q-tab__indicator absolute-bottom"
+            />
+          </div>
+          <div
+            aria-selected="false"
+            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            role="tab"
+            tabindex="-1"
+          >
+            <div
+              class="q-focus-helper"
+              tabindex="-1"
+            />
+            <div
+              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
+            >
+              <i
+                aria-hidden="true"
+                class="q-icon notranslate material-icons q-tab__icon"
+                role="presentation"
+              >
+                groups
+              </i>
+              <div
+                class="q-tab__label"
+              >
+                Meetings
+              </div>
+            </div>
+            <div
+              class="q-tab__indicator absolute-bottom"
+            />
+          </div>
+          
+          <div
+            aria-selected="false"
+            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            role="tab"
+            tabindex="-1"
+          >
+            <div
+              class="q-focus-helper"
+              tabindex="-1"
+            />
+            <div
+              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
+            >
+              <i
+                aria-hidden="true"
+                class="q-icon notranslate material-icons q-tab__icon"
+                role="presentation"
+              >
+                clear
+              </i>
+              <div
+                class="q-tab__label"
+              >
+                Clear All
+              </div>
+            </div>
+            <div
+              class="q-tab__indicator absolute-bottom"
+            />
+          </div>
+        </div>
+        <i
+          aria-hidden="true"
+          class="q-icon notranslate material-icons q-tabs__arrow q-tabs__arrow--left absolute q-tab__icon"
+          role="presentation"
+        >
+          chevron_left
+        </i>
+        <i
+          aria-hidden="true"
+          class="q-icon notranslate material-icons q-tabs__arrow q-tabs__arrow--right absolute q-tab__icon q-tabs__arrow--faded"
+          role="presentation"
+        >
+          chevron_right
+        </i>
+      </div>
+    </div>
+    <div
+      class="q-layout__shadow absolute-full overflow-hidden no-pointer-events"
+    />
+    <object
+      aria-hidden="true"
+      data="about:blank"
+      style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
+      tabindex="-1"
+      type="text/html"
+    />
+  </header>
+  <div
+    class="q-page-container"
+    style="padding-top: 50px; padding-bottom: 50px;"
+  >
+    <router-view />
+  </div>
+  <footer
+    class="q-footer q-layout__section--marginal fixed-bottom"
     id="footer"
   >
-    <q-toolbar-stub>
-      <q-toolbar-title-stub
+    <object
+      aria-hidden="true"
+      data="about:blank"
+      style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
+      tabindex="-1"
+      type="text/html"
+    />
+    <div
+      class="q-toolbar row no-wrap items-center"
+      role="toolbar"
+    >
+      <div
+        class="q-toolbar__title ellipsis"
         id="footer-text"
       >
         <a
-          href="https://github.com/icampbell2"
-          title="https://github.com/icampbell2"
+          href="https://github.com/iancampbellstuff"
+          title="https://github.com/iancampbellstuff"
         >
-          https://github.com/icampbell2
+          https://github.com/iancampbellstuff
         </a>
-      </q-toolbar-title-stub>
-    </q-toolbar-stub>
-  </q-footer-stub>
-</q-layout-stub>
+      </div>
+    </div>
+    <div
+      class="q-layout__shadow absolute-full overflow-hidden no-pointer-events"
+    />
+  </footer>
+</div>
 `;
