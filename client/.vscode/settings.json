@@ -1,6 +1,9 @@
 {
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": ["source.fixAll.eslint"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
+  "editor.guides.bracketPairs": true,
   "editor.rulers": [130],
   "editor.snippetSuggestions": "top",
   "eslint.validate": ["javascript", "javascriptreact", "typescript", "vue"],
@@ -13,6 +16,7 @@
     "src-pwa": true
   },
   "jest.rootPath": ".",
+  "typescript.tsdk": "node_modules/typescript/lib",
   "search.exclude": {
     ".quasar": true,
     "coverage": true,
@@ -22,9 +26,5 @@
     "src-electron": true,
     "src-pwa": true
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "vetur.experimental.templateInterpolationService": true,
-  "vetur.format.enable": false,
-  "vetur.validation.template": false,
   "workbench.iconTheme": "vs-minimal"
 }

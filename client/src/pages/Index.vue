@@ -8,7 +8,7 @@
     </q-page>
 </template>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 #index {
     #logo {
         width: 80%;
@@ -16,11 +16,3 @@
     }
 }
 </style>
-
-<script lang="ts">
-import Vue from 'vue';
-
-export default Vue.extend({
-    name: 'Index'
-});
-</script>

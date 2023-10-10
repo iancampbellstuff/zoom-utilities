@@ -1,26 +1,18 @@
-import { createLocalVue, mount, Wrapper } from '@vue/test-utils';
-import Vuex from 'vuex';
-// code under test
+import { mount, VueWrapper } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
+import Quasar from 'quasar';
+import { usePasscodeStore } from '../../stores';
 import Passcode from '../Passcode.vue';
-import getters from '../../store/passcode/getters';
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe('Passcode', () => {
     let store;
-    let wrapper: Wrapper<any>;
+    let wrapper: VueWrapper<any>;
     beforeEach(() => {
-        store = new Vuex.Store({
-            modules: {
-                passcodeModule: {
-                    getters,
-                    state: {}
-                }
-            }
-        });
+        store = usePasscodeStore(createTestingPinia());
         wrapper = mount(Passcode, {
-            localVue,
+            global: {
+                plugins: [Quasar]
+            },
             store,
             stubs: [
                 'q-btn-group',

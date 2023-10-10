@@ -1,11 +1,15 @@
-import { mount, Wrapper } from '@vue/test-utils';
-// code under test
+import { mount, VueWrapper } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
+import Quasar from 'quasar';
 import MainLayout from '../MainLayout.vue';
 
 describe('MainLayout', () => {
-    let wrapper: Wrapper<any>;
+    let wrapper: VueWrapper<any>;
     beforeEach(() => {
         wrapper = mount(MainLayout, {
+            global: {
+                plugins: [Quasar, createTestingPinia()]
+            },
             stubs: [
                 'q-btn-group',
                 'q-btn',

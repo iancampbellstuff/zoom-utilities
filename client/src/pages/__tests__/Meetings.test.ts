@@ -1,30 +1,18 @@
-// test-related
-import { createLocalVue, mount, Wrapper } from '@vue/test-utils';
-// externals
+import { mount, VueWrapper } from '@vue/test-utils';
+import { createTestingPinia } from '@pinia/testing';
 import Quasar from 'quasar';
-import Vuex from 'vuex';
-// code under test
+import { useMeetingsStore } from '../../stores';
 import Meetings from '../Meetings.vue';
-import getters from '../../store/passcode/getters';
-
-const localVue = createLocalVue();
-localVue.use(Quasar);
-localVue.use(Vuex);
 
 describe('Meetings', () => {
     let store;
-    let wrapper: Wrapper<any>;
+    let wrapper: VueWrapper<any>;
     beforeEach(() => {
-        store = new Vuex.Store({
-            modules: {
-                meetingsModule: {
-                    getters,
-                    state: {}
-                }
-            }
-        });
+        store = useMeetingsStore(createTestingPinia());
         wrapper = mount(Meetings, {
-            localVue,
+            global: {
+                plugins: [Quasar]
+            },
             store,
             stubs: [
                 'q-btn',

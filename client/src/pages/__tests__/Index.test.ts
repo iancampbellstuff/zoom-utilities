@@ -1,9 +1,9 @@
-import { mount, Wrapper } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 // code under test
 import Index from '../Index.vue';
 
 describe('Index', () => {
-    let wrapper: Wrapper<any>;
+    let wrapper: VueWrapper<any>;
     beforeEach(() => {
         wrapper = mount(Index, {
             stubs: ['q-page', 'router-view']

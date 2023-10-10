@@ -1,9 +1,9 @@
-import { mount, Wrapper } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 // code under test
 import App from '../App.vue';
 
 describe('App', () => {
-    let wrapper: Wrapper<any>;
+    let wrapper: VueWrapper;
     beforeEach(() => {
         wrapper = mount(App, {
             stubs: ['router-view']

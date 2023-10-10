@@ -25,6 +25,12 @@
     },
     {
       "type": "npm",
+      "label": "format",
+      "group": "test",
+      "script": "format"
+    },
+    {
+      "type": "npm",
       "label": "build",
       "group": {
         "kind": "build",

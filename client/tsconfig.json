@@ -1,13 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "strictPropertyInitialization": false,
     "typeRoots": ["@types", "node_modules/@types"],
     "types": ["jest", "node"]
   },
-  "extends": "@quasar/app/tsconfig-preset",
+  "extends": "@quasar/app-vite/tsconfig-preset",
   "include": ["src"]
 }
