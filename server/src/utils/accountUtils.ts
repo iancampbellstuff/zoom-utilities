@@ -1,30 +1,80 @@
 // externals
-import jwt from 'jsonwebtoken';
+import axios from 'axios';
 // types
-import { IAccountConfig, ITokenMap, ITokenPayload } from '../types';
+import { IAccountConfig, ITokenMap, ITokenResponse } from '../types';
 // utils
 import { isExpired } from '../../../common/src/utils';
 // config
 import config from '../../config.json';
+// constants
+import { OAUTH_ROUTE } from '../constants';
 
-class AccountHelper {
-    // 90 minutes -- hours * minutes * seconds * milliseconds
-    private static readonly EXPIRATION_MILLISECONDS = 1 * 90 * 60 * 1000;
+export class AccountHelper {
     private static INSTANCE: AccountHelper;
     private currentUserId: string;
     private tokenMap: ITokenMap;
-    public static getInstanceOf(): AccountHelper {
+    public static async requestInstanceOf(): Promise<AccountHelper> {
         if (!AccountHelper.INSTANCE) {
             AccountHelper.INSTANCE = new AccountHelper();
+            const tokenMap = await AccountHelper.INSTANCE.requestTokenMap();
+            AccountHelper.INSTANCE.tokenMap = tokenMap;
         }
         return AccountHelper.INSTANCE;
     }
-    private constructor() {
-        this.tokenMap = this.getTokenMap();
-    }
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    private constructor() {}
     private getAccountConfigs(): IAccountConfig[] {
         const accountConfigs = config || [];
         return accountConfigs;
+    }
+    private async generateToken(
+        accountConfig: IAccountConfig
+    ): Promise<ITokenResponse> {
+        try {
+            const { accountId, clientId, clientSecret } = accountConfig;
+            const request = await axios.post(
+                OAUTH_ROUTE,
+                `grant_type=account_credentials&account_id=${accountId}`,
+                {
+                    headers: {
+                        Authorization: `Basic ${Buffer.from(
+                            `${clientId}:${clientSecret}`
+                        ).toString('base64')}`
+                    }
+                }
+            );
+            const { access_token: token, expires_in: expirationDate } =
+                await request.data;
+            return {
+                error: null,
+                expirationDate,
+                token
+            };
+        } catch (error) {
+            return {
+                error,
+                expirationDate: null,
+                token: null
+            };
+        }
+    }
+    private async requestTokenMap(): Promise<ITokenMap> {
+        const accountConfigs = this.getAccountConfigs();
+        const tokenMap: ITokenMap = {};
+        for (const accountConfig of accountConfigs) {
+            const { token, expirationDate, error } = await this.generateToken(
+                accountConfig
+            );
+            if (error) {
+                console.error(error);
+            } else {
+                tokenMap[accountConfig.userId] = {
+                    expirationDate,
+                    token
+                };
+            }
+        }
+        return tokenMap;
     }
     public getUserIds(): string[] {
         const accountConfigs = this.getAccountConfigs();
@@ -32,37 +82,6 @@ class AccountHelper {
             (accountConfig: IAccountConfig) => accountConfig.userId
         );
         return userIds;
-    }
-    private getExpirationDate() {
-        const expirationDate = new Date(
-            Date.now() + AccountHelper.EXPIRATION_MILLISECONDS
-        );
-        return expirationDate;
-    }
-    private generateToken(accountConfig: IAccountConfig, expirationDate: Date) {
-        const { apiKey, apiSecret } = accountConfig;
-        const payload: ITokenPayload = {
-            exp: expirationDate.getTime(),
-            iss: apiKey
-        };
-        const token = jwt.sign(payload, apiSecret);
-        return token;
-    }
-    private getTokenMap(): ITokenMap {
-        const accountConfigs = this.getAccountConfigs();
-        const expirationDate = this.getExpirationDate();
-        const tokenMap = accountConfigs.reduce(
-            (tokenMap: ITokenMap, accountConfig: IAccountConfig) => {
-                const token = this.generateToken(accountConfig, expirationDate);
-                tokenMap[accountConfig.userId] = {
-                    expirationDate,
-                    token
-                };
-                return tokenMap;
-            },
-            {}
-        );
-        return tokenMap;
     }
     public getCurrentUserId() {
         return this.currentUserId;
@@ -76,23 +95,26 @@ class AccountHelper {
     private getTokenMapValue(userId: string) {
         const accountConfigs = this.getAccountConfigs();
         const accountConfig = accountConfigs.find(
-            accountConfig => accountConfig.userId === userId
+            (accountConfig) => accountConfig.userId === userId
         );
         const tokenMapValue = this.tokenMap[accountConfig?.userId];
         return tokenMapValue;
     }
-    public getToken(userId: string = this.currentUserId): string {
+    public async requestToken(
+        userId: string = this.currentUserId
+    ): Promise<string | null> {
         const tokenMapValue = this.getTokenMapValue(userId);
-        const expirationDate = tokenMapValue?.expirationDate;
-        let token = tokenMapValue?.token;
-        if (expirationDate && isExpired(expirationDate)) {
-            // reset token map
-            this.tokenMap = this.getTokenMap();
-            // get new token
-            token = this.getToken(userId);
+        if (tokenMapValue) {
+            const { expirationDate, token } = tokenMapValue;
+            if (expirationDate && isExpired(expirationDate)) {
+                // reset token map
+                this.tokenMap = await this.requestTokenMap();
+                // get new token
+                const newToken = await this.requestToken(userId);
+                return newToken;
+            }
+            return token;
         }
-        return token;
+        return null;
     }
 }
-
-export const accountHelper = AccountHelper.getInstanceOf();

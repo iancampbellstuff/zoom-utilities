@@ -1,2 +1,2 @@
-export { accountHelper } from './accountUtils';
+export { AccountHelper } from './accountUtils';
 export { getUrl, handleError } from './requestUtils';

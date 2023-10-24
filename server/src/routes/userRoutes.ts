@@ -2,25 +2,32 @@
 import { Request, Response } from 'express';
 import express from 'express';
 // utils
-import { accountHelper } from '../utils';
+import { AccountHelper } from '../utils';
 
-export const requestUserIds = (req: Request, res: Response) => {
+export const requestUserIds = async (req: Request, res: Response) => {
+    const accountHelper = await AccountHelper.requestInstanceOf();
     const userIds = accountHelper.getUserIds();
     return res.send(userIds);
 };
-export const requestSetCurrentUserId = (
+export const requestSetCurrentUserId = async (
     req: Request<{ userId: string }>,
     res: Response
 ) => {
     const { userId } = req.params;
+    const accountHelper = await AccountHelper.requestInstanceOf();
     accountHelper.setCurrentUserId(userId);
     return res.sendStatus(200);
 };
 export const getUserRoutes = () => {
     const router = express.Router();
-    router.get('/', (req: Request, res: Response) => requestUserIds(req, res));
-    router.post('/:userId', (req: Request<{ userId: string }>, res: Response) =>
-        requestSetCurrentUserId(req, res)
+    router.get(
+        '/',
+        (req: Request, res: Response) => void requestUserIds(req, res)
+    );
+    router.post(
+        '/:userId',
+        (req: Request<{ userId: string }>, res: Response) =>
+            void requestSetCurrentUserId(req, res)
     );
     return router;
 };

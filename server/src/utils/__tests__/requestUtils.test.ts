@@ -1,10 +1,10 @@
 // externals
 import { AxiosError, AxiosResponse } from 'axios';
 import { Response } from 'express';
-
+// constants
+import { BASE_ROUTE } from '../../constants';
 // code under test
-import { BASE_ROUTE, getUrl, handleError } from '../requestUtils';
-
+import { getUrl, handleError } from '../requestUtils';
 // utils
 import { combineURLs } from '../../../../common/src';
 

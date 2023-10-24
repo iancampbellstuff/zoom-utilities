@@ -18,9 +18,9 @@ An Express app for simplifying Zoom tasks in the [`@zoom-utilities`](../README.m
 
 ## Project Setup
 
-1. Follow the [Zoom documentation for "Using JWT"](https://marketplace.zoom.us/docs/api-reference/using-zoom-apis#using-jwt 'https://marketplace.zoom.us/docs/api-reference/using-zoom-apis#using-jwt') to create and register a JWT Zoom app.
+1. Follow the [Zoom documentation for "Internal apps (Server-to-server)"](https://developers.zoom.us/docs/internal-apps/ 'https://developers.zoom.us/docs/internal-apps/') to create and register a server-to-server OAuth app.
 
-2. Copy your API key and secret from your JWT Zoom app, and paste those values into [`config.json`](./config.json).
+2. Copy your account ID, client ID, and client secret values from your server-to-server OAuth Zoom app, and paste those values into [`config.json`](./config.json).
 
 > :warning: **Do not commit changes to this file!** :warning:
 >

@@ -1,12 +1,14 @@
 [
   {
-    "apiKey": "exampleApiKey1",
-    "apiSecret": "exampleApiSecret1",
+    "accountId": "exampleAccountId1",
+    "clientId": "exampleClientId1",
+    "clientSecret": "exampleClientSecret1",
     "userId": "exampleEmailAddress1@example.com"
   },
   {
-    "apiKey": "exampleApiKey2",
-    "apiSecret": "exampleApiSecret2",
+    "accountId": "exampleAccountId2",
+    "clientId": "exampleClientId2",
+    "clientSecret": "exampleClientSecret2",
     "userId": "exampleEmailAddress2@example.com"
   }
 ]

@@ -10,15 +10,16 @@ import {
 } from '../../../common/src';
 // utils
 import { getRequest } from '../../../common/src';
-import { accountHelper, getUrl, handleError } from '../utils';
+import { AccountHelper, getUrl, handleError } from '../utils';
 
-export const getMeeting = async (
+export const requestMeeting = async (
     req: Request<{ meetingId: string }>,
     res: Response<IZoomMeeting>
 ) => {
     try {
         const { meetingId } = req.params;
-        const token = accountHelper.getToken();
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken();
         const meeting = await getRequest<IZoomMeeting>({
             method: 'GET',
             token,
@@ -29,12 +30,13 @@ export const getMeeting = async (
         handleError(error, res);
     }
 };
-export const getMeetings = async (
+export const requestMeetings = async (
     req: Request,
     res: Response<IZoomMeeting[]>
 ) => {
     try {
-        const token = accountHelper.getToken();
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken();
         const userId = accountHelper.getCurrentUserId();
         const meetingsResponse = await getRequest<{ meetings: IZoomMeeting[] }>(
             {
@@ -43,17 +45,19 @@ export const getMeetings = async (
                 url: getUrl(`users/${userId}/meetings`)
             }
         );
-        const meetingRequests = meetingsResponse.data.meetings.map(meeting => {
-            // TODO: reuse getMeeting if possible
-            const meetingRequest = getRequest({
-                method: 'GET',
-                token,
-                url: getUrl(`meetings/${meeting.id}`)
-            });
-            return meetingRequest;
-        });
+        const meetingRequests = meetingsResponse.data.meetings.map(
+            (meeting) => {
+                // TODO: reuse requestMeeting if possible
+                const meetingRequest = getRequest({
+                    method: 'GET',
+                    token,
+                    url: getUrl(`meetings/${meeting.id}`)
+                });
+                return meetingRequest;
+            }
+        );
         const meetingResponses = await Promise.all<any>(meetingRequests);
-        const meetings = meetingResponses.map(meetingResponse => {
+        const meetings = meetingResponses.map((meetingResponse) => {
             return meetingResponse.data;
         }) as IZoomMeeting[];
         res.send(meetings);
@@ -61,33 +65,34 @@ export const getMeetings = async (
         handleError(error, res);
     }
 };
-export const getMeetingRecordings = async (
+export const requestMeetingRecordings = async (
     req: Request<{ meetingId: string }>,
     res: Response<TZoomMeetingRecordingsResponse>
 ) => {
     try {
         const { meetingId } = req.params;
-        const token = accountHelper.getToken();
-        const meetingRecordings = await getRequest<
-            TZoomMeetingRecordingsResponse
-        >({
-            method: 'GET',
-            token,
-            url: getUrl(`meetings/${meetingId}/recordings`)
-        });
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken();
+        const meetingRecordings =
+            await getRequest<TZoomMeetingRecordingsResponse>({
+                method: 'GET',
+                token,
+                url: getUrl(`meetings/${meetingId}/recordings`)
+            });
         res.send(meetingRecordings.data);
     } catch (error) {
         handleError(error, res);
     }
 };
-export const patchMeeting = async (
+export const requestPatchMeeting = async (
     req: Request<{ meetingId: string }, any, IZoomMeetingPatch>,
     res: Response
 ) => {
     try {
         const meetingPatch = req.body;
         const { meetingId } = req.params;
-        const token = accountHelper.getToken();
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken();
         const meetingRequest = getRequest({
             data: meetingPatch,
             method: 'PATCH',
@@ -100,58 +105,66 @@ export const patchMeeting = async (
         handleError(error, res);
     }
 };
-export const patchMeetings = async (
+export const requestPatchMeetings = async (
     req: Request<any, any, IZoomMeetingPatchRequestPayload[]>,
     res: Response
 ) => {
     try {
         const meetingsInfo = req.body;
-        const token = accountHelper.getToken();
-        const meetingRequests = meetingsInfo.map(meetingPatchRequestPayload => {
-            // TODO: reuse patchMeeting if possible
-            const meetingRequest = getRequest({
-                data: meetingPatchRequestPayload.data,
-                method: 'PATCH',
-                token,
-                url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
-            });
-            return meetingRequest;
-        });
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken();
+        const meetingRequests = meetingsInfo.map(
+            (meetingPatchRequestPayload) => {
+                // TODO: reuse requestPatchMeeting if possible
+                const meetingRequest = getRequest({
+                    data: meetingPatchRequestPayload.data,
+                    method: 'PATCH',
+                    token,
+                    url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
+                });
+                return meetingRequest;
+            }
+        );
         await Promise.all<any>(meetingRequests);
         res.sendStatus(200);
     } catch (error) {
         handleError(error, res);
     }
 };
+
+/**
+ *
+ * @returns
+ */
 export const getMeetingRoutes = () => {
     const router = express.Router();
     router.get(
         '/:meetingId',
         (req: Request<{ meetingId: string }>, res: Response) =>
-            void getMeeting(req, res)
+            void requestMeeting(req, res)
     );
     router.get(
         '/:meetingId/recordings',
         (req: Request<{ meetingId: string }>, res: Response) =>
-            void getMeetingRecordings(req, res)
+            void requestMeetingRecordings(req, res)
     );
     router.get(
         '/',
-        (req: Request, res: Response) => void getMeetings(req, res)
+        (req: Request, res: Response) => void requestMeetings(req, res)
     );
     router.patch(
         '/:meetingId',
         (
             req: Request<{ meetingId: string }, any, IZoomMeetingPatch>,
             res: Response
-        ) => void patchMeeting(req, res)
+        ) => void requestPatchMeeting(req, res)
     );
     router.patch(
         '/',
         (
             req: Request<any, any, IZoomMeetingPatchRequestPayload[]>,
             res: Response
-        ) => void patchMeetings(req, res)
+        ) => void requestPatchMeetings(req, res)
     );
     return router;
 };
