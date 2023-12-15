@@ -209,16 +209,19 @@ export type TZoomMeetingRecordingFileStatus = 'completed';
 export type TZoomMeetingRecordingType =
     | 'audio_only'
     | 'shared_screen_with_speaker_view';
-export interface IZoomMeetingRecordingFile {
+export interface IZoomMeetingRecordingFileData {
     download_url: string;
+    recording_end: string;
+    recording_start: string;
+}
+export interface IZoomMeetingRecordingFile
+    extends IZoomMeetingRecordingFileData {
     file_extension: TZoomMeetingRecordingFileType;
     file_size: number;
     file_type: TZoomMeetingRecordingFileType;
     id: string;
     meeting_id: string;
     play_url: string;
-    recording_end: string;
-    recording_start: string;
     recording_type: TZoomMeetingRecordingType;
     status: TZoomMeetingRecordingFileStatus;
 }
@@ -226,19 +229,24 @@ export interface IZoomMeetingRecording extends IZoomMeetingBase {
     account_id: string;
     recording_count: number;
     recording_files: IZoomMeetingRecordingFile[];
+    recording_play_passcode: string;
     share_url: string;
     total_size: number;
 }
-export interface IZoomMeetingEmptyRecording {
+export interface IZoomMeetingRecordingResponse {
     from: string;
-    meetings: any[];
+    meetings: IZoomMeetingRecording[];
     next_page_token: string;
     page_count: number;
     page_size: number;
     to: string;
     total_records: number;
 }
-export type TZoomMeetingRecordingsResponse =
-    | IZoomMeetingRecording[]
-    | IZoomMeetingEmptyRecording;
+export interface IZoomMeetingRecordingsResponseItem
+    extends IZoomMeetingRecordingFileData {
+    play_url: string;
+    topic: string;
+}
+export type TZoomMeetingRecordingsResponseData =
+    IZoomMeetingRecordingFileData[];
 //#endregion IZoomMeetingRecording

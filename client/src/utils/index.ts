@@ -5,6 +5,7 @@ export {
     // IMeetingFilters,
     getMeeting,
     getMeetings,
+    getRecordings,
     getUserIds,
     setCurrentUserId,
     updateMeeting,

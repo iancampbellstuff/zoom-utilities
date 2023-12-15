@@ -5,8 +5,7 @@ import express from 'express';
 import {
     IZoomMeeting,
     IZoomMeetingPatch,
-    IZoomMeetingPatchRequestPayload,
-    TZoomMeetingRecordingsResponse
+    IZoomMeetingPatchRequestPayload
 } from '../../../common/src';
 // utils
 import { getRequest } from '../../../common/src';
@@ -61,25 +60,6 @@ export const requestMeetings = async (
             return meetingResponse.data;
         }) as IZoomMeeting[];
         res.send(meetings);
-    } catch (error) {
-        handleError(error, res);
-    }
-};
-export const requestMeetingRecordings = async (
-    req: Request<{ meetingId: string }>,
-    res: Response<TZoomMeetingRecordingsResponse>
-) => {
-    try {
-        const { meetingId } = req.params;
-        const accountHelper = await AccountHelper.requestInstanceOf();
-        const token = await accountHelper.requestToken();
-        const meetingRecordings =
-            await getRequest<TZoomMeetingRecordingsResponse>({
-                method: 'GET',
-                token,
-                url: getUrl(`meetings/${meetingId}/recordings`)
-            });
-        res.send(meetingRecordings.data);
     } catch (error) {
         handleError(error, res);
     }
@@ -142,11 +122,6 @@ export const getMeetingRoutes = () => {
         '/:meetingId',
         (req: Request<{ meetingId: string }>, res: Response) =>
             void requestMeeting(req, res)
-    );
-    router.get(
-        '/:meetingId/recordings',
-        (req: Request<{ meetingId: string }>, res: Response) =>
-            void requestMeetingRecordings(req, res)
     );
     router.get(
         '/',
