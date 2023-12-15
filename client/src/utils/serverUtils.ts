@@ -3,7 +3,8 @@ import {
     APP_PORT,
     getRequest,
     IZoomMeeting,
-    IZoomMeetingPatchRequestPayload
+    IZoomMeetingPatchRequestPayload,
+    IZoomMeetingRecordingsResponseItem
 } from '../../../common/src';
 // utils
 import { combineURLs, isExpired } from '../../../common/src';
@@ -34,10 +35,10 @@ export const getMeetings = async (meetingFilters: IMeetingFilters = {}) => {
     const { hasPassword, isNotExpired } = meetingFilters;
     let meetings = response.data;
     if (hasPassword) {
-        meetings = meetings.filter(meeting => !!meeting.password);
+        meetings = meetings.filter((meeting) => !!meeting.password);
     }
     if (isNotExpired) {
-        meetings = meetings.filter(meeting => !isExpired(meeting.start_time));
+        meetings = meetings.filter((meeting) => !isExpired(meeting.start_time));
     }
     return meetings;
 };
@@ -75,4 +76,14 @@ export const setCurrentUserId = async (userId: string) => {
         url: getUrl(`users/${userId}`)
     });
     return response;
+};
+export const getRecordings = async () => {
+    const response = await getRequest<IZoomMeetingRecordingsResponseItem[]>({
+        method: 'GET',
+        url: getUrl('recordings')
+    });
+    const recordings = response.data.filter(
+        (recording) => !!recording.recording_end
+    );
+    return recordings;
 };

@@ -33,3 +33,4 @@ export default store((/* { ssrContext } */) => {
 
 export * from './meetings';
 export * from './passcode';
+export * from './recordings';

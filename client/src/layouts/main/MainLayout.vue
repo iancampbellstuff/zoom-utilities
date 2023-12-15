@@ -56,13 +56,14 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { useMeetingsStore, usePasscodeStore } from '../../stores';
+import { useMeetingsStore, usePasscodeStore, useRecordingsStore } from '../../stores';
 import { tabs } from './mainTabs';
 import { toast } from '../../utils';
 
 const router = useRouter();
 const meetingsStore = useMeetingsStore();
 const passcodeStore = usePasscodeStore();
+const recordingsStore = useRecordingsStore();
 const tabName = ref(tabs[0].name);
 const path = ref<string>();
 
@@ -73,6 +74,7 @@ onMounted(() => {
 const onClearAllClick = () => {
     meetingsStore.resetAll();
     passcodeStore.resetAll();
+    recordingsStore.resetAll();
     const { value } = path;
     if (value !== '/' && value !== '/home') {
         //TODO: Promises must be handled appropriately or explicitly marked as ignored with the `void` operator.eslint@typescript-eslint/no-floating-promises

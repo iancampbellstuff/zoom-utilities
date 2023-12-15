@@ -1,3 +1,8 @@
 export * from './requestUtils';
+export * from './stringUtils';
 export * from './zoomUtils';
-export { isExpired } from './dateUtils';
+export {
+    getFormattedDate,
+    getFormattedTimestamp,
+    isExpired
+} from './dateUtils';
