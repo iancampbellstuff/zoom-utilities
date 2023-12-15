@@ -1,6 +1,10 @@
+// externals
+import { AxiosError } from 'axios';
+
 export interface IAccountConfig {
-    apiKey: string;
-    apiSecret: string;
+    accountId: string;
+    clientId: string;
+    clientSecret: string;
     userId: string;
 }
 
@@ -13,7 +17,6 @@ export interface ITokenMap {
     [key: string]: ITokenMapValue;
 }
 
-export interface ITokenPayload {
-    exp: number;
-    iss: string;
+export interface ITokenResponse extends ITokenMapValue {
+    error: AxiosError | Error;
 }

@@ -1,10 +1,11 @@
 // externals
 import { AxiosError } from 'axios';
 import { Response } from 'express';
+// constants
+import { BASE_ROUTE } from '../constants';
 // utils
 import { combineURLs } from '../../../common/src';
 
-export const BASE_ROUTE = 'https://api.zoom.us/v2';
 export const getUrl = (path: string) => {
     const url = combineURLs(BASE_ROUTE, path);
     return url;
