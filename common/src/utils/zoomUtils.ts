@@ -1,5 +1,10 @@
 // types
-import { IZoomMeeting, IZoomMeetingPatchRequestPayload } from '../types';
+import {
+    IZoomMeeting,
+    IZoomMeetingPatchRequestPayload,
+    IZoomMeetingPostRequestData,
+    IZoomMeetingPostRequestPayload
+} from '../types';
 
 export const mapToPatchRequestPayload = (
     meeting: IZoomMeeting = {} as IZoomMeeting
@@ -93,4 +98,29 @@ export const mapToPatchRequestPayload = (
         }
     };
     return patchRequestPayload;
+};
+
+export const mapToPostRequestPayload = (
+    meetingPostRequestData: IZoomMeetingPostRequestData
+): IZoomMeetingPostRequestPayload => {
+    const { topic, password, recordToTheCloud, userId } =
+        meetingPostRequestData;
+    const postRequestPayload: IZoomMeetingPostRequestPayload = {
+        userId,
+        data: {
+            agenda: topic,
+            default_password: false,
+            pre_schedule: false,
+            schedule_for: userId,
+            topic,
+            type: 3
+        }
+    };
+    if (password) {
+        postRequestPayload.data.password = password;
+    }
+    if (recordToTheCloud) {
+        postRequestPayload.data.auto_recording = 'cloud';
+    }
+    return postRequestPayload;
 };

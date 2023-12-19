@@ -203,6 +203,29 @@ export interface IZoomMeetingPatchRequestPayload {
 }
 //#endregion IZoomMeetingPatch
 
+//#region IZoomMeetingPost
+export interface IZoomMeetingPostRequestData {
+    password: string;
+    recordToTheCloud: boolean;
+    topic: string;
+    userId: string;
+}
+export interface IZoomMeetingPost {
+    agenda: string;
+    auto_recording?: 'cloud';
+    default_password: false;
+    password?: string;
+    pre_schedule: false;
+    schedule_for: string;
+    topic: string;
+    type: 3;
+}
+export interface IZoomMeetingPostRequestPayload {
+    userId: string;
+    data: IZoomMeetingPost;
+}
+//#endregion IZoomMeetingPost
+
 //#region IZoomMeetingRecording
 export type TZoomMeetingRecordingFileType = 'M4A' | 'MP4';
 export type TZoomMeetingRecordingFileStatus = 'completed';

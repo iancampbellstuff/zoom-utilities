@@ -37,6 +37,8 @@ export const requestMeetings = async (
         const accountHelper = await AccountHelper.requestInstanceOf();
         const token = await accountHelper.requestToken();
         const userId = accountHelper.getCurrentUserId();
+        console.log(`\n\n requestMeetings -- token: ${token} \n\n`);
+        console.log(`\n\n requestMeetings -- userId: ${userId} \n\n`);
         const meetingsResponse = await getRequest<{ meetings: IZoomMeeting[] }>(
             {
                 method: 'GET',
@@ -111,6 +113,53 @@ export const requestPatchMeetings = async (
         handleError(error, res);
     }
 };
+export const requestDeleteMeeting = async (
+    req: Request<{ meetingId: string }, any, IZoomMeetingPatch>,
+    res: Response
+) => {
+    try {
+        const meetingPatch = req.body;
+        const { meetingId } = req.params;
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken();
+        const meetingRequest = getRequest({
+            data: meetingPatch,
+            method: 'DELETE',
+            token,
+            url: getUrl(`meetings/${meetingId}`)
+        });
+        await meetingRequest;
+        res.sendStatus(200);
+    } catch (error) {
+        handleError(error, res);
+    }
+};
+export const requestDeleteMeetings = async (
+    req: Request<any, any, IZoomMeetingPatchRequestPayload[]>,
+    res: Response
+) => {
+    try {
+        const meetingsInfo = req.body;
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken();
+        const meetingRequests = meetingsInfo.map(
+            (meetingPatchRequestPayload) => {
+                // TODO: reuse requestDeleteMeeting if possible
+                const meetingRequest = getRequest({
+                    data: meetingPatchRequestPayload.data,
+                    method: 'DELETE',
+                    token,
+                    url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
+                });
+                return meetingRequest;
+            }
+        );
+        await Promise.all<any>(meetingRequests);
+        res.sendStatus(200);
+    } catch (error) {
+        handleError(error, res);
+    }
+};
 
 /**
  *
@@ -140,6 +189,20 @@ export const getMeetingRoutes = () => {
             req: Request<any, any, IZoomMeetingPatchRequestPayload[]>,
             res: Response
         ) => void requestPatchMeetings(req, res)
+    );
+    router.delete(
+        '/:meetingId',
+        (
+            req: Request<{ meetingId: string }, any, IZoomMeetingPatch>,
+            res: Response
+        ) => void requestDeleteMeeting(req, res)
+    );
+    router.delete(
+        '/',
+        (
+            req: Request<any, any, IZoomMeetingPatchRequestPayload[]>,
+            res: Response
+        ) => void requestDeleteMeetings(req, res)
     );
     return router;
 };
