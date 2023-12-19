@@ -5,18 +5,18 @@
             <q-toolbar-title class="text-center">Recordings</q-toolbar-title>
             <q-table
                 :columns="columns"
-                :rows="data"
                 :filter-method="(customFilter as any)"
                 :filter="filter"
+                :rows="data"
                 outlined
-                v-model:pagination="paginationOptions"
-                row-key="name"
+                row-key="id"
                 standout
                 title="Recordings"
+                v-model:pagination="paginationOptions"
             >
                 <template v-slot:top>
                     <div style="width: 100%" class="row">
-                        <div class="col-3">
+                        <div :class="!!currentUserId ? 'col-3' : 'col-5'">
                             <q-select
                                 :options="userIds"
                                 @update:model-value="onChangeUserId"
@@ -53,15 +53,11 @@
                 </template>
                 <template v-slot:body="props">
                     <q-tr :props="props">
-                        <q-td
-                            key="topic"
-                            :props="props"
-                            :title="props.row.topic"
-                            >{{ truncate(props.row.topic) }}</q-td
-                        >
+                        <q-td key="topic" :title="props.row.topic">{{
+                            truncate(props.row.topic)
+                        }}</q-td>
                         <q-td
                             key="recording_start"
-                            :props="props"
                             :title="getFormattedDate(props.row.recording_start)"
                             >{{
                                 truncate(
@@ -71,12 +67,60 @@
                                 )
                             }}</q-td
                         >
-                        <q-td key="play_url" :props="props">
-                            <a :href="props.row.play_url" target="_blank">
+                        <q-td key="play_url">
+                            <a
+                                href="javascript:void(0);"
+                                @click="
+                                    () => {
+                                        play = true;
+                                        playUrl = props.row.play_url;
+                                    }
+                                "
+                            >
                                 {{ truncate(props.row.play_url) }}
                             </a>
+                            <q-dialog v-model="play">
+                                <q-card style="min-width: 350px">
+                                    <q-card-section>
+                                        <div class="text-h6">
+                                            Copy or open this URL?
+                                        </div>
+                                    </q-card-section>
+                                    <q-card-section
+                                        class="q-pt-none bg-grey-4 scroll"
+                                    >
+                                        <q-input
+                                            borderless
+                                            readonly
+                                            type="textarea"
+                                            v-model="playUrl"
+                                        ></q-input>
+                                    </q-card-section>
+                                    <q-card-actions
+                                        class="text-primary justify-end"
+                                    >
+                                        <q-btn
+                                            @click="onCopy"
+                                            flat
+                                            label="Copy"
+                                            v-close-popup
+                                        ></q-btn>
+                                        <q-btn
+                                            @click="onOpen"
+                                            flat
+                                            label="Open"
+                                            v-close-popup
+                                        ></q-btn>
+                                        <q-btn
+                                            flat
+                                            label="Cancel"
+                                            v-close-popup
+                                        ></q-btn>
+                                    </q-card-actions>
+                                </q-card>
+                            </q-dialog>
                         </q-td>
-                        <q-td key="download_url" :props="props">
+                        <q-td key="download_url">
                             <a :href="props.row.download_url" target="_blank">
                                 {{ truncate(props.row.download_url) }}
                             </a>
@@ -116,6 +160,7 @@ import {
     truncate
 } from '../../../common/src';
 import {
+    copyInput,
     ELogLevel,
     getRecordings,
     getUserIds,
@@ -128,9 +173,9 @@ interface IPaginationOptions {
 }
 
 const $q = useQuasar();
-const paginationOptions: IPaginationOptions = {
+const paginationOptions = ref<IPaginationOptions>({
     rowsPerPage: 10
-};
+});
 const columns: any = [
     {
         align: 'left',
@@ -171,6 +216,8 @@ const data = ref<IZoomMeetingRecordingsResponseItem[]>([]);
 const errorOccurred = ref(false);
 const search = ref('');
 const userIds = ref<string[]>([]);
+const play = ref(false);
+const playUrl = ref('');
 
 onBeforeMount(() => {
     userIds.value = store.userIds;
@@ -272,6 +319,20 @@ const onRefresh = () => {
 };
 const onSearch = () => {
     store.setSearch(search.value);
+};
+const onCopy = () => {
+    if (playUrl.value) {
+        const message = 'URL copied to the clipboard!';
+        copyInput(playUrl.value, message).then(() => {
+            playUrl.value = '';
+        });
+    }
+};
+const onOpen = () => {
+    if (playUrl.value) {
+        const redirectWindow = window.open(playUrl.value, '_blank');
+        redirectWindow.location;
+    }
 };
 const showErrorMessage = () => {
     if (errorOccurred.value) {
