@@ -3,6 +3,9 @@ export { ELogLevel, toast } from './messageUtils';
 export { MAXIMUM_DIGIT, MINIMUM_DIGIT } from './numberUtils';
 export {
     // IMeetingFilters,
+    createMeeting,
+    deleteMeeting,
+    deleteMeetings,
     getMeeting,
     getMeetings,
     getRecordings,

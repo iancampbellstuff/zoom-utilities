@@ -5,18 +5,22 @@
             <q-toolbar-title class="text-center">Meetings</q-toolbar-title>
             <q-table
                 :columns="columns"
-                :rows="data"
                 :filter-method="(customFilter as any)"
                 :filter="filter"
+                :rows="data"
+                :selected-rows-label="getSelectedString"
+                @update:pagination="onPagination"
                 outlined
-                v-model:pagination="paginationOptions"
-                row-key="name"
+                row-key="id"
+                selection="multiple"
                 standout
                 title="Meetings"
+                v-model:pagination="paginationOptions"
+                v-model:selected="selectedRows"
             >
                 <template v-slot:top>
-                    <div style="width: 100%" class="row">
-                        <div class="col-3">
+                    <div style="width: 100%" class="row justify-between">
+                        <div class="col">
                             <q-select
                                 :options="userIds"
                                 @update:model-value="onChangeUserId"
@@ -35,12 +39,204 @@
                             no-caps
                             wait-for-ripple
                         />
+                        <q-btn
+                            @click="copy = true"
+                            color="secondary"
+                            :disable="
+                                !currentUserId || selectedRows.length !== 1
+                            "
+                            flat
+                            icon="file_copy"
+                            label="Copy"
+                            no-caps
+                            wait-for-ripple
+                        />
+                        <q-dialog v-model="copy" @show="setCopyInput">
+                            <q-card style="min-width: 350px">
+                                <q-card-section>
+                                    <div class="text-h6">
+                                        Copy {{ !copyToggle ? 'text' : 'HTML' }}
+                                    </div>
+                                </q-card-section>
+                                <q-card-section
+                                    class="q-pt-none bg-grey-4 scroll"
+                                >
+                                    <q-input
+                                        borderless
+                                        readonly
+                                        type="textarea"
+                                        v-model="copyTextarea"
+                                    ></q-input>
+                                </q-card-section>
+                                <q-card-actions
+                                    class="text-primary justify-around"
+                                >
+                                    <div>
+                                        <span>text</span>
+                                        <q-toggle
+                                            @update:model-value="setCopyInput"
+                                            v-model="copyToggle"
+                                        />
+                                        <span>HTML</span>
+                                    </div>
+                                    <div>
+                                        <q-btn
+                                            @click="onCopyInput"
+                                            flat
+                                            label="Copy"
+                                            v-close-popup
+                                        ></q-btn>
+                                        <q-btn
+                                            flat
+                                            label="Cancel"
+                                            v-close-popup
+                                        ></q-btn>
+                                    </div>
+                                </q-card-actions>
+                            </q-card>
+                        </q-dialog>
+                        <q-btn
+                            @click="update = true"
+                            color="secondary"
+                            :disable="!currentUserId || !selectedRows.length"
+                            flat
+                            icon="update"
+                            label="Update"
+                            no-caps
+                            wait-for-ripple
+                        />
+                        <q-dialog v-model="update">
+                            <q-card style="min-width: 350px">
+                                <q-card-section>
+                                    <div class="text-h6">
+                                        Update passcode for
+                                        {{ selectedRows.length }} row(s):
+                                    </div>
+                                </q-card-section>
+                                <q-card-section class="q-pt-none">
+                                    <q-input
+                                        autofocus
+                                        color="primary"
+                                        label="Passcode:"
+                                        v-model="updatePasscode"
+                                    ></q-input>
+                                </q-card-section>
+                                <q-card-actions
+                                    class="text-primary justify-end"
+                                >
+                                    <q-btn
+                                        @click="onUpdate"
+                                        flat
+                                        label="Update"
+                                        v-close-popup
+                                    ></q-btn>
+                                    <q-btn
+                                        flat
+                                        label="Cancel"
+                                        v-close-popup
+                                    ></q-btn>
+                                </q-card-actions>
+                            </q-card>
+                        </q-dialog>
+                        <q-btn
+                            @click="del = true"
+                            color="secondary"
+                            :disable="!currentUserId || !selectedRows.length"
+                            flat
+                            icon="delete"
+                            label="Delete"
+                            no-caps
+                            wait-for-ripple
+                        />
+                        <q-dialog v-model="del">
+                            <q-card style="min-width: 350px">
+                                <q-card-section>
+                                    <div class="text-h6">
+                                        Are you sure you want to delete
+                                        {{ selectedRows.length }} row(s)?
+                                    </div>
+                                </q-card-section>
+                                <q-card-actions
+                                    class="text-primary justify-end"
+                                >
+                                    <q-btn
+                                        @click="onDelete"
+                                        flat
+                                        label="Delete"
+                                        v-close-popup
+                                    ></q-btn>
+                                    <q-btn
+                                        flat
+                                        label="Cancel"
+                                        v-close-popup
+                                    ></q-btn>
+                                </q-card-actions>
+                            </q-card>
+                        </q-dialog>
+                        <q-btn
+                            @click="create = true"
+                            color="secondary"
+                            :disable="!currentUserId || !!selectedRows.length"
+                            flat
+                            icon="create"
+                            label="New"
+                            no-caps
+                            wait-for-ripple
+                        />
+                        <q-dialog v-model="create">
+                            <q-card style="min-width: 350px">
+                                <q-card-section>
+                                    <div class="text-h6">
+                                        Create a new meeting:
+                                    </div>
+                                </q-card-section>
+                                <q-card-section class="q-pt-none">
+                                    <q-input
+                                        autofocus
+                                        color="primary"
+                                        label="Meeting Name:"
+                                        v-model="createMeetingName"
+                                    ></q-input>
+                                </q-card-section>
+                                <q-card-section class="q-pt-none">
+                                    <q-input
+                                        color="primary"
+                                        label="Passcode (optional):"
+                                        maxlength="10"
+                                        v-model="createPasscode"
+                                    ></q-input>
+                                </q-card-section>
+                                <q-card-section class="q-pt-none">
+                                    <span class="text-h7"
+                                        >Record to the cloud?</span
+                                    >
+                                    <q-checkbox v-model="recordToTheCloud" />
+                                </q-card-section>
+                                <q-card-actions
+                                    class="text-primary justify-end"
+                                >
+                                    <q-btn
+                                        @click="onCreate"
+                                        flat
+                                        label="Create"
+                                        v-close-popup
+                                    ></q-btn>
+                                    <q-btn
+                                        flat
+                                        label="Cancel"
+                                        v-close-popup
+                                    ></q-btn>
+                                </q-card-actions>
+                            </q-card>
+                        </q-dialog>
                     </div>
                     <div style="width: 100%" class="row">
                         <div class="col-12">
                             <q-input
+                                autofocus
                                 color="primary"
                                 debounce="100"
+                                label="Search:"
                                 v-model="search"
                                 @keyup="onSearch"
                             >
@@ -53,46 +249,58 @@
                 </template>
                 <template v-slot:body="props">
                     <q-tr :props="props">
-                        <q-td key="topic" :props="props">
-                            {{ props.row.topic }}
-                            <q-popup-edit
-                                buttons
-                                persistent
-                                @save="
-                                    (value: string, initialValue: string) =>
-                                        onSavePopup(value, initialValue, props)
-                                "
-                                v-slot="scope"
-                                v-model="props.row.topic"
-                            >
-                                <q-input
-                                    autofocus
-                                    counter
-                                    dense
-                                    v-model="scope.value"
-                                />
-                            </q-popup-edit>
+                        <q-td>
+                            <q-checkbox v-model="props.selected" />
                         </q-td>
-                        <q-td key="id" :props="props">{{ props.row.id }}</q-td>
-                        <q-td key="password" :props="props">
-                            {{ props.row.password }}
-                            <q-popup-edit
-                                buttons
-                                persistent
-                                @save="
+                        <q-td
+                            v-for="col in props.cols"
+                            :key="col.name"
+                            :props="props"
+                            row-key="id"
+                        >
+                            <span v-if="col.name === 'topic'">
+                                {{ props.row.topic }}
+                                <q-popup-edit
+                                    buttons
+                                    persistent
+                                    @save="
                                     (value: string, initialValue: string) =>
                                         onSavePopup(value, initialValue, props)
                                 "
-                                v-slot="scope"
-                                v-model="props.row.password"
-                            >
-                                <q-input
-                                    autofocus
-                                    counter
-                                    dense
-                                    v-model="scope.value"
-                                />
-                            </q-popup-edit>
+                                    v-slot="scope"
+                                    v-model="props.row.topic"
+                                >
+                                    <q-input
+                                        autofocus
+                                        counter
+                                        dense
+                                        v-model="scope.value"
+                                    />
+                                </q-popup-edit>
+                            </span>
+                            <span v-else-if="col.name === 'id'">
+                                {{ props.row.id }}
+                            </span>
+                            <span v-else-if="col.name === 'password'">
+                                {{ props.row.password }}
+                                <q-popup-edit
+                                    buttons
+                                    persistent
+                                    @save="
+                                    (value: string, initialValue: string) =>
+                                        onSavePopup(value, initialValue, props)
+                                "
+                                    v-slot="scope"
+                                    v-model="props.row.password"
+                                >
+                                    <q-input
+                                        autofocus
+                                        counter
+                                        dense
+                                        v-model="scope.value"
+                                    />
+                                </q-popup-edit>
+                            </span>
                         </q-td>
                     </q-tr>
                 </template>
@@ -123,14 +331,22 @@
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
 import { useMeetingsStore } from '../stores';
-import { IZoomMeeting, mapToPatchRequestPayload } from '../../../common/src';
 import {
+    IZoomMeeting,
+    mapToPatchRequestPayload,
+    mapToPostRequestPayload
+} from '../../../common/src';
+import {
+    copyInput,
+    createMeeting,
+    deleteMeetings,
     ELogLevel,
     getMeetings,
     getUserIds,
     setCurrentUserId,
     toast,
-    updateMeeting
+    updateMeeting,
+    updateMeetings
 } from '../utils';
 
 interface IPaginationOptions {
@@ -143,9 +359,9 @@ interface IZoomMeetingRowProps {
 }
 
 const $q = useQuasar();
-const paginationOptions: IPaginationOptions = {
+const paginationOptions = ref<IPaginationOptions>({
     rowsPerPage: 10
-};
+});
 const columns: any = [
     {
         align: 'left',
@@ -175,9 +391,20 @@ const columns: any = [
 const store = useMeetingsStore();
 const currentUserId = ref('');
 const data = ref<IZoomMeeting[]>([]);
+const selectedRows = ref<IZoomMeeting[]>([]);
 const errorOccurred = ref(false);
 const search = ref('');
 const userIds = ref<string[]>([]);
+const copy = ref(false);
+const update = ref(false);
+const del = ref(false);
+const create = ref(false);
+const copyToggle = ref(true);
+const copyTextarea = ref('');
+const updatePasscode = ref('');
+const createMeetingName = ref('');
+const createPasscode = ref('');
+const recordToTheCloud = ref(false);
 
 onBeforeMount(() => {
     userIds.value = store.userIds;
@@ -248,7 +475,6 @@ const onChangeUserId = (currentUserId: string) => {
         .then(() => {
             store.setCurrentUserId(currentUserId);
             return getMeetings({
-                hasPassword: true,
                 isNotExpired: true
             });
         })
@@ -267,9 +493,9 @@ const onChangeUserId = (currentUserId: string) => {
 const onRefresh = () => {
     if (currentUserId.value) {
         errorOccurred.value = false;
+        selectedRows.value = [];
         $q.loading.show();
         getMeetings({
-            hasPassword: true,
             isNotExpired: true
         })
             .then((meetings) => {
@@ -293,12 +519,11 @@ const onSavePopup = (
     const { row } = rowProps;
     const patchRequestPayload = mapToPatchRequestPayload(row);
     patchRequestPayload.data.password = value;
-    console.log(patchRequestPayload);
     errorOccurred.value = false;
     $q.loading.show();
     updateMeeting(patchRequestPayload)
         .then(() => {
-            toast('Data saved successfully.');
+            toast('Meeting updated successfully.');
         })
         .catch((error) => {
             errorOccurred.value = true;
@@ -311,9 +536,176 @@ const onSavePopup = (
 const onSearch = () => {
     store.setSearch(search.value);
 };
+const getSelectedString = () => {
+    const { length } = selectedRows.value;
+    let selectedString = '';
+    if (length > 0) {
+        selectedString = `${length} record(s) selected of ${data.value.length}`;
+    }
+    return selectedString;
+};
 const showErrorMessage = () => {
     if (errorOccurred.value) {
         toast('An error occurred!', ELogLevel.ERROR);
     }
+};
+const setCopyInput = (value: boolean = copyToggle.value) => {
+    const selectedRow = selectedRows.value?.[0];
+    if (selectedRow) {
+        const {
+            host_email: hostEmail,
+            id: meetingId,
+            password: passcode
+        } = selectedRow;
+        let copyValue = '';
+        if (!value) {
+            // text
+            copyValue = `
+${hostEmail} is inviting you to a scheduled Zoom meeting.
+
+https://us02web.zoom.us/j/${meetingId}
+
+Meeting ID: ${meetingId}
+`;
+            if (passcode) {
+                copyValue = `${copyValue}
+Passcode: ${passcode}
+`;
+            }
+        } else {
+            // HTML
+            copyValue = `<br />
+<p>${hostEmail} is inviting you to a scheduled Zoom meeting.</p>
+<br />
+<p>
+    <a href="https://us02web.zoom.us/j/${meetingId}" target="_blank">
+        https://us02web.zoom.us/j/${meetingId}
+    </a>
+</p>
+<br />
+<p>Meeting ID: ${meetingId}</p>`;
+            if (passcode) {
+                copyValue = `${copyValue}
+<p>Passcode: ${passcode}</p>`;
+            }
+            copyValue = `${copyValue}
+<br />`;
+        }
+        copyTextarea.value = copyValue;
+    }
+};
+const onCopyInput = () => {
+    if (copyTextarea.value) {
+        const message = `${
+            !copyToggle.value ? 'Text' : 'HTML'
+        } copied to the clipboard!`;
+        copyInput(copyTextarea.value, message).then(() => {
+            copyTextarea.value = '';
+            selectedRows.value = [];
+        });
+    }
+};
+const onUpdate = () => {
+    updatePasscode.value = updatePasscode.value?.trim();
+    if (updatePasscode.value) {
+        const patchRequestPayloads = (selectedRows.value as IZoomMeeting[]).map(
+            (selectedRow: IZoomMeeting) => {
+                const patchRequestPayload =
+                    mapToPatchRequestPayload(selectedRow);
+                patchRequestPayload.data.password = updatePasscode.value;
+                return patchRequestPayload;
+            }
+        );
+        errorOccurred.value = false;
+        $q.loading.show();
+        updateMeetings(patchRequestPayloads)
+            .then(() => {
+                const meetingsRequest = getMeetings({
+                    isNotExpired: true
+                });
+                return meetingsRequest;
+            })
+            .then((meetings) => {
+                data.value = meetings;
+                store.setMeetings(meetings);
+                updatePasscode.value = '';
+                selectedRows.value = [];
+                toast('Meeting(s) updated successfully.');
+            })
+            .catch((error) => {
+                errorOccurred.value = true;
+                showErrorMessage();
+            })
+            .finally(() => {
+                $q.loading.hide();
+            });
+    }
+};
+const onDelete = () => {
+    const deleteRequestPayloads = (selectedRows.value as IZoomMeeting[]).map(
+        (selectedRow: IZoomMeeting) => {
+            const deleteRequestPayload = mapToPatchRequestPayload(selectedRow);
+            return deleteRequestPayload;
+        }
+    );
+    errorOccurred.value = false;
+    $q.loading.show();
+    deleteMeetings(deleteRequestPayloads)
+        .then(() => {
+            const meetingsRequest = getMeetings({
+                isNotExpired: true
+            });
+            return meetingsRequest;
+        })
+        .then((meetings) => {
+            data.value = meetings;
+            store.setMeetings(meetings);
+            selectedRows.value = [];
+            toast('Meeting(s) deleted successfully.');
+        })
+        .catch((error) => {
+            errorOccurred.value = true;
+            showErrorMessage();
+        })
+        .finally(() => {
+            $q.loading.hide();
+        });
+};
+const onCreate = () => {
+    createMeetingName.value = createMeetingName.value?.trim();
+    createPasscode.value = createPasscode.value?.trim() || '';
+    if (createMeetingName.value) {
+        const postRequestPayload = mapToPostRequestPayload({
+            topic: createMeetingName.value,
+            password: createPasscode.value,
+            recordToTheCloud: recordToTheCloud.value,
+            userId: currentUserId.value
+        });
+        createMeeting(postRequestPayload)
+            .then(() => {
+                const meetingsRequest = getMeetings({
+                    isNotExpired: true
+                });
+                return meetingsRequest;
+            })
+            .then((meetings) => {
+                data.value = meetings;
+                store.setMeetings(meetings);
+                createMeetingName.value = '';
+                createPasscode.value = '';
+                recordToTheCloud.value = false;
+                toast('Meeting created successfully.');
+            })
+            .catch((error) => {
+                errorOccurred.value = true;
+                showErrorMessage();
+            })
+            .finally(() => {
+                $q.loading.hide();
+            });
+    }
+};
+const onPagination = () => {
+    selectedRows.value = [];
 };
 </script>
