@@ -103,18 +103,17 @@ export class AccountHelper {
     public async requestToken(
         userId: string = this.currentUserId
     ): Promise<string | null> {
-        const tokenMapValue = this.getTokenMapValue(userId);
+        let tokenMapValue = this.getTokenMapValue(userId);
         if (tokenMapValue) {
             const { expirationDate, token } = tokenMapValue;
-            if (expirationDate && isExpired(expirationDate)) {
-                // reset token map
-                this.tokenMap = await this.requestTokenMap();
-                // get new token
-                const newToken = await this.requestToken(userId);
-                return newToken;
+            if (!isExpired(expirationDate)) {
+                return token;
             }
-            return token;
         }
-        return null;
+        // reset token map
+        this.tokenMap = await this.requestTokenMap();
+        // get new token
+        tokenMapValue = this.getTokenMapValue(userId);
+        return tokenMapValue ? tokenMapValue.token : null;
     }
 }
