@@ -4,6 +4,7 @@ import {
     getRequest,
     IZoomMeeting,
     IZoomMeetingPatchRequestPayload,
+    IZoomMeetingPostRequestPayload,
     IZoomMeetingRecordingsResponseItem
 } from '../../../common/src';
 // utils
@@ -42,6 +43,16 @@ export const getMeetings = async (meetingFilters: IMeetingFilters = {}) => {
     }
     return meetings;
 };
+export const createMeeting = async (
+    meetingPostRequestPayload: IZoomMeetingPostRequestPayload
+) => {
+    const response = await getRequest({
+        data: meetingPostRequestPayload.data,
+        method: 'POST',
+        url: getUrl(`users/${meetingPostRequestPayload.userId}/meetings`)
+    });
+    return response;
+};
 export const updateMeeting = async (
     meetingPatchRequestPayload: IZoomMeetingPatchRequestPayload
 ) => {
@@ -58,6 +69,26 @@ export const updateMeetings = async (
     const response = await getRequest({
         data: meetingPatchRequestPayloads,
         method: 'PATCH',
+        url: getUrl('meetings')
+    });
+    return response;
+};
+export const deleteMeeting = async (
+    meetingPatchRequestPayload: IZoomMeetingPatchRequestPayload
+) => {
+    const response = await getRequest({
+        data: meetingPatchRequestPayload.data,
+        method: 'DELETE',
+        url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
+    });
+    return response;
+};
+export const deleteMeetings = async (
+    meetingPatchRequestPayloads: IZoomMeetingPatchRequestPayload[]
+) => {
+    const response = await getRequest({
+        data: meetingPatchRequestPayloads,
+        method: 'DELETE',
         url: getUrl('meetings')
     });
     return response;
