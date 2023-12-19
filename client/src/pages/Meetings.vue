@@ -279,7 +279,7 @@
                                 </q-popup-edit>
                             </span>
                             <span v-else-if="col.name === 'id'">
-                                {{ props.row.id }}
+                                {{ getFormattedMeetingId(props.row.id) }}
                             </span>
                             <span v-else-if="col.name === 'password'">
                                 {{ props.row.password }}
@@ -348,6 +348,7 @@ import {
     updateMeeting,
     updateMeetings
 } from '../utils';
+import { getFormattedMeetingId } from '../../../common/src/utils';
 
 interface IPaginationOptions {
     rowsPerPage: number;
@@ -557,6 +558,7 @@ const setCopyInput = (value: boolean = copyToggle.value) => {
             id: meetingId,
             password: passcode
         } = selectedRow;
+        const formattedMeetingId = getFormattedMeetingId(meetingId);
         let copyValue = '';
         if (!value) {
             // text
@@ -565,7 +567,7 @@ ${hostEmail} is inviting you to a scheduled Zoom meeting.
 
 https://us02web.zoom.us/j/${meetingId}
 
-Meeting ID: ${meetingId}
+Meeting ID: ${formattedMeetingId}
 `;
             if (passcode) {
                 copyValue = `${copyValue}
@@ -583,7 +585,7 @@ Passcode: ${passcode}
     </a>
 </p>
 <br />
-<p>Meeting ID: ${meetingId}</p>`;
+<p>Meeting ID: ${formattedMeetingId}</p>`;
             if (passcode) {
                 copyValue = `${copyValue}
 <p>Passcode: ${passcode}</p>`;
