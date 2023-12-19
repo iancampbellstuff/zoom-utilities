@@ -99,7 +99,6 @@ export const mapToPatchRequestPayload = (
     };
     return patchRequestPayload;
 };
-
 export const mapToPostRequestPayload = (
     meetingPostRequestData: IZoomMeetingPostRequestData
 ): IZoomMeetingPostRequestPayload => {
@@ -123,4 +122,15 @@ export const mapToPostRequestPayload = (
         postRequestPayload.data.auto_recording = 'cloud';
     }
     return postRequestPayload;
+};
+export const getFormattedMeetingId = (meetingId: string | number): string => {
+    meetingId = meetingId?.toString()?.trim();
+    if (!meetingId || meetingId.length !== 11) {
+        return null;
+    }
+    const formattedMeetingId = `${meetingId.substring(
+        0,
+        3
+    )} ${meetingId.substring(3, 7)} ${meetingId.substring(7)}`;
+    return formattedMeetingId;
 };
