@@ -118,9 +118,9 @@ export const mapToPostRequestPayload = (
     if (password) {
         postRequestPayload.data.password = password;
     }
-    if (recordToTheCloud) {
-        postRequestPayload.data.auto_recording = 'cloud';
-    }
+    postRequestPayload.data.auto_recording = recordToTheCloud
+        ? 'cloud'
+        : 'none';
     return postRequestPayload;
 };
 export const getFormattedMeetingId = (meetingId: string | number): string => {
