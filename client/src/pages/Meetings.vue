@@ -210,7 +210,9 @@
                                     <span class="text-h7"
                                         >Record to the cloud?</span
                                     >
-                                    <q-checkbox v-model="recordToTheCloud" />
+                                    <q-checkbox
+                                        v-model="createRecordToTheCloud"
+                                    />
                                 </q-card-section>
                                 <q-card-actions
                                     class="text-primary justify-end"
@@ -265,7 +267,7 @@
                                     persistent
                                     @save="
                                     (value: string, initialValue: string) =>
-                                        onSavePopup(value, initialValue, props)
+                                        onSaveMeetingName(value, initialValue, props)
                                 "
                                     v-slot="scope"
                                     v-model="props.row.topic"
@@ -288,7 +290,7 @@
                                     persistent
                                     @save="
                                     (value: string, initialValue: string) =>
-                                        onSavePopup(value, initialValue, props)
+                                        onSavePasscode(value, initialValue, props)
                                 "
                                     v-slot="scope"
                                     v-model="props.row.password"
@@ -300,6 +302,15 @@
                                         v-model="scope.value"
                                     />
                                 </q-popup-edit>
+                            </span>
+                            <span v-else-if="col.name === 'recordToTheCloud'">
+                                <q-checkbox
+                                    @update:model-value="(value: boolean) => onSaveRecordToTheCloud(value, props)"
+                                    :modelValue="
+                                        props.row.settings?.auto_recording ===
+                                        'cloud'
+                                    "
+                                />
                             </span>
                         </q-td>
                     </q-tr>
@@ -333,6 +344,8 @@ import { useQuasar } from 'quasar';
 import { useMeetingsStore } from '../stores';
 import {
     IZoomMeeting,
+    IZoomMeetingPatch,
+    IZoomMeetingPatchRequestPayload,
     mapToPatchRequestPayload,
     mapToPostRequestPayload
 } from '../../../common/src';
@@ -387,6 +400,12 @@ const columns: any = [
         label: 'Passcode',
         name: 'password',
         required: false
+    },
+    {
+        align: 'center',
+        label: 'Record to the Cloud?',
+        name: 'recordToTheCloud',
+        required: false
     }
 ];
 const store = useMeetingsStore();
@@ -405,7 +424,7 @@ const copyTextarea = ref('');
 const updatePasscode = ref('');
 const createMeetingName = ref('');
 const createPasscode = ref('');
-const recordToTheCloud = ref(false);
+const createRecordToTheCloud = ref(false);
 
 onBeforeMount(() => {
     userIds.value = store.userIds;
@@ -512,14 +531,7 @@ const onRefresh = () => {
             });
     }
 };
-const onSavePopup = (
-    value: string,
-    initialValue: string,
-    rowProps: IZoomMeetingRowProps
-) => {
-    const { row } = rowProps;
-    const patchRequestPayload = mapToPatchRequestPayload(row);
-    patchRequestPayload.data.password = value;
+const onSave = (patchRequestPayload: IZoomMeetingPatchRequestPayload) => {
     errorOccurred.value = false;
     $q.loading.show();
     updateMeeting(patchRequestPayload)
@@ -533,6 +545,43 @@ const onSavePopup = (
         .finally(() => {
             $q.loading.hide();
         });
+};
+const onSaveMeetingName = (
+    meetingName: string,
+    initialValue: string,
+    rowProps: IZoomMeetingRowProps
+) => {
+    const { row } = rowProps;
+    const patchRequestPayload = mapToPatchRequestPayload(row);
+    patchRequestPayload.data.agenda = meetingName;
+    patchRequestPayload.data.topic = meetingName;
+    onSave(patchRequestPayload);
+};
+const onSavePasscode = (
+    passcode: string,
+    initialValue: string,
+    rowProps: IZoomMeetingRowProps
+) => {
+    const { row } = rowProps;
+    const patchRequestPayload = mapToPatchRequestPayload(row);
+    patchRequestPayload.data.password = passcode;
+    onSave(patchRequestPayload);
+};
+const onSaveRecordToTheCloud = (
+    recordingToTheCloud: boolean,
+    rowProps: IZoomMeetingRowProps
+) => {
+    const setAutoRecording = (data: IZoomMeeting | IZoomMeetingPatch) => {
+        data.settings = {
+            ...data.settings,
+            auto_recording: recordingToTheCloud ? 'cloud' : 'none'
+        };
+    };
+    const { row } = rowProps;
+    const patchRequestPayload = mapToPatchRequestPayload(row);
+    setAutoRecording(row);
+    setAutoRecording(patchRequestPayload.data);
+    onSave(patchRequestPayload);
 };
 const onSearch = () => {
     store.setSearch(search.value);
@@ -680,7 +729,7 @@ const onCreate = () => {
         const postRequestPayload = mapToPostRequestPayload({
             topic: createMeetingName.value,
             password: createPasscode.value,
-            recordToTheCloud: recordToTheCloud.value,
+            recordToTheCloud: createRecordToTheCloud.value,
             userId: currentUserId.value
         });
         createMeeting(postRequestPayload)
@@ -695,7 +744,7 @@ const onCreate = () => {
                 store.setMeetings(meetings);
                 createMeetingName.value = '';
                 createPasscode.value = '';
-                recordToTheCloud.value = false;
+                createRecordToTheCloud.value = false;
                 toast('Meeting created successfully.');
             })
             .catch((error) => {

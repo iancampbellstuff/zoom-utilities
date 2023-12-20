@@ -212,7 +212,7 @@ export interface IZoomMeetingPostRequestData {
 }
 export interface IZoomMeetingPost {
     agenda: string;
-    auto_recording?: 'cloud';
+    auto_recording: 'cloud' | 'none';
     default_password: false;
     password?: string;
     pre_schedule: false;
