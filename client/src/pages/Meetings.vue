@@ -51,7 +51,7 @@
                             no-caps
                             wait-for-ripple
                         />
-                        <q-dialog v-model="copy" @show="setCopyInput">
+                        <q-dialog v-model="copy">
                             <q-card style="min-width: 350px">
                                 <q-card-section>
                                     <div class="text-h6">

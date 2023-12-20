@@ -37,8 +37,6 @@ export const requestMeetings = async (
         const accountHelper = await AccountHelper.requestInstanceOf();
         const token = await accountHelper.requestToken();
         const userId = accountHelper.getCurrentUserId();
-        console.log(`\n\n requestMeetings -- token: ${token} \n\n`);
-        console.log(`\n\n requestMeetings -- userId: ${userId} \n\n`);
         const meetingsResponse = await getRequest<{ meetings: IZoomMeeting[] }>(
             {
                 method: 'GET',
