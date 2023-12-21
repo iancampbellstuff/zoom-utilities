@@ -25,6 +25,7 @@ export const requestMeeting = async (
             token,
             url: getUrl(`meetings/${meetingId}`)
         });
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         res.send(meeting.data);
     } catch (error) {
         handleError(error as AxiosError, res);
