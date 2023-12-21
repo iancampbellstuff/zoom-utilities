@@ -1,4 +1,5 @@
 // externals
+import { AxiosError } from 'axios';
 import { Request, Response } from 'express';
 import express from 'express';
 // types
@@ -68,15 +69,16 @@ export const requestRecordings = async (
                 b: IZoomMeetingRecordingFileData
             ) => {
                 return (
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     new Date(b.recording_start).getTime() -
+                    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
                     new Date(a.recording_start).getTime()
                 );
             }
         );
         res.send(recordingsData);
     } catch (error) {
-        const testError = new EvalError('what what what');
-        handleError(testError, res);
+        handleError(error as AxiosError, res);
     }
 };
 export const getRecordingRoutes = () => {
@@ -85,7 +87,7 @@ export const getRecordingRoutes = () => {
         '/',
         (
             req: Request<null, null, null, IRecordingsRequestQuery>,
-            res: Response
+            res: Response<TZoomMeetingRecordingsResponseData>
         ) => void requestRecordings(req, res)
     );
     return router;

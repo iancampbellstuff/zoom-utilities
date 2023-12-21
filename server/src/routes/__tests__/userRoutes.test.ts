@@ -9,14 +9,14 @@ import {
 } from '../userRoutes';
 
 // utils
-import { accountHelper } from '../../utils';
+import { AccountHelper } from '../../utils';
 
 // config
 import config from '../../../config.example.json';
 
 describe('userRoutes', () => {
     beforeAll(() => {
-        accountHelper['getAccountConfigs'] = () => config;
+        AccountHelper['getAccountConfigs'] = () => config;
     });
     describe('requestUserIds', () => {
         let request: Request;
@@ -32,9 +32,9 @@ describe('userRoutes', () => {
         afterEach(() => {
             jest.clearAllMocks();
         });
-        it('should request user IDs', () => {
-            requestUserIds(request, response);
-            expect(send).toHaveBeenCalledWith(accountHelper.getUserIds());
+        it('should request user IDs', async () => {
+            await requestUserIds(request, response);
+            expect(send).toHaveBeenCalledWith(AccountHelper.getUserIds());
         });
     });
     describe('requestSetCurrentUserId', () => {
@@ -43,8 +43,8 @@ describe('userRoutes', () => {
         let sendStatus: jest.SpyInstance;
         let response: Response;
         beforeEach(() => {
-            const userIds = accountHelper.getUserIds();
-            accountHelper.setCurrentUserId(userId);
+            const userIds = AccountHelper.getUserIds();
+            AccountHelper.setCurrentUserId(userId);
             userId = userIds[0];
             request = { params: { userId } } as any;
             sendStatus = jest.fn();
@@ -53,8 +53,8 @@ describe('userRoutes', () => {
         afterEach(() => {
             jest.clearAllMocks();
         });
-        it('should request to set the current user id', () => {
-            requestSetCurrentUserId(request, response);
+        it('should request to set the current user id', async () => {
+            await requestSetCurrentUserId(request, response);
             expect(sendStatus).toHaveBeenCalledWith(200);
         });
     });
