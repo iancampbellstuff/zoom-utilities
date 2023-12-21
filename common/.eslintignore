@@ -1,4 +1,8 @@
+.dockerignore
+.editorconfig
+.eslintignore
 .eslintrc.js
+.git
 coverage
 dist
 jest.config.js

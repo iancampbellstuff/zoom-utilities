@@ -14,16 +14,16 @@ describe('requestUtils', () => {
         });
         it('should combine URLs', () => {
             const result = combineURLs(baseURL, relativeURL);
-            expect(result).toEqual(`${baseURL}/${relativeURL}`);
+            expect(result).toBe(`${baseURL}/${relativeURL}`);
         });
         it('should combine URLs with extra slashes', () => {
             const result = combineURLs(`${baseURL}/`, `/${relativeURL}`);
-            expect(result).toEqual(`${baseURL}/${relativeURL}`);
+            expect(result).toBe(`${baseURL}/${relativeURL}`);
         });
         it('should handle a falsy base URL', () => {
             baseURL = undefined;
             const result = combineURLs(baseURL, relativeURL);
-            expect(result).toEqual('');
+            expect(result).toBe('');
         });
         it('should handle a falsy relative URL', () => {
             relativeURL = null;
@@ -34,7 +34,7 @@ describe('requestUtils', () => {
             baseURL = undefined;
             relativeURL = undefined;
             const result = combineURLs(baseURL, relativeURL);
-            expect(result).toEqual('');
+            expect(result).toBe('');
         });
     });
     describe('getRequestConfig', () => {

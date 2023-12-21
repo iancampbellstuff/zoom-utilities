@@ -108,6 +108,7 @@ export const mapToPostRequestPayload = (
         userId,
         data: {
             agenda: topic,
+            auto_recording: 'none',
             default_password: false,
             pre_schedule: false,
             schedule_for: userId,
@@ -118,9 +119,9 @@ export const mapToPostRequestPayload = (
     if (password) {
         postRequestPayload.data.password = password;
     }
-    postRequestPayload.data.auto_recording = recordToTheCloud
-        ? 'cloud'
-        : 'none';
+    if (recordToTheCloud) {
+        postRequestPayload.data.auto_recording = 'cloud';
+    }
     return postRequestPayload;
 };
 export const getFormattedMeetingId = (meetingId: string | number): string => {
