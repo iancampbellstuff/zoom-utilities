@@ -1,4 +1,8 @@
+.dockerignore
+.editorconfig
+.eslintignore
 .eslintrc.js
+/.git
 /.quasar
 /coverage
 /dist
