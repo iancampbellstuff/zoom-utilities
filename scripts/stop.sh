@@ -3,11 +3,10 @@
 # imports
 source ./shared.sh
 
-# Stop the running container and delete the service images.
+# Stop the running container and delete the image.
 stop() {
   docker-compose down
-  docker image rm "$APP_NAME-$CLIENT"
-  docker image rm "$APP_NAME-$SERVER"
+  docker image rm "$IMAGE_NAME"
 }
 
 # Example usage:

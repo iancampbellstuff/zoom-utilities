@@ -1,14 +1,11 @@
 version: '3.8'
 services:
-  server:
+  main:
     build:
       context: .
-      dockerfile: server/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - '4000:4000'
-  client:
-    build:
-      context: .
-      dockerfile: client/Dockerfile
-    ports:
       - '8080:8080'
+    volumes:
+      - .:/usr/src/app
