@@ -9,6 +9,5 @@ RUN npm run install-all
 
 FROM install AS start
 WORKDIR $ROOTDIR
-EXPOSE 4000
-EXPOSE 8080
+EXPOSE 4000 8080
 CMD ["npm", "start"]
