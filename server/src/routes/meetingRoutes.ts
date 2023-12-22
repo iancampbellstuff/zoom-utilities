@@ -1,4 +1,5 @@
 // externals
+import { AxiosError } from 'axios';
 import { Request, Response } from 'express';
 import express from 'express';
 // types
@@ -24,9 +25,10 @@ export const requestMeeting = async (
             token,
             url: getUrl(`meetings/${meetingId}`)
         });
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         res.send(meeting.data);
     } catch (error) {
-        handleError(error, res);
+        handleError(error as AxiosError, res);
     }
 };
 export const requestMeetings = async (
@@ -61,7 +63,7 @@ export const requestMeetings = async (
         }) as IZoomMeeting[];
         res.send(meetings);
     } catch (error) {
-        handleError(error, res);
+        handleError(error as AxiosError, res);
     }
 };
 export const requestPatchMeeting = async (
@@ -82,7 +84,7 @@ export const requestPatchMeeting = async (
         await meetingRequest;
         res.sendStatus(200);
     } catch (error) {
-        handleError(error, res);
+        handleError(error as AxiosError, res);
     }
 };
 export const requestPatchMeetings = async (
@@ -108,7 +110,7 @@ export const requestPatchMeetings = async (
         await Promise.all<any>(meetingRequests);
         res.sendStatus(200);
     } catch (error) {
-        handleError(error, res);
+        handleError(error as AxiosError, res);
     }
 };
 export const requestDeleteMeeting = async (
@@ -129,7 +131,7 @@ export const requestDeleteMeeting = async (
         await meetingRequest;
         res.sendStatus(200);
     } catch (error) {
-        handleError(error, res);
+        handleError(error as AxiosError, res);
     }
 };
 export const requestDeleteMeetings = async (
@@ -155,7 +157,7 @@ export const requestDeleteMeetings = async (
         await Promise.all<any>(meetingRequests);
         res.sendStatus(200);
     } catch (error) {
-        handleError(error, res);
+        handleError(error as AxiosError, res);
     }
 };
 
@@ -167,12 +169,13 @@ export const getMeetingRoutes = () => {
     const router = express.Router();
     router.get(
         '/:meetingId',
-        (req: Request<{ meetingId: string }>, res: Response) =>
+        (req: Request<{ meetingId: string }>, res: Response<IZoomMeeting>) =>
             void requestMeeting(req, res)
     );
     router.get(
         '/',
-        (req: Request, res: Response) => void requestMeetings(req, res)
+        (req: Request, res: Response<IZoomMeeting[]>) =>
+            void requestMeetings(req, res)
     );
     router.patch(
         '/:meetingId',

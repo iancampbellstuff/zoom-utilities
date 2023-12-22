@@ -1,4 +1,5 @@
 // externals
+import { AxiosError } from 'axios';
 import { Request, Response } from 'express';
 import express from 'express';
 // types
@@ -43,7 +44,7 @@ export const requestCreateMeeting = async (
         res.sendStatus(200);
     } catch (error) {
         console.error(error);
-        handleError(error, res);
+        handleError(error as AxiosError, res);
     }
 };
 export const getUserRoutes = () => {

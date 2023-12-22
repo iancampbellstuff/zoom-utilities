@@ -36,10 +36,14 @@ export const getMeetings = async (meetingFilters: IMeetingFilters = {}) => {
     const { hasPassword, isNotExpired } = meetingFilters;
     let meetings = response.data;
     if (hasPassword) {
-        meetings = meetings.filter((meeting) => !!meeting.password);
+        meetings = meetings.filter(
+            (meeting: IZoomMeeting) => !!meeting.password
+        );
     }
     if (isNotExpired) {
-        meetings = meetings.filter((meeting) => !isExpired(meeting.start_time));
+        meetings = meetings.filter(
+            (meeting: IZoomMeeting) => !isExpired(meeting.start_time)
+        );
     }
     return meetings;
 };
@@ -114,7 +118,8 @@ export const getRecordings = async () => {
         url: getUrl('recordings')
     });
     const recordings = response.data.filter(
-        (recording) => !!recording.recording_end
+        (recording: IZoomMeetingRecordingsResponseItem) =>
+            !!recording.recording_end
     );
     return recordings;
 };

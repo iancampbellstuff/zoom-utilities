@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "strictNullChecks": false,
     "typeRoots": ["@types", "node_modules/@types"],
-    "types": ["jest", "node"]
+    "types": ["@types/jest", "jest", "node"]
   },
   "extends": "@quasar/app-vite/tsconfig-preset",
   "include": ["src"]
