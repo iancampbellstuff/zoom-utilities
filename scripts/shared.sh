@@ -1,7 +1,7 @@
 #!/bin/bash
 
 APP_NAME='zoom-utilities'
-CLIENT='client'
-SERVER='server'
+SERVICE_NAME='main'
+IMAGE_NAME="$APP_NAME-$SERVICE_NAME"
 
 cd ..

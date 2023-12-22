@@ -18,19 +18,12 @@ This script starts the code with docker-compose.
 This script inspects the running Docker comtainer for this monorepo.
 
 ```sh
-# inspects the client service by default:
 ./inspect.sh
-
-# inspect the client service:
-./inspect.sh client
-
-# inspect the server service:
-./inspect.sh server
 ```
 
 ## Stop
 
-This script stops the running container and delete the service images.
+This script stops the running container and deletes the image.
 
 ```sh
 ./stop.sh
