@@ -1,118 +1,56 @@
+**/.DS_Store
+**/.thumbs.db
+**/.git
+**/.vscode
+**/*.md
+**/node_modules
+
+# Log files
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# Editor directories and files
+**/.idea
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+
+# Test and build directories
+**/coverage
+**/dist
+
 #########################################
 # main
 #########################################
-.DS_Store
-.thumbs.db
-.dockerignore
-.git
-.vscode
-Dockerfile
-docker-compose.yml
-*.code-workspace
-*.md
-node_modules
-scripts
-documentation
-
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
+**/*.code-workspace
+**/scripts
+**/documentation
 
 #########################################
 # client
 #########################################
-client/.DS_Store
-client/.thumbs.db
-client/.git
-client/.vscode
-client/*.md
-client/node_modules
-client/coverage
-
 # Quasar core related directories
-client/.quasar
-client/dist
+**/.quasar
+**/dist
 
 # Cordova related directories and files
-client/src-cordova/node_modules
-client/src-cordova/platforms
-client/src-cordova/plugins
-client/src-cordova/www
+**/src-cordova/node_modules
+**/src-cordova/platforms
+**/src-cordova/plugins
+**/src-cordova/www
 
 # Capacitor related directories and files
-client/src-capacitor/www
-client/src-capacitor/node_modules
+**/src-capacitor/www
+**/src-capacitor/node_modules
 
 # BEX related directories and files
-client/src-bex/www
-client/src-bex/js/core
+**/src-bex/www
+**/src-bex/js/core
 
 # Electron related directories and files
-client/src-electron
+**/src-electron
 
 # PWA related directories and files
-client/src-pwa
-
-# Log files
-client/npm-debug.log*
-client/yarn-debug.log*
-client/yarn-error.log*
-
-# Editor directories and files
-client/.idea
-client/*.suo
-client/*.ntvs*
-client/*.njsproj
-client/*.sln
-
-#########################################
-# common
-#########################################
-common/.DS_Store
-common/.thumbs.db
-common/*.md
-common/node_modules
-common/coverage
-common/dist
-
-# Log files
-common/npm-debug.log*
-common/yarn-debug.log*
-common/yarn-error.log*
-
-# Editor directories and files
-common/.idea
-common/*.suo
-common/*.ntvs*
-common/*.njsproj
-common/*.sln
-
-#########################################
-# server
-#########################################
-server/.DS_Store
-server/.thumbs.db
-server/*.md
-server/coverage
-server/dist
-server/node_modules
-
-# Log files
-server/npm-debug.log*
-server/yarn-debug.log*
-server/yarn-error.log*
-
-# Editor directories and files
-server/.idea
-server/*.suo
-server/*.ntvs*
-server/*.njsproj
-server/*.sln
+**/src-pwa
