@@ -5,7 +5,10 @@ export const getNowTimestamp = () => {
 };
 export const parseTimestamp = (timestamp?: Date | string) => {
     const parsed = Date.parse(
-        timestamp instanceof Date ? timestamp.toLocaleString() : timestamp
+        timestamp instanceof Date
+            ? timestamp.toLocaleString()
+            : // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+              (timestamp as string)
     );
     return Number.isNaN(parsed) ? -1 : parsed;
 };

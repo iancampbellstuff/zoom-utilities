@@ -66,7 +66,8 @@
                                         readonly
                                         type="textarea"
                                         v-model="copyTextarea"
-                                    ></q-input>
+                                        >{{ copyTextarea }}</q-input
+                                    >
                                 </q-card-section>
                                 <q-card-actions
                                     class="text-primary justify-around"
@@ -625,22 +626,22 @@ Passcode: ${passcode}
             }
         } else {
             // HTML
-            copyValue = `<br />
-<p>${hostEmail} is inviting you to a scheduled Zoom meeting.</p>
-<br />
-<p>
+            copyValue = `<div>&nbsp;</div>
+<div>${hostEmail} is inviting you to a scheduled Zoom meeting.</div>
+<div>&nbsp;</div>
+<div>
     <a href="https://us02web.zoom.us/j/${meetingId}" target="_blank">
         https://us02web.zoom.us/j/${meetingId}
     </a>
-</p>
-<br />
-<p>Meeting ID: ${formattedMeetingId}</p>`;
+</div>
+<div>&nbsp;</div>
+<div>Meeting ID: ${formattedMeetingId}</div>`;
             if (passcode) {
                 copyValue = `${copyValue}
-<p>Passcode: ${passcode}</p>`;
+<div>Passcode: ${passcode}</div>`;
             }
             copyValue = `${copyValue}
-<br />`;
+<div>&nbsp;</div>`;
         }
         copyTextarea.value = copyValue;
     }

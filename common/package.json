@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A common package for simplifying Zoom tasks.",
   "productName": "Zoom Utilities Common",
-  "author": "icampbell2",
+  "author": "iancampbellstuff",
   "license": "ISC",
   "private": true,
   "scripts": {

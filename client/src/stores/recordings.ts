@@ -27,7 +27,7 @@ export const useRecordingsStore = defineStore({
             this.currentUserId = '';
         },
         resetRecordings() {
-            delete this.recordings;
+            this.recordings = [];
         },
         resetSearch() {
             this.search = '';
