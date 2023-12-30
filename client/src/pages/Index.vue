@@ -11,8 +11,9 @@
 <style scoped lang="scss">
 #index {
     #logo {
-        width: 80%;
-        height: auto;
+        width: auto;
+        max-height: calc(100vh - 125px);
+        padding: 25px;
     }
 }
 </style>

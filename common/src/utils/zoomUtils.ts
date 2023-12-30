@@ -124,7 +124,7 @@ export const mapToPostRequestPayload = (
     }
     return postRequestPayload;
 };
-export const getFormattedMeetingId = (meetingId: string | number): string => {
+export const getFormattedMeetingId = (meetingId: string | number): string|null => {
     meetingId = meetingId?.toString()?.trim();
     if (!meetingId || meetingId.length !== 11) {
         return null;
