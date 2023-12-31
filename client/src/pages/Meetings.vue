@@ -51,7 +51,10 @@
                             no-caps
                             wait-for-ripple
                         />
-                        <q-dialog v-model="copy">
+                        <q-dialog
+                            v-model="copy"
+                            @before-show="() => setCopyInput(copyToggle)"
+                        >
                             <q-card style="min-width: 350px">
                                 <q-card-section>
                                     <div class="text-h6">
@@ -66,8 +69,7 @@
                                         readonly
                                         type="textarea"
                                         v-model="copyTextarea"
-                                        >{{ copyTextarea }}</q-input
-                                    >
+                                    ></q-input>
                                 </q-card-section>
                                 <q-card-actions
                                     class="text-primary justify-around"
@@ -600,7 +602,7 @@ const showErrorMessage = () => {
         toast('An error occurred!', ELogLevel.ERROR);
     }
 };
-const setCopyInput = (value: boolean = copyToggle.value) => {
+const setCopyInput = (copyHtml: boolean = copyToggle.value) => {
     const selectedRow = selectedRows.value?.[0];
     if (selectedRow) {
         const {
@@ -610,7 +612,7 @@ const setCopyInput = (value: boolean = copyToggle.value) => {
         } = selectedRow;
         const formattedMeetingId = getFormattedMeetingId(meetingId);
         let copyValue = '';
-        if (!value) {
+        if (!copyHtml) {
             // text
             copyValue = `
 ${hostEmail} is inviting you to a scheduled Zoom meeting.
