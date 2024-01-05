@@ -18,7 +18,7 @@
     "pretest": "npm run lint && npx --no-install rimraf coverage",
     "start-electron": "npx --no-install quasar dev -m electron -t mat",
     "start-pwa": "npx --no-install quasar dev -m pwa -t mat",
-    "start": "NODE_OPTIONS=--openssl-legacy-provider npm run start-pwa",
+    "start": "NODE_OPTIONS='--abort-on-uncaught-exception --openssl-legacy-provider --trace-deprecation --trace-warnings' npm run start-pwa",
     "serve": "npx --no-install quasar serve dist/ --port 8080",
     "test-only": "jest --coverage",
     "test-serve": "npx --no-install quasar serve coverage/lcov-report/ --port 8788",

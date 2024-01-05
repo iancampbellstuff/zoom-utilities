@@ -3,6 +3,7 @@
   "description": "An Express app for simplifying Zoom tasks.",
   "productName": "Zoom Utilities Server",
   "author": "iancampbellstuff",
+  "version": "1.0.0",
   "license": "ISC",
   "private": true,
   "scripts": {
@@ -12,7 +13,7 @@
     "lint": "eslint --ext .js,.ts ./",
     "prebuild": "npm run lint && npm run clean",
     "pretest": "npm run lint && npx --no-install rimraf coverage",
-    "start": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "start": "NODE_OPTIONS='--abort-on-uncaught-exception --trace-deprecation --trace-warnings' ts-node-dev --respawn --transpile-only src/index.ts",
     "test-only": "jest --colors",
     "test-watch": "npm test -- --watchAll",
     "test": "npm run test-only"

@@ -54,3 +54,8 @@
 
 # PWA related directories and files
 **/src-pwa
+
+#########################################
+# server
+#########################################
+**/config.json

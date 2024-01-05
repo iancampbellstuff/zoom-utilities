@@ -11,7 +11,7 @@ do
   esac
 done
 
-# Start a docker-compose orchestration.
+# Build and start the Docker container.
 #
 # Example usage:
 #
@@ -20,10 +20,10 @@ done
 # start 0
 start() {
   local TAIL=$1
-  docker-compose down
-  BUILDKIT_PROGRESS=plain DOCKER_BUILDKIT=1 docker-compose up -d --build
+  docker compose build --no-cache
+  docker compose up -d
   if [ $TAIL == 1 ]; then
-    docker-compose logs -f --tail=10
+    docker compose logs -f --tail=10
   fi
 }
 
