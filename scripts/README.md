@@ -2,9 +2,23 @@
 
 Helper scripts for the zoom-utilities monorepo.
 
-## Start
+## Setup
 
-This script starts the code with docker-compose.
+- [Install Docker Desktop](https://docs.docker.com/desktop/install/mac-install/ 'https://docs.docker.com/desktop/install/mac-install/')
+
+- Or, install Docker Desktop with [Homebrew](https://docs.brew.sh/Installation 'https://docs.brew.sh/Installation'):
+
+```sh
+brew install --cask docker
+```
+
+---
+
+## Commands
+
+### Start
+
+This script builds and starts the Docker container for this monorepo.
 
 ```sh
 ./start.sh
@@ -13,7 +27,7 @@ This script starts the code with docker-compose.
 ./start.sh -t
 ```
 
-## Inspect
+### Inspect
 
 This script inspects the running Docker comtainer for this monorepo.
 
@@ -21,7 +35,7 @@ This script inspects the running Docker comtainer for this monorepo.
 ./inspect.sh
 ```
 
-## Stop
+### Stop
 
 This script stops the running container and deletes the image.
 
