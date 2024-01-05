@@ -1,11 +1,11 @@
 // externals
 import axios from 'axios';
+import fs from 'fs';
 // types
 import { IAccountConfig, ITokenMap, ITokenResponse } from '../types';
 // utils
 import { isExpired } from '../../../common/src/utils';
-// config
-import config from '../../config.json';
+import { requestModule } from './moduleUtils';
 // constants
 import { OAUTH_ROUTE } from '../constants';
 
@@ -13,9 +13,15 @@ export class AccountHelper {
     private static INSTANCE: AccountHelper;
     private currentUserId: string;
     private tokenMap: ITokenMap;
+    private localConfig: IAccountConfig[];
     public static async requestInstanceOf(): Promise<AccountHelper> {
         if (!AccountHelper.INSTANCE) {
             AccountHelper.INSTANCE = new AccountHelper();
+            // set local config
+            const localConfig =
+                await AccountHelper.INSTANCE.requestAccountConfigs();
+            AccountHelper.INSTANCE.localConfig = localConfig;
+            // set token map
             const tokenMap = await AccountHelper.INSTANCE.requestTokenMap();
             AccountHelper.INSTANCE.tokenMap = tokenMap;
         }
@@ -23,8 +29,18 @@ export class AccountHelper {
     }
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     private constructor() {}
-    private getAccountConfigs(): IAccountConfig[] {
-        const accountConfigs = config || [];
+    private async requestAccountConfigs(): Promise<IAccountConfig[]> {
+        let accountConfigs = [];
+        try {
+            const config = fs
+                .readFileSync(process.env.CONFIG_FILE, 'utf8')
+                .trim();
+            accountConfigs = JSON.parse(config);
+        } catch (error) {
+            accountConfigs = await requestModule<IAccountConfig[]>(
+                '../../config.json'
+            );
+        }
         return accountConfigs;
     }
     private async generateToken(
@@ -59,9 +75,8 @@ export class AccountHelper {
         }
     }
     private async requestTokenMap(): Promise<ITokenMap> {
-        const accountConfigs = this.getAccountConfigs();
         const tokenMap: ITokenMap = {};
-        for (const accountConfig of accountConfigs) {
+        for (const accountConfig of this.localConfig) {
             const { token, expirationDate, error } = await this.generateToken(
                 accountConfig
             );
@@ -77,8 +92,7 @@ export class AccountHelper {
         return tokenMap;
     }
     public getUserIds(): string[] {
-        const accountConfigs = this.getAccountConfigs();
-        const userIds = accountConfigs.map(
+        const userIds = this.localConfig.map(
             (accountConfig: IAccountConfig) => accountConfig.userId
         );
         return userIds;
@@ -93,8 +107,7 @@ export class AccountHelper {
         }
     }
     private getTokenMapValue(userId: string) {
-        const accountConfigs = this.getAccountConfigs();
-        const accountConfig = accountConfigs.find(
+        const accountConfig = this.localConfig.find(
             (accountConfig) => accountConfig.userId === userId
         );
         const tokenMapValue = this.tokenMap[accountConfig?.userId];
