@@ -21,7 +21,7 @@ const init = () => {
     for (const [path, router] of Object.entries(routerMap)) {
         app.use(path, router);
     }
-    app.listen(APP_PORT, function() {
+    app.listen(APP_PORT, function () {
         console.log('Server started...');
     });
 };
