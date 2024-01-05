@@ -23,7 +23,6 @@ export const getRequestConfig = (requestOptions: IRequestOptions) => {
         data,
         headers: {
             'content-type': 'application/json',
-            'User-Agent': 'Zoom-api-Jwt-Request',
             Authorization: `Bearer ${token}`
         },
         method,
