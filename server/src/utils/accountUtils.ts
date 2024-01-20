@@ -11,7 +11,6 @@ import { OAUTH_ROUTE } from '../constants';
 
 export class AccountHelper {
     private static INSTANCE: AccountHelper;
-    private currentUserId: string;
     private tokenMap: ITokenMap;
     private localConfig: IAccountConfig[];
     public static async requestInstanceOf(): Promise<AccountHelper> {
@@ -46,6 +45,7 @@ export class AccountHelper {
     private async generateToken(
         accountConfig: IAccountConfig
     ): Promise<ITokenResponse> {
+        let response: ITokenResponse;
         try {
             const { accountId, clientId, clientSecret } = accountConfig;
             const request = await axios.post(
@@ -61,18 +61,19 @@ export class AccountHelper {
             );
             const { access_token: token, expires_in: expirationDate } =
                 await request.data;
-            return {
+            response = {
                 error: null,
                 expirationDate,
                 token
             };
         } catch (error) {
-            return {
+            response = {
                 error,
                 expirationDate: null,
                 token: null
             };
         }
+        return response;
     }
     private async requestTokenMap(): Promise<ITokenMap> {
         const tokenMap: ITokenMap = {};
@@ -97,15 +98,6 @@ export class AccountHelper {
         );
         return userIds;
     }
-    public getCurrentUserId() {
-        return this.currentUserId;
-    }
-    public setCurrentUserId(userId: string) {
-        const userIds = this.getUserIds();
-        if (userIds.includes(userId)) {
-            this.currentUserId = userId;
-        }
-    }
     private getTokenMapValue(userId: string) {
         const accountConfig = this.localConfig.find(
             (accountConfig) => accountConfig.userId === userId
@@ -113,13 +105,16 @@ export class AccountHelper {
         const tokenMapValue = this.tokenMap[accountConfig?.userId];
         return tokenMapValue;
     }
-    public async requestToken(
-        userId: string = this.currentUserId
-    ): Promise<string | null> {
+    public userIdIsValid(userId: string) {
+        const tokenMapValue = this.getTokenMapValue(userId);
+        const userIdIsValid = !!tokenMapValue;
+        return userIdIsValid;
+    }
+    public async requestToken(userId: string): Promise<string | null> {
         let tokenMapValue = this.getTokenMapValue(userId);
         if (tokenMapValue) {
             const { expirationDate, token } = tokenMapValue;
-            if (!isExpired(expirationDate)) {
+            if (!isExpired(expirationDate) && !!token?.trim()) {
                 return token;
             }
         }

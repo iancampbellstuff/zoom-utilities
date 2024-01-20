@@ -164,7 +164,6 @@ import {
     ELogLevel,
     getRecordings,
     getUserIds,
-    setCurrentUserId,
     toast
 } from '../utils';
 
@@ -279,14 +278,12 @@ const customFilter = (rows: any[], searchValue: string) => {
     );
     return filteredRows;
 };
-const onChangeUserId = (currentUserId: string) => {
+const onChangeUserId = (userId: string) => {
+    currentUserId.value = userId;
+    store.setCurrentUserId(userId);
     errorOccurred.value = false;
     $q.loading.show();
-    setCurrentUserId(currentUserId)
-        .then(() => {
-            store.setCurrentUserId(currentUserId);
-            return getRecordings();
-        })
+    getRecordings(userId)
         .then((recordings) => {
             data.value = recordings;
             store.setRecordings(recordings);
@@ -300,10 +297,11 @@ const onChangeUserId = (currentUserId: string) => {
         });
 };
 const onRefresh = () => {
-    if (currentUserId.value) {
+    const userId = currentUserId.value;
+    if (userId) {
         errorOccurred.value = false;
         $q.loading.show();
-        getRecordings()
+        getRecordings(userId)
             .then((recordings) => {
                 data.value = recordings;
                 store.setRecordings(recordings);
@@ -331,7 +329,7 @@ const onCopy = () => {
 const onOpen = () => {
     if (playUrl.value) {
         const redirectWindow = window.open(playUrl.value, '_blank');
-        redirectWindow.location;
+        redirectWindow?.location;
     }
 };
 const showErrorMessage = () => {
