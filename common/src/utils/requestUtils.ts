@@ -18,16 +18,22 @@ export const combineURLs = (baseURL: string, relativeURL: string) => {
     return url;
 };
 export const getRequestConfig = (requestOptions: IRequestOptions) => {
-    const { data, method, token, url } = requestOptions || {};
+    const { data, method, params, token, url } = requestOptions || {};
     const requestConfig: AxiosRequestConfig = {
         data,
         headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${token}`
+            'Content-Type': 'application/json'
         },
         method,
+        params,
         url
     };
+    if (!!token?.trim()) {
+        requestConfig.headers = {
+            ...requestConfig.headers,
+            Authorization: `Bearer ${token}`
+        };
+    }
     return requestConfig;
 };
 export const getRequest = <T = any>(requestOptions: IRequestOptions) => {
