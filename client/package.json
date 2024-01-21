@@ -63,9 +63,8 @@
     "last 10 iOS versions",
     "last 5 Opera versions"
   ],
-  "engines": {
-    "node": ">= 12.22.1",
-    "npm": ">= 6.13.4",
-    "yarn": ">= 1.21.1"
+  "engines" : {
+    "npm" : ">=9.x <10.x",
+    "node" : ">=18.x <20.x"
   }
 }
