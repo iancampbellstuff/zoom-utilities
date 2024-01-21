@@ -25,9 +25,6 @@ export const requestCreateMeeting = async (
         const meetingPost = req.body;
         const { userId } = req.params;
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meetingRequest = getRequest({
             data: meetingPost,

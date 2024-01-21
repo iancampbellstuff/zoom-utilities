@@ -29,9 +29,6 @@ export const requestRecordings = async (
         search = search?.trim();
         timestamp = getFormattedTimestamp(timestamp);
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meetingRecordings =
             await getRequest<IZoomMeetingRecordingResponse>({

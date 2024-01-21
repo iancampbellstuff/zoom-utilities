@@ -28,9 +28,6 @@ export const requestMeeting = async (
         const { meetingId } = req.params;
         const { userId } = req.query;
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meeting = await getRequest<IZoomMeeting>({
             method: 'GET',
@@ -50,9 +47,6 @@ export const requestMeetings = async (
     try {
         const { userId } = req.query;
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meetingsResponse = await getRequest<{ meetings: IZoomMeeting[] }>(
             {
@@ -95,9 +89,6 @@ export const requestPatchMeeting = async (
         const { meetingId } = req.params;
         const { userId } = req.query;
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meetingRequest = getRequest({
             data: meetingPatch,
@@ -124,9 +115,6 @@ export const requestPatchMeetings = async (
         const meetingsInfo = req.body;
         const { userId } = req.query;
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meetingRequests = meetingsInfo.map(
             (meetingPatchRequestPayload) => {
@@ -160,9 +148,6 @@ export const requestDeleteMeeting = async (
         const { meetingId } = req.params;
         const { userId } = req.query;
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meetingRequest = getRequest({
             data: meetingPatch,
@@ -189,9 +174,6 @@ export const requestDeleteMeetings = async (
         const meetingsInfo = req.body;
         const { userId } = req.query;
         const accountHelper = await AccountHelper.requestInstanceOf();
-        if (!accountHelper.userIdIsValid(userId)) {
-            res.sendStatus(400);
-        }
         const token = await accountHelper.requestToken(userId);
         const meetingRequests = meetingsInfo.map(
             (meetingPatchRequestPayload) => {
