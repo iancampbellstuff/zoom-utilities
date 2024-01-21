@@ -20,9 +20,12 @@ export const getUrl = (path: string) => {
     const url = combineURLs(LOCAL_BASE_ROUTE, path);
     return url;
 };
-export const getMeeting = async (meetingId: string) => {
+export const getMeeting = async (meetingId: string, userId: string) => {
     const response = await getRequest<IZoomMeeting>({
         method: 'GET',
+        params: {
+            userId
+        },
         url: getUrl(`meetings/${meetingId}`)
     });
     const meeting = response.data;
