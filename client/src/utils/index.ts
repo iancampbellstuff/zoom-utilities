@@ -10,7 +10,6 @@ export {
     getMeetings,
     getRecordings,
     getUserIds,
-    setCurrentUserId,
     updateMeeting,
     updateMeetings
 } from './serverUtils';

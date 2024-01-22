@@ -1,19 +1,18 @@
 // externals
-import axios from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import fs from 'fs';
 // types
-import { IAccountConfig, ITokenMap, ITokenResponse } from '../types';
+import { IAccountConfig, ITokenMap, ITokenResponse, IZoomTokenResponse } from '../types';
 // utils
-import { isExpired } from '../../../common/src/utils';
+import { getExpirationDate, isExpired } from '../../../common/src/utils';
 import { requestModule } from './moduleUtils';
 // constants
 import { OAUTH_ROUTE } from '../constants';
 
 export class AccountHelper {
     private static INSTANCE: AccountHelper;
-    private currentUserId: string;
-    private tokenMap: ITokenMap;
     private localConfig: IAccountConfig[];
+    private tokenMap: ITokenMap;
     public static async requestInstanceOf(): Promise<AccountHelper> {
         if (!AccountHelper.INSTANCE) {
             AccountHelper.INSTANCE = new AccountHelper();
@@ -22,8 +21,7 @@ export class AccountHelper {
                 await AccountHelper.INSTANCE.requestAccountConfigs();
             AccountHelper.INSTANCE.localConfig = localConfig;
             // set token map
-            const tokenMap = await AccountHelper.INSTANCE.requestTokenMap();
-            AccountHelper.INSTANCE.tokenMap = tokenMap;
+            AccountHelper.INSTANCE.tokenMap = {};
         }
         return AccountHelper.INSTANCE;
     }
@@ -43,68 +41,58 @@ export class AccountHelper {
         }
         return accountConfigs;
     }
-    private async generateToken(
-        accountConfig: IAccountConfig
-    ): Promise<ITokenResponse> {
+    private getAccountConfig(userId: string): IAccountConfig | null {
+        let accountConfig: IAccountConfig;
+        for (const config of this.localConfig) {
+            if (userId === config.userId) {
+                accountConfig = config;
+                break;
+            }
+        }
+        return accountConfig;
+    }
+    private async generateToken(userId: string): Promise<ITokenResponse> {
+        let response: ITokenResponse;
         try {
+            const accountConfig = this.getAccountConfig(userId);
+            if (!accountConfig) {
+                throw new EvalError(`Invalid user ID ${userId}!`);
+            }
             const { accountId, clientId, clientSecret } = accountConfig;
-            const request = await axios.post(
+            const request: AxiosResponse<IZoomTokenResponse, null> = await axios.post(
                 OAUTH_ROUTE,
                 `grant_type=account_credentials&account_id=${accountId}`,
                 {
                     headers: {
                         Authorization: `Basic ${Buffer.from(
                             `${clientId}:${clientSecret}`
-                        ).toString('base64')}`
+                        ).toString('base64')}`,
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }
             );
-            const { access_token: token, expires_in: expirationDate } =
-                await request.data;
-            return {
+            const { access_token: token, expires_in: expirationSeconds } =
+                request.data;
+            const expirationDate = getExpirationDate(expirationSeconds);
+            response = {
                 error: null,
                 expirationDate,
                 token
             };
         } catch (error) {
-            return {
+            response = {
                 error,
                 expirationDate: null,
                 token: null
             };
         }
-    }
-    private async requestTokenMap(): Promise<ITokenMap> {
-        const tokenMap: ITokenMap = {};
-        for (const accountConfig of this.localConfig) {
-            const { token, expirationDate, error } = await this.generateToken(
-                accountConfig
-            );
-            if (error) {
-                console.error(error);
-            } else {
-                tokenMap[accountConfig.userId] = {
-                    expirationDate,
-                    token
-                };
-            }
-        }
-        return tokenMap;
+        return response;
     }
     public getUserIds(): string[] {
         const userIds = this.localConfig.map(
             (accountConfig: IAccountConfig) => accountConfig.userId
         );
         return userIds;
-    }
-    public getCurrentUserId() {
-        return this.currentUserId;
-    }
-    public setCurrentUserId(userId: string) {
-        const userIds = this.getUserIds();
-        if (userIds.includes(userId)) {
-            this.currentUserId = userId;
-        }
     }
     private getTokenMapValue(userId: string) {
         const accountConfig = this.localConfig.find(
@@ -113,20 +101,22 @@ export class AccountHelper {
         const tokenMapValue = this.tokenMap[accountConfig?.userId];
         return tokenMapValue;
     }
-    public async requestToken(
-        userId: string = this.currentUserId
-    ): Promise<string | null> {
-        let tokenMapValue = this.getTokenMapValue(userId);
+    public async requestToken(userId: string): Promise<string | null> {
+        const tokenMapValue = this.getTokenMapValue(userId);
         if (tokenMapValue) {
             const { expirationDate, token } = tokenMapValue;
             if (!isExpired(expirationDate)) {
                 return token;
             }
         }
-        // reset token map
-        this.tokenMap = await this.requestTokenMap();
-        // get new token
-        tokenMapValue = this.getTokenMapValue(userId);
-        return tokenMapValue ? tokenMapValue.token : null;
+        const tokenResponse = await this.generateToken(userId);
+        const { error, ...ITokenMapValue } = tokenResponse;
+        if (error) {
+            console.error(error);
+            return null;
+        } else {
+            this.tokenMap[userId] = ITokenMapValue;
+            return ITokenMapValue.token;
+        }
     }
 }

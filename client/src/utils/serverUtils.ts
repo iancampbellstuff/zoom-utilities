@@ -20,17 +20,26 @@ export const getUrl = (path: string) => {
     const url = combineURLs(LOCAL_BASE_ROUTE, path);
     return url;
 };
-export const getMeeting = async (meetingId: string) => {
+export const getMeeting = async (meetingId: string, userId: string) => {
     const response = await getRequest<IZoomMeeting>({
         method: 'GET',
+        params: {
+            userId
+        },
         url: getUrl(`meetings/${meetingId}`)
     });
     const meeting = response.data;
     return meeting;
 };
-export const getMeetings = async (meetingFilters: IMeetingFilters = {}) => {
+export const getMeetings = async (
+    meetingFilters: IMeetingFilters = {},
+    userId: string
+) => {
     const response = await getRequest<IZoomMeeting[]>({
         method: 'GET',
+        params: {
+            userId
+        },
         url: getUrl('meetings')
     });
     const { hasPassword, isNotExpired } = meetingFilters;
@@ -48,31 +57,43 @@ export const getMeetings = async (meetingFilters: IMeetingFilters = {}) => {
     return meetings;
 };
 export const createMeeting = async (
-    meetingPostRequestPayload: IZoomMeetingPostRequestPayload
+    meetingPostRequestPayload: IZoomMeetingPostRequestPayload,
+    userId: string
 ) => {
     const response = await getRequest({
         data: meetingPostRequestPayload.data,
         method: 'POST',
+        params: {
+            userId
+        },
         url: getUrl(`users/${meetingPostRequestPayload.userId}/meetings`)
     });
     return response;
 };
 export const updateMeeting = async (
-    meetingPatchRequestPayload: IZoomMeetingPatchRequestPayload
+    meetingPatchRequestPayload: IZoomMeetingPatchRequestPayload,
+    userId: string
 ) => {
     const response = await getRequest({
         data: meetingPatchRequestPayload.data,
         method: 'PATCH',
+        params: {
+            userId
+        },
         url: getUrl(`meetings/${meetingPatchRequestPayload.id}`)
     });
     return response;
 };
 export const updateMeetings = async (
-    meetingPatchRequestPayloads: IZoomMeetingPatchRequestPayload[]
+    meetingPatchRequestPayloads: IZoomMeetingPatchRequestPayload[],
+    userId: string
 ) => {
     const response = await getRequest({
         data: meetingPatchRequestPayloads,
         method: 'PATCH',
+        params: {
+            userId
+        },
         url: getUrl('meetings')
     });
     return response;
@@ -88,11 +109,15 @@ export const deleteMeeting = async (
     return response;
 };
 export const deleteMeetings = async (
-    meetingPatchRequestPayloads: IZoomMeetingPatchRequestPayload[]
+    meetingPatchRequestPayloads: IZoomMeetingPatchRequestPayload[],
+    userId: string
 ) => {
     const response = await getRequest({
         data: meetingPatchRequestPayloads,
         method: 'DELETE',
+        params: {
+            userId
+        },
         url: getUrl('meetings')
     });
     return response;
@@ -105,16 +130,12 @@ export const getUserIds = async () => {
     const userIds = response.data;
     return userIds;
 };
-export const setCurrentUserId = async (userId: string) => {
-    const response = await getRequest({
-        method: 'POST',
-        url: getUrl(`users/${userId}`)
-    });
-    return response;
-};
-export const getRecordings = async () => {
+export const getRecordings = async (userId: string) => {
     const response = await getRequest<IZoomMeetingRecordingsResponseItem[]>({
         method: 'GET',
+        params: {
+            userId
+        },
         url: getUrl('recordings')
     });
     const recordings = response.data.filter(

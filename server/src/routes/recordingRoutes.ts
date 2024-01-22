@@ -16,6 +16,7 @@ import { AccountHelper, getUrl, handleError } from '../utils';
 interface IRecordingsRequestQuery {
     search?: string;
     timestamp?: string;
+    userId: string;
 }
 
 export const requestRecordings = async (
@@ -23,12 +24,12 @@ export const requestRecordings = async (
     res: Response<TZoomMeetingRecordingsResponseData>
 ) => {
     try {
+        const { userId } = req.query;
         let { search, timestamp } = req.query;
         search = search?.trim();
         timestamp = getFormattedTimestamp(timestamp);
         const accountHelper = await AccountHelper.requestInstanceOf();
-        const token = await accountHelper.requestToken();
-        const userId = accountHelper.getCurrentUserId();
+        const token = await accountHelper.requestToken(userId);
         const meetingRecordings =
             await getRequest<IZoomMeetingRecordingResponse>({
                 method: 'GET',

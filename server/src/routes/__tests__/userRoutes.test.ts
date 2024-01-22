@@ -2,11 +2,7 @@
 import { Request, Response } from 'express';
 
 // code under test
-import {
-    requestUserIds,
-    requestSetCurrentUserId,
-    getUserRoutes
-} from '../userRoutes';
+import { requestUserIds, getUserRoutes } from '../userRoutes';
 
 // utils
 import { AccountHelper } from '../../utils';
@@ -35,27 +31,6 @@ describe('userRoutes', () => {
         it('should request user IDs', async () => {
             await requestUserIds(request, response);
             expect(send).toHaveBeenCalledWith(AccountHelper.getUserIds());
-        });
-    });
-    describe('requestSetCurrentUserId', () => {
-        let userId: string;
-        let request: Request<{ userId: string }>;
-        let sendStatus: jest.SpyInstance;
-        let response: Response;
-        beforeEach(() => {
-            const userIds = AccountHelper.getUserIds();
-            AccountHelper.setCurrentUserId(userId);
-            userId = userIds[0];
-            request = { params: { userId } } as any;
-            sendStatus = jest.fn();
-            response = { sendStatus } as any;
-        });
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
-        it('should request to set the current user id', async () => {
-            await requestSetCurrentUserId(request, response);
-            expect(sendStatus).toHaveBeenCalledWith(200);
         });
     });
     describe('getUserRoutes', () => {

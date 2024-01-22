@@ -1,5 +1,8 @@
-export const getNowTimestamp = () => {
+export const getNowTimestamp = (expirationSeconds?: number) => {
     const now = new Date();
+    if (expirationSeconds && expirationSeconds > 0) {
+        now.setSeconds(now.getSeconds() + expirationSeconds);
+    }
     const timestamp = now.toISOString();
     return timestamp;
 };
@@ -21,6 +24,10 @@ export const isExpired = (timestamp?: Date | string) => {
         isExpired = parsed <= now;
     }
     return isExpired;
+};
+export const getExpirationDate = (expirationSeconds: number) => {
+    const expirationDate = getNowTimestamp(expirationSeconds);
+    return expirationDate;
 };
 export const getFormattedDate = (timestamp?: Date | string) => {
     const parsed = parseTimestamp(timestamp);
