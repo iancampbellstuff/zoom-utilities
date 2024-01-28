@@ -359,7 +359,6 @@ import {
     ELogLevel,
     getMeetings,
     getUserIds,
-    setCurrentUserId,
     toast,
     updateMeeting,
     updateMeetings
@@ -491,16 +490,17 @@ const customFilter = (rows: any[], searchValue: string) => {
     );
     return filteredRows;
 };
-const onChangeUserId = (currentUserId: string) => {
+const onChangeUserId = (userId: string) => {
+    currentUserId.value = userId;
+    store.setCurrentUserId(userId);
     errorOccurred.value = false;
     $q.loading.show();
-    setCurrentUserId(currentUserId)
-        .then(() => {
-            store.setCurrentUserId(currentUserId);
-            return getMeetings({
-                isNotExpired: true
-            });
-        })
+    getMeetings(
+        {
+            isNotExpired: true
+        },
+        userId
+    )
         .then((meetings) => {
             data.value = meetings;
             store.setMeetings(meetings);
@@ -514,13 +514,17 @@ const onChangeUserId = (currentUserId: string) => {
         });
 };
 const onRefresh = () => {
-    if (currentUserId.value) {
+    const userId = currentUserId.value;
+    if (userId) {
         errorOccurred.value = false;
         selectedRows.value = [];
         $q.loading.show();
-        getMeetings({
-            isNotExpired: true
-        })
+        getMeetings(
+            {
+                isNotExpired: true
+            },
+            userId
+        )
             .then((meetings) => {
                 data.value = meetings;
                 store.setMeetings(meetings);
@@ -535,9 +539,10 @@ const onRefresh = () => {
     }
 };
 const onSave = (patchRequestPayload: IZoomMeetingPatchRequestPayload) => {
+    const userId = currentUserId.value;
     errorOccurred.value = false;
     $q.loading.show();
-    updateMeeting(patchRequestPayload)
+    updateMeeting(patchRequestPayload, userId)
         .then(() => {
             toast('Meeting updated successfully.');
         })
@@ -662,6 +667,7 @@ const onCopyInput = () => {
 const onUpdate = () => {
     updatePasscode.value = updatePasscode.value?.trim();
     if (updatePasscode.value) {
+        const userId = currentUserId.value;
         const patchRequestPayloads = (selectedRows.value as IZoomMeeting[]).map(
             (selectedRow: IZoomMeeting) => {
                 const patchRequestPayload =
@@ -672,11 +678,14 @@ const onUpdate = () => {
         );
         errorOccurred.value = false;
         $q.loading.show();
-        updateMeetings(patchRequestPayloads)
+        updateMeetings(patchRequestPayloads, userId)
             .then(() => {
-                const meetingsRequest = getMeetings({
-                    isNotExpired: true
-                });
+                const meetingsRequest = getMeetings(
+                    {
+                        isNotExpired: true
+                    },
+                    userId
+                );
                 return meetingsRequest;
             })
             .then((meetings) => {
@@ -696,6 +705,7 @@ const onUpdate = () => {
     }
 };
 const onDelete = () => {
+    const userId = currentUserId.value;
     const deleteRequestPayloads = (selectedRows.value as IZoomMeeting[]).map(
         (selectedRow: IZoomMeeting) => {
             const deleteRequestPayload = mapToPatchRequestPayload(selectedRow);
@@ -704,11 +714,14 @@ const onDelete = () => {
     );
     errorOccurred.value = false;
     $q.loading.show();
-    deleteMeetings(deleteRequestPayloads)
+    deleteMeetings(deleteRequestPayloads, userId)
         .then(() => {
-            const meetingsRequest = getMeetings({
-                isNotExpired: true
-            });
+            const meetingsRequest = getMeetings(
+                {
+                    isNotExpired: true
+                },
+                userId
+            );
             return meetingsRequest;
         })
         .then((meetings) => {
@@ -726,6 +739,7 @@ const onDelete = () => {
         });
 };
 const onCreate = () => {
+    const userId = currentUserId.value;
     createMeetingName.value = createMeetingName.value?.trim();
     createPasscode.value = createPasscode.value?.trim() || '';
     if (createMeetingName.value) {
@@ -733,13 +747,16 @@ const onCreate = () => {
             topic: createMeetingName.value,
             password: createPasscode.value,
             recordToTheCloud: createRecordToTheCloud.value,
-            userId: currentUserId.value
+            userId
         });
-        createMeeting(postRequestPayload)
+        createMeeting(postRequestPayload, userId)
             .then(() => {
-                const meetingsRequest = getMeetings({
-                    isNotExpired: true
-                });
+                const meetingsRequest = getMeetings(
+                    {
+                        isNotExpired: true
+                    },
+                    userId
+                );
                 return meetingsRequest;
             })
             .then((meetings) => {
