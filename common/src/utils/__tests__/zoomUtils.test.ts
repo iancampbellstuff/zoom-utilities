@@ -55,7 +55,7 @@ describe('zoomUtils', () => {
                     request_permission_to_unmute_participants: false,
                     show_share_button: false,
                     use_pmi: false,
-                    waiting_room: true,
+                    waiting_room: false,
                     watermark: false
                 },
                 start_url: 'https://us02web.zoom.us/s/ABCDEF123456',

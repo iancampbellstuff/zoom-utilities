@@ -219,6 +219,7 @@ export interface IZoomMeetingPost {
     schedule_for: string;
     topic: string;
     type: 3;
+    waiting_room?: boolean;
 }
 export interface IZoomMeetingPostRequestPayload {
     userId: string;
