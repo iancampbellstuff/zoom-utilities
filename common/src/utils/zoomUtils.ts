@@ -118,13 +118,18 @@ export const mapToPostRequestPayload = (
     };
     if (password) {
         postRequestPayload.data.password = password;
+        postRequestPayload.data.waiting_room = false;
+    } else {
+        postRequestPayload.data.waiting_room = true;
     }
     if (recordToTheCloud) {
         postRequestPayload.data.auto_recording = 'cloud';
     }
     return postRequestPayload;
 };
-export const getFormattedMeetingId = (meetingId: string | number): string|null => {
+export const getFormattedMeetingId = (
+    meetingId: string | number
+): string | null => {
     meetingId = meetingId?.toString()?.trim();
     if (!meetingId || meetingId.length !== 11) {
         return null;
