@@ -5,7 +5,7 @@ ARG ROOTDIR=/usr/src/app
 FROM node:18.14.2 AS install
 WORKDIR $ROOTDIR
 COPY . .
-RUN npm install
+RUN npm ci
 CMD npm run install-all
 
 FROM install AS start
