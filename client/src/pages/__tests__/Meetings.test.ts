@@ -4,6 +4,23 @@ import Quasar from 'quasar';
 import { useMeetingsStore } from '../../stores';
 import Meetings from '../Meetings.vue';
 
+jest.mock('quasar', () => {
+    const Notify = {
+        create: jest.fn()
+    };
+    const useQuasar = () => ({
+        loading: {
+            hide: jest.fn(),
+            show: jest.fn()
+        }
+    });
+    return {
+        ...jest.requireActual('quasar'),
+        Notify,
+        useQuasar
+    };
+});
+
 describe('Meetings', () => {
     let store;
     let wrapper: VueWrapper<any>;

@@ -1,14 +1,20 @@
-import { mount, VueWrapper } from '@vue/test-utils';
+import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 import { createTestingPinia } from '@pinia/testing';
+import { mount, VueWrapper } from '@vue/test-utils';
 import Quasar from 'quasar';
 import MainLayout from '../MainLayout.vue';
+import routes from '../../../router/routes';
 
 describe('MainLayout', () => {
+    const router = createRouter({
+        history: createWebHistory(),
+        routes: routes[0].children as RouteRecordRaw[]
+    });
     let wrapper: VueWrapper<any>;
     beforeEach(() => {
         wrapper = mount(MainLayout, {
             global: {
-                plugins: [Quasar, createTestingPinia()]
+                plugins: [Quasar, createTestingPinia(), router]
             },
             stubs: [
                 'q-btn-group',
