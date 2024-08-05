@@ -1,6 +1,7 @@
 {
   "recommendations": [
     "esbenp.prettier-vscode",
+    "github.vscode-github-actions",
     "ms-azuretools.vscode-docker",
     "pflannery.vscode-versionlens",
     "william-voyek.vscode-nginx"

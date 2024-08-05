@@ -20,12 +20,16 @@ describe('routes', () => {
                     {
                         path: '/meetings',
                         component: expect.any(Function)
+                    },
+                    {
+                        path: '/recordings',
+                        component: expect.any(Function)
                     }
                 ]
             },
             {
-                path: '/:catchAll(.*)*',
-                component: expect.any(Function)
+                path: '/:pathMatch(.*)*',
+                redirect: '/'
             }
         ]);
     });

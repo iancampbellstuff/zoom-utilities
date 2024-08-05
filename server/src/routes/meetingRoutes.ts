@@ -12,11 +12,11 @@ import {
 import { getRequest } from '../../../common/src';
 import { AccountHelper, getUrl, handleError } from '../utils';
 
-interface IMeetingRequestParams {
+export interface IMeetingRequestParams {
     meetingId: string;
 }
 
-interface IMeetingRequestQuery {
+export interface IMeetingRequestQuery {
     userId: string;
 }
 

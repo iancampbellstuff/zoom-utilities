@@ -3,16 +3,16 @@ import { Request, Response } from 'express';
 
 // code under test
 import {
-    getRecordings,
-    getRecordingsSinceDate,
-    getRecordingRoutes
+    getRecordingRoutes,
+    IRecordingsRequestQuery,
+    requestRecordings
 } from '../recordingRoutes';
 
 // types
-import { TZoomMeetingRecordingsResponse } from '../../../../common/src';
+import { TZoomMeetingRecordingsResponseData } from '../../../../common/src';
 
 // utils
-import { accountHelper } from '../../utils';
+import { AccountHelper } from '../../utils';
 import * as requestUtils from '../../utils/requestUtils';
 
 // config
@@ -21,11 +21,15 @@ import config from '../../../config.example.json';
 describe('recordingRoutes', () => {
     let handleError: jest.SpyInstance;
     beforeAll(() => {
-        accountHelper['getAccountConfigs'] = () => config;
-        const userIds = accountHelper.getUserIds();
-        const userId = userIds[0];
-        accountHelper.setCurrentUserId(userId);
-        accountHelper['tokenMap'] = accountHelper['getTokenMap']();
+        Object.defineProperty(
+            AccountHelper.prototype,
+            'requestAccountConfigs',
+            {
+                value: () => Promise.resolve(config),
+                configurable: true,
+                writable: true
+            }
+        );
     });
     beforeEach(() => {
         handleError = jest.spyOn(requestUtils, 'handleError');
@@ -33,11 +37,11 @@ describe('recordingRoutes', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
-    describe('getRecordings', () => {
-        let request: Request;
+    describe('requestRecordings', () => {
+        let request: Request<null, null, null, IRecordingsRequestQuery>;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
-        let response: Response<TZoomMeetingRecordingsResponse>;
+        let response: Response<TZoomMeetingRecordingsResponseData>;
         beforeEach(() => {
             request = {} as any;
             send = jest.fn();
@@ -50,37 +54,7 @@ describe('recordingRoutes', () => {
             jest.clearAllMocks();
         });
         it('should handle a request error', async () => {
-            await getRecordings(request, response);
-            expect(handleError).toHaveBeenCalledWith(
-                expect.any(Error),
-                response
-            );
-        });
-    });
-    describe('getRecordingsSinceDate', () => {
-        let request: Request<{ year: string; month: string; day: string }>;
-        let send: jest.SpyInstance;
-        let status: jest.SpyInstance;
-        let response: Response<TZoomMeetingRecordingsResponse>;
-        beforeEach(() => {
-            request = {
-                params: {
-                    year: '2022',
-                    month: '08',
-                    day: '31'
-                }
-            } as any;
-            send = jest.fn();
-            status = jest.fn(() => ({ send }));
-            response = {
-                status
-            } as any;
-        });
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
-        it('should handle a request error', async () => {
-            await getRecordingsSinceDate(request, response);
+            await requestRecordings(request, response);
             expect(handleError).toHaveBeenCalledWith(
                 expect.any(Error),
                 response

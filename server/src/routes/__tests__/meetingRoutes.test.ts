@@ -3,24 +3,24 @@ import { Request, Response } from 'express';
 
 // code under test
 import {
-    getMeeting,
-    getMeetings,
-    patchMeeting,
-    patchMeetings,
+    IMeetingRequestParams,
+    IMeetingRequestQuery,
     getMeetingRoutes,
-    getMeetingRecordings
+    requestMeeting,
+    requestMeetings,
+    requestPatchMeeting,
+    requestPatchMeetings
 } from '../meetingRoutes';
 
 // types
 import {
     IZoomMeeting,
     IZoomMeetingPatch,
-    IZoomMeetingPatchRequestPayload,
-    TZoomMeetingRecordingsResponse
+    IZoomMeetingPatchRequestPayload
 } from '../../../../common/src';
 
 // utils
-import { accountHelper } from '../../utils';
+import { AccountHelper } from '../../utils';
 import * as requestUtils from '../../utils/requestUtils';
 
 // config
@@ -29,11 +29,15 @@ import config from '../../../config.example.json';
 describe('meetingRoutes', () => {
     let handleError: jest.SpyInstance;
     beforeAll(() => {
-        accountHelper['getAccountConfigs'] = () => config;
-        const userIds = accountHelper.getUserIds();
-        const userId = userIds[0];
-        accountHelper.setCurrentUserId(userId);
-        accountHelper['tokenMap'] = accountHelper['getTokenMap']();
+        Object.defineProperty(
+            AccountHelper.prototype,
+            'requestAccountConfigs',
+            {
+                value: () => Promise.resolve(config),
+                configurable: true,
+                writable: true
+            }
+        );
     });
     beforeEach(() => {
         handleError = jest.spyOn(requestUtils, 'handleError');
@@ -41,9 +45,14 @@ describe('meetingRoutes', () => {
     afterEach(() => {
         jest.clearAllMocks();
     });
-    describe('getMeeting', () => {
+    describe('requestMeeting', () => {
         let meetingId: string;
-        let request: Request<{ meetingId: string }>;
+        let request: Request<
+            IMeetingRequestParams,
+            null,
+            null,
+            IMeetingRequestQuery
+        >;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
         let response: Response<IZoomMeeting>;
@@ -60,41 +69,15 @@ describe('meetingRoutes', () => {
             jest.clearAllMocks();
         });
         it('should handle a request error', async () => {
-            await getMeeting(request, response);
+            await requestMeeting(request, response);
             expect(handleError).toHaveBeenCalledWith(
                 expect.any(Error),
                 response
             );
         });
     });
-    describe('getMeetingRecordings', () => {
-        let meetingId: string;
-        let request: Request<{ meetingId: string }>;
-        let send: jest.SpyInstance;
-        let status: jest.SpyInstance;
-        let response: Response<TZoomMeetingRecordingsResponse>;
-        beforeEach(() => {
-            meetingId = 'test meeting ID';
-            request = { params: { meetingId } } as any;
-            send = jest.fn();
-            status = jest.fn(() => ({ send }));
-            response = {
-                status
-            } as any;
-        });
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
-        it('should handle a request error', async () => {
-            await getMeetingRecordings(request, response);
-            expect(handleError).toHaveBeenCalledWith(
-                expect.any(Error),
-                response
-            );
-        });
-    });
-    describe('getMeetings', () => {
-        let request: Request;
+    describe('requestMeetings', () => {
+        let request: Request<null, null, null, IMeetingRequestQuery>;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
         let response: Response<IZoomMeeting[]>;
@@ -110,15 +93,20 @@ describe('meetingRoutes', () => {
             jest.clearAllMocks();
         });
         it('should handle a request error', async () => {
-            await getMeetings(request, response);
+            await requestMeetings(request, response);
             expect(handleError).toHaveBeenCalledWith(
                 expect.any(Error),
                 response
             );
         });
     });
-    describe('patchMeeting', () => {
-        let request: Request<{ meetingId: string }, any, IZoomMeetingPatch>;
+    describe('requestPatchMeeting', () => {
+        let request: Request<
+            IMeetingRequestParams,
+            null,
+            IZoomMeetingPatch,
+            IMeetingRequestQuery
+        >;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
         let response: Response;
@@ -134,15 +122,20 @@ describe('meetingRoutes', () => {
             jest.clearAllMocks();
         });
         it('should handle a request error', async () => {
-            await patchMeeting(request, response);
+            await requestPatchMeeting(request, response);
             expect(handleError).toHaveBeenCalledWith(
                 expect.any(Error),
                 response
             );
         });
     });
-    describe('patchMeetings', () => {
-        let request: Request<any, any, IZoomMeetingPatchRequestPayload[]>;
+    describe('requestPatchMeetings', () => {
+        let request: Request<
+            null,
+            null,
+            IZoomMeetingPatchRequestPayload[],
+            IMeetingRequestQuery
+        >;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
         let response: Response;
@@ -158,7 +151,7 @@ describe('meetingRoutes', () => {
             jest.clearAllMocks();
         });
         it('should handle a request error', async () => {
-            await patchMeetings(request, response);
+            await requestPatchMeetings(request, response);
             expect(handleError).toHaveBeenCalledWith(
                 expect.any(Error),
                 response

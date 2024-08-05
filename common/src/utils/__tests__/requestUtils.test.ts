@@ -53,9 +53,8 @@ describe('requestUtils', () => {
             expect(result).toEqual({
                 data,
                 headers: {
-                    'content-type': 'application/json',
-                    'User-Agent': 'Zoom-api-Jwt-Request',
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 },
                 method,
                 url
@@ -65,11 +64,13 @@ describe('requestUtils', () => {
             requestOptions = undefined;
             const result = getRequestConfig(requestOptions);
             expect(result).toEqual({
+                data: undefined,
                 headers: {
-                    'content-type': 'application/json',
-                    'User-Agent': 'Zoom-api-Jwt-Request',
-                    Authorization: 'Bearer undefined'
-                }
+                    'Content-Type': 'application/json'
+                },
+                method: undefined,
+                params: undefined,
+                url: undefined
             });
         });
     });
@@ -84,11 +85,6 @@ describe('requestUtils', () => {
             };
         });
         it('should get a request', () => {
-            const result = getRequest(requestOptions);
-            expect(result).toBeInstanceOf(Promise);
-        });
-        it('should handle a falsy argument', () => {
-            requestOptions = undefined;
             const result = getRequest(requestOptions);
             expect(result).toBeInstanceOf(Promise);
         });

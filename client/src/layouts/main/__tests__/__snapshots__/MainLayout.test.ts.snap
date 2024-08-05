@@ -25,7 +25,7 @@ exports[`MainLayout should render correctly 1`] = `
       <div
         class="q-toolbar__title ellipsis"
       >
-         Zoom Utilities 
+        Zoom Utilities
       </div>
       <div
         class="q-tabs row no-wrap items-center q-tabs--not-scrollable q-tabs--horizontal q-tabs__arrows--inside q-tabs--mobile-without-arrows"
@@ -42,9 +42,10 @@ exports[`MainLayout should render correctly 1`] = `
           class="q-tabs__content scroll--mobile row no-wrap items-center self-stretch hide-scrollbar relative-position q-tabs__content--align-justify"
         >
           
-          <div
+          <a
             aria-selected="true"
             class="q-tab relative-position self-stretch flex flex-center text-center q-tab--active q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            href="/home"
             role="tab"
             tabindex="0"
           >
@@ -71,10 +72,11 @@ exports[`MainLayout should render correctly 1`] = `
             <div
               class="q-tab__indicator absolute-bottom"
             />
-          </div>
-          <div
+          </a>
+          <a
             aria-selected="false"
             class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            href="/passcode"
             role="tab"
             tabindex="-1"
           >
@@ -101,10 +103,11 @@ exports[`MainLayout should render correctly 1`] = `
             <div
               class="q-tab__indicator absolute-bottom"
             />
-          </div>
-          <div
+          </a>
+          <a
             aria-selected="false"
             class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            href="/meetings"
             role="tab"
             tabindex="-1"
           >
@@ -131,7 +134,38 @@ exports[`MainLayout should render correctly 1`] = `
             <div
               class="q-tab__indicator absolute-bottom"
             />
-          </div>
+          </a>
+          <a
+            aria-selected="false"
+            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
+            href="/recordings"
+            role="tab"
+            tabindex="-1"
+          >
+            <div
+              class="q-focus-helper"
+              tabindex="-1"
+            />
+            <div
+              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
+            >
+              <i
+                aria-hidden="true"
+                class="q-icon notranslate material-icons q-tab__icon"
+                role="presentation"
+              >
+                videocam
+              </i>
+              <div
+                class="q-tab__label"
+              >
+                Recordings
+              </div>
+            </div>
+            <div
+              class="q-tab__indicator absolute-bottom"
+            />
+          </a>
           
           <div
             aria-selected="false"
@@ -195,7 +229,7 @@ exports[`MainLayout should render correctly 1`] = `
     class="q-page-container"
     style="padding-top: 50px; padding-bottom: 50px;"
   >
-    <router-view />
+    <!---->
   </div>
   <footer
     class="q-footer q-layout__section--marginal fixed-bottom"
