@@ -34,8 +34,8 @@
   "dependencies": {
     "axios": "0.27.2"
   },
-  "engines" : {
-    "npm" : ">=9.x <10.x",
-    "node" : ">=18.x <20.x"
+  "engines": {
+    "node": "20.x",
+    "npm": ">=10.x"
   }
 }
