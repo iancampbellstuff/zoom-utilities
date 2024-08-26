@@ -12,13 +12,23 @@ import config from '../../../config.example.json';
 
 describe('userRoutes', () => {
     beforeAll(() => {
-        AccountHelper['getAccountConfigs'] = () => config;
+        Object.defineProperty(
+            AccountHelper.prototype,
+            'requestAccountConfigs',
+            {
+                value: () => Promise.resolve(config),
+                configurable: true,
+                writable: true
+            }
+        );
     });
     describe('requestUserIds', () => {
+        let accountHelper: AccountHelper;
         let request: Request;
         let send: jest.SpyInstance;
         let response: Response;
-        beforeEach(() => {
+        beforeEach(async () => {
+            accountHelper = await AccountHelper.requestInstanceOf();
             request = {} as any;
             send = jest.fn();
             response = {
@@ -30,7 +40,7 @@ describe('userRoutes', () => {
         });
         it('should request user IDs', async () => {
             await requestUserIds(request, response);
-            expect(send).toHaveBeenCalledWith(AccountHelper.getUserIds());
+            expect(send).toHaveBeenCalledWith(accountHelper.getUserIds());
         });
     });
     describe('getUserRoutes', () => {

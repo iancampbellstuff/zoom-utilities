@@ -2,7 +2,7 @@
     <q-layout id="main-layout" view="lHh Lpr lFf">
         <q-header elevated>
             <q-toolbar>
-                <q-toolbar-title> Zoom Utilities </q-toolbar-title>
+                <q-toolbar-title>Zoom Utilities</q-toolbar-title>
                 <q-tabs v-model="tabName">
                     <q-route-tab
                         v-for="t in tabs"

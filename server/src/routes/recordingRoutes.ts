@@ -13,7 +13,7 @@ import {
 import { getFormattedTimestamp, getRequest } from '../../../common/src';
 import { AccountHelper, getUrl, handleError } from '../utils';
 
-interface IRecordingsRequestQuery {
+export interface IRecordingsRequestQuery {
     search?: string;
     timestamp?: string;
     userId: string;

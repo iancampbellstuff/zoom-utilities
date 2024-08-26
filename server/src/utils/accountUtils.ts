@@ -2,7 +2,13 @@
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs';
 // types
-import { IAccountConfig, ITokenMap, ITokenResponse, IZoomTokenResponse } from '../types';
+import {
+    IAccountConfig,
+    ITokenMap,
+    ITokenMapValue,
+    ITokenResponse,
+    IZoomTokenResponse
+} from '../types';
 // utils
 import { getExpirationDate, isExpired } from '../../../common/src/utils';
 import { requestModule } from './moduleUtils';
@@ -59,18 +65,19 @@ export class AccountHelper {
                 throw new EvalError(`Invalid user ID ${userId}!`);
             }
             const { accountId, clientId, clientSecret } = accountConfig;
-            const request: AxiosResponse<IZoomTokenResponse, null> = await axios.post(
-                OAUTH_ROUTE,
-                `grant_type=account_credentials&account_id=${accountId}`,
-                {
-                    headers: {
-                        Authorization: `Basic ${Buffer.from(
-                            `${clientId}:${clientSecret}`
-                        ).toString('base64')}`,
-                        'Content-Type': 'application/x-www-form-urlencoded'
+            const request: AxiosResponse<IZoomTokenResponse, null> =
+                await axios.post(
+                    OAUTH_ROUTE,
+                    `grant_type=account_credentials&account_id=${accountId}`,
+                    {
+                        headers: {
+                            Authorization: `Basic ${Buffer.from(
+                                `${clientId}:${clientSecret}`
+                            ).toString('base64')}`,
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        }
                     }
-                }
-            );
+                );
             const { access_token: token, expires_in: expirationSeconds } =
                 request.data;
             const expirationDate = getExpirationDate(expirationSeconds);
@@ -94,7 +101,7 @@ export class AccountHelper {
         );
         return userIds;
     }
-    private getTokenMapValue(userId: string) {
+    private getTokenMapValue(userId: string): ITokenMapValue {
         const accountConfig = this.localConfig.find(
             (accountConfig) => accountConfig.userId === userId
         );
