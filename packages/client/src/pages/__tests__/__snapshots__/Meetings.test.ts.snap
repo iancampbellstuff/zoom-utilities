@@ -1,3 +1,142 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Meetings should render correctly 1`] = `<!---->`;
+exports[`Meetings should render correctly 1`] = `
+<q-page
+  class="row items-start justify-evenly"
+  id="meetings"
+>
+  <q-form
+    class="q-gutter-lg"
+    id="form"
+  >
+    <q-toolbar-title
+      class="text-center"
+    >
+      Meetings
+    </q-toolbar-title>
+    <q-table
+      columns="[object Object],[object Object],[object Object],[object Object]"
+      filter=""
+      filter-method="function (rows, searchValue) {
+      /* istanbul ignore next */
+      cov_10h5eifb5i().f[11]++;
+      var filteredRows =
+      /* istanbul ignore next */
+      (cov_10h5eifb5i().s[62]++, rows.filter(function (row) {
+        /* istanbul ignore next */
+        cov_10h5eifb5i().f[12]++;
+        var resultFound =
+        /* istanbul ignore next */
+        (cov_10h5eifb5i().s[63]++, true);
+        /* istanbul ignore next */
+        cov_10h5eifb5i().s[64]++;
+        if (searchValue !== '') {
+          /* istanbul ignore next */
+          cov_10h5eifb5i().b[7][0]++;
+          var rowValues =
+          /* istanbul ignore next */
+          (cov_10h5eifb5i().s[65]++, Object.entries(row).reduce(function (values, _a) {
+            /* istanbul ignore next */
+            cov_10h5eifb5i().f[13]++;
+            var key =
+              /* istanbul ignore next */
+              (cov_10h5eifb5i().s[66]++, _a[0]),
+              value =
+              /* istanbul ignore next */
+              (cov_10h5eifb5i().s[67]++, _a[1]);
+            /* istanbul ignore next */
+            cov_10h5eifb5i().s[68]++;
+            switch (key) {
+              // case 'id':
+              // case 'password':
+              case 'topic':
+                /* istanbul ignore next */
+                cov_10h5eifb5i().b[8][0]++;
+                {
+                  /* istanbul ignore next */
+                  cov_10h5eifb5i().s[69]++;
+                  values.push(value.toString());
+                  /* istanbul ignore next */
+                  cov_10h5eifb5i().s[70]++;
+                  break;
+                }
+            }
+            /* istanbul ignore next */
+            cov_10h5eifb5i().s[71]++;
+            return values;
+          }, []));
+          /* istanbul ignore next */
+          cov_10h5eifb5i().s[72]++;
+          resultFound = false;
+          /* istanbul ignore next */
+          cov_10h5eifb5i().s[73]++;
+          for (var i =
+          /* istanbul ignore next */
+          (cov_10h5eifb5i().s[74]++, 0); i < rowValues.length; i++) {
+            var rowValue =
+            /* istanbul ignore next */
+            (cov_10h5eifb5i().s[75]++, rowValues[i]);
+            /* istanbul ignore next */
+            cov_10h5eifb5i().s[76]++;
+            if (rowValue.includes(searchValue)) {
+              /* istanbul ignore next */
+              cov_10h5eifb5i().b[9][0]++;
+              cov_10h5eifb5i().s[77]++;
+              resultFound = true;
+              /* istanbul ignore next */
+              cov_10h5eifb5i().s[78]++;
+              break;
+            } else
+            /* istanbul ignore next */
+            {
+              cov_10h5eifb5i().b[9][1]++;
+            }
+          }
+        } else
+        /* istanbul ignore next */
+        {
+          cov_10h5eifb5i().b[7][1]++;
+        }
+        cov_10h5eifb5i().s[79]++;
+        return resultFound;
+      }));
+      /* istanbul ignore next */
+      cov_10h5eifb5i().s[80]++;
+      return filteredRows;
+    }"
+      outlined=""
+      pagination="[object Object]"
+      row-key="id"
+      rows=""
+      selected=""
+      selected-rows-label="function () {
+      /* istanbul ignore next */
+      cov_10h5eifb5i().f[31]++;
+      var length =
+      /* istanbul ignore next */
+      (cov_10h5eifb5i().s[135]++, selectedRows.value.length);
+      var selectedString =
+      /* istanbul ignore next */
+      (cov_10h5eifb5i().s[136]++, '');
+      /* istanbul ignore next */
+      cov_10h5eifb5i().s[137]++;
+      if (length > 0) {
+        /* istanbul ignore next */
+        cov_10h5eifb5i().b[12][0]++;
+        cov_10h5eifb5i().s[138]++;
+        selectedString = "".concat(length, " record(s) selected of ").concat(data.value.length);
+      } else
+      /* istanbul ignore next */
+      {
+        cov_10h5eifb5i().b[12][1]++;
+      }
+      cov_10h5eifb5i().s[139]++;
+      return selectedString;
+    }"
+      selection="multiple"
+      standout=""
+      title="Meetings"
+    />
+  </q-form>
+</q-page>
+`;

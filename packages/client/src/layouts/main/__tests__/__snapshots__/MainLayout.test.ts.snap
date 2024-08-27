@@ -1,253 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`MainLayout should render correctly 1`] = `
-<div
-  class="q-layout q-layout--standard"
+<q-layout
   id="main-layout"
-  style="min-height: 768px;"
-  tabindex="-1"
+  view="lHh Lpr lFf"
 >
-  <!---->
-  <object
-    aria-hidden="true"
-    data="about:blank"
-    style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
-    tabindex="-1"
-    type="text/html"
-  />
-  <header
-    class="q-header q-layout__section--marginal fixed-top"
+  <q-header
+    elevated=""
   >
-    <div
-      class="q-toolbar row no-wrap items-center"
-      role="toolbar"
-    >
-      <div
-        class="q-toolbar__title ellipsis"
-      >
+    <q-toolbar>
+      <q-toolbar-title>
         Zoom Utilities
-      </div>
-      <div
-        class="q-tabs row no-wrap items-center q-tabs--not-scrollable q-tabs--horizontal q-tabs__arrows--inside q-tabs--mobile-without-arrows"
-        role="tablist"
+      </q-toolbar-title>
+      <q-tabs
+        modelvalue="home"
       >
-        <object
-          aria-hidden="true"
-          data="about:blank"
-          style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
-          tabindex="-1"
-          type="text/html"
+        
+        <q-route-tab
+          exact=""
+          icon="home"
+          label="Home"
+          name="home"
+          no-caps=""
+          to="/home"
         />
-        <div
-          class="q-tabs__content scroll--mobile row no-wrap items-center self-stretch hide-scrollbar relative-position q-tabs__content--align-justify"
-        >
-          
-          <a
-            aria-selected="true"
-            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--active q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
-            href="/home"
-            role="tab"
-            tabindex="0"
-          >
-            <div
-              class="q-focus-helper"
-              tabindex="-1"
-            />
-            <div
-              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
-            >
-              <i
-                aria-hidden="true"
-                class="q-icon notranslate material-icons q-tab__icon"
-                role="presentation"
-              >
-                home
-              </i>
-              <div
-                class="q-tab__label"
-              >
-                Home
-              </div>
-            </div>
-            <div
-              class="q-tab__indicator absolute-bottom"
-            />
-          </a>
-          <a
-            aria-selected="false"
-            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
-            href="/passcode"
-            role="tab"
-            tabindex="-1"
-          >
-            <div
-              class="q-focus-helper"
-              tabindex="-1"
-            />
-            <div
-              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
-            >
-              <i
-                aria-hidden="true"
-                class="q-icon notranslate material-icons q-tab__icon"
-                role="presentation"
-              >
-                lock
-              </i>
-              <div
-                class="q-tab__label"
-              >
-                Passcode
-              </div>
-            </div>
-            <div
-              class="q-tab__indicator absolute-bottom"
-            />
-          </a>
-          <a
-            aria-selected="false"
-            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
-            href="/meetings"
-            role="tab"
-            tabindex="-1"
-          >
-            <div
-              class="q-focus-helper"
-              tabindex="-1"
-            />
-            <div
-              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
-            >
-              <i
-                aria-hidden="true"
-                class="q-icon notranslate material-icons q-tab__icon"
-                role="presentation"
-              >
-                groups
-              </i>
-              <div
-                class="q-tab__label"
-              >
-                Meetings
-              </div>
-            </div>
-            <div
-              class="q-tab__indicator absolute-bottom"
-            />
-          </a>
-          <a
-            aria-selected="false"
-            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
-            href="/recordings"
-            role="tab"
-            tabindex="-1"
-          >
-            <div
-              class="q-focus-helper"
-              tabindex="-1"
-            />
-            <div
-              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
-            >
-              <i
-                aria-hidden="true"
-                class="q-icon notranslate material-icons q-tab__icon"
-                role="presentation"
-              >
-                videocam
-              </i>
-              <div
-                class="q-tab__label"
-              >
-                Recordings
-              </div>
-            </div>
-            <div
-              class="q-tab__indicator absolute-bottom"
-            />
-          </a>
-          
-          <div
-            aria-selected="false"
-            class="q-tab relative-position self-stretch flex flex-center text-center q-tab--inactive q-tab--full q-tab--no-caps q-focusable q-hoverable cursor-pointer"
-            role="tab"
-            tabindex="-1"
-          >
-            <div
-              class="q-focus-helper"
-              tabindex="-1"
-            />
-            <div
-              class="q-tab__content self-stretch flex-center relative-position q-anchor--skip non-selectable column"
-            >
-              <i
-                aria-hidden="true"
-                class="q-icon notranslate material-icons q-tab__icon"
-                role="presentation"
-              >
-                clear
-              </i>
-              <div
-                class="q-tab__label"
-              >
-                Clear All
-              </div>
-            </div>
-            <div
-              class="q-tab__indicator absolute-bottom"
-            />
-          </div>
-        </div>
-        <i
-          aria-hidden="true"
-          class="q-icon notranslate material-icons q-tabs__arrow q-tabs__arrow--left absolute q-tab__icon"
-          role="presentation"
-        >
-          chevron_left
-        </i>
-        <i
-          aria-hidden="true"
-          class="q-icon notranslate material-icons q-tabs__arrow q-tabs__arrow--right absolute q-tab__icon q-tabs__arrow--faded"
-          role="presentation"
-        >
-          chevron_right
-        </i>
-      </div>
-    </div>
-    <div
-      class="q-layout__shadow absolute-full overflow-hidden no-pointer-events"
-    />
-    <object
-      aria-hidden="true"
-      data="about:blank"
-      style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
-      tabindex="-1"
-      type="text/html"
-    />
-  </header>
-  <div
-    class="q-page-container"
-    style="padding-top: 50px; padding-bottom: 50px;"
-  >
-    <!---->
-  </div>
-  <footer
-    class="q-footer q-layout__section--marginal fixed-bottom"
+        <q-route-tab
+          exact=""
+          icon="lock"
+          label="Passcode"
+          name="passcode"
+          no-caps=""
+          to="/passcode"
+        />
+        <q-route-tab
+          exact=""
+          icon="groups"
+          label="Meetings"
+          name="meetings"
+          no-caps=""
+          to="/meetings"
+        />
+        <q-route-tab
+          exact=""
+          icon="videocam"
+          label="Recordings"
+          name="recordings"
+          no-caps=""
+          to="/recordings"
+        />
+        
+        <q-tab
+          icon="clear"
+          label="Clear All"
+          name="clearAll"
+          no-caps=""
+        />
+      </q-tabs>
+    </q-toolbar>
+  </q-header>
+  <q-page-container>
+    <q-page
+      class="row items-center justify-evenly"
+      id="index"
+    >
+      <img
+        alt="Zoom Utilities"
+        id="logo"
+        src=""
+      />
+    </q-page>
+  </q-page-container>
+  <q-footer
+    elevated=""
     id="footer"
   >
-    <object
-      aria-hidden="true"
-      data="about:blank"
-      style="display: block; position: absolute; top: 0px; left: 0px; right: 0px; bottom: 0px; height: 100%; width: 100%; overflow: hidden; pointer-events: none; z-index: -1;"
-      tabindex="-1"
-      type="text/html"
-    />
-    <div
-      class="q-toolbar row no-wrap items-center"
-      role="toolbar"
-    >
-      <div
-        class="q-toolbar__title ellipsis"
+    <q-toolbar>
+      <q-toolbar-title
         id="footer-text"
       >
         <a
@@ -256,11 +84,8 @@ exports[`MainLayout should render correctly 1`] = `
         >
           https://github.com/iancampbellstuff
         </a>
-      </div>
-    </div>
-    <div
-      class="q-layout__shadow absolute-full overflow-hidden no-pointer-events"
-    />
-  </footer>
-</div>
+      </q-toolbar-title>
+    </q-toolbar>
+  </q-footer>
+</q-layout>
 `;

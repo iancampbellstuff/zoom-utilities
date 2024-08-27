@@ -1,3 +1,85 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Passcode should render correctly 1`] = `<!---->`;
+exports[`Passcode should render correctly 1`] = `
+<q-page
+  class="row items-start justify-evenly"
+  id="passcode"
+>
+  <q-form
+    class="q-gutter-lg"
+    greedy=""
+    id="form"
+  >
+    <q-toolbar-title
+      class="text-center"
+    >
+      Generate a Passcode
+    </q-toolbar-title>
+    <q-input
+      dense=""
+      hint="(optional)"
+      label="Length"
+      max="16"
+      min="4"
+      outlined=""
+      standout=""
+      type="number"
+    />
+    <q-input
+      dense=""
+      hint="(optional)"
+      label="First Digit"
+      max="9"
+      min="1"
+      outlined=""
+      standout=""
+      type="number"
+    />
+    <q-btn-group
+      spread=""
+    >
+      <q-btn
+        color="primary"
+        label="Submit"
+        no-caps=""
+        type="submit"
+      />
+      <q-btn
+        class="q-ml-sm"
+        color="primary"
+        flat=""
+        label="Reset"
+        no-caps=""
+        type="reset"
+      />
+    </q-btn-group>
+    <q-btn-group
+      spread=""
+    >
+      <q-input
+        dense=""
+        filled=""
+        label="Passcode"
+        outlined=""
+        readonly=""
+        standout=""
+      />
+      <q-btn
+        color="secondary"
+        no-caps=""
+      >
+        <q-icon
+          name="file_copy"
+        />
+        <q-tooltip
+          transition-hide="jump-down"
+          transition-show="scale"
+        >
+          Copy passcode
+        </q-tooltip>
+         Copy 
+      </q-btn>
+    </q-btn-group>
+  </q-form>
+</q-page>
+`;
