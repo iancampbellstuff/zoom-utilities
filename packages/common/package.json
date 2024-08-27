@@ -13,7 +13,8 @@
     "lint": "npx --no-install eslint --ext .js,.ts ./",
     "prebuild": "npm run lint && npm run clean",
     "pretest": "npm run lint && npx --no-install rimraf coverage",
-    "test-only": "npx --no-install jest --colors",
+    "test-only": "npx --no-install jest --colors --coverage",
+    "test-open": "npm test && open coverage/index.html",
     "test-watch": "npm test -- --watchAll",
     "test": "npm run test-only"
   },

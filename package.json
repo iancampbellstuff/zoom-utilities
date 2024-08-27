@@ -15,14 +15,7 @@
   },
   "scripts": {
     "start": "npm start --workspace=@zoom-utilities/{client,server}",
-    "test": "npm test -ws"
-  },
-  "devDependencies": {
-    "husky": "^9.1.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm test"
-    }
+    "test": "npm test -ws",
+    "test-open": "npm run -ws test-open"
   }
 }

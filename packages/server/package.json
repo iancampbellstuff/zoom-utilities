@@ -14,7 +14,8 @@
     "prebuild": "npm run lint && npm run clean",
     "pretest": "npm run lint && npx --no-install rimraf coverage",
     "start": "NODE_OPTIONS='--abort-on-uncaught-exception --trace-deprecation --trace-warnings' npx --no-install ts-node-dev --respawn --transpile-only src/index.ts",
-    "test-only": "npx --no-install jest --colors",
+    "test-only": "npx --no-install jest --colors --coverage",
+    "test-open": "npm test && open coverage/index.html",
     "test-watch": "npm test -- --watchAll",
     "test": "npm run test-only"
   },
