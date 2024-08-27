@@ -18,6 +18,7 @@
 **/*.sln
 
 # Test and build directories
+**/build
 **/coverage
 **/dist
 
@@ -33,7 +34,6 @@
 #########################################
 # Quasar core related directories
 **/.quasar
-**/dist
 
 # Cordova related directories and files
 **/src-cordova/node_modules
@@ -59,3 +59,4 @@
 # server
 #########################################
 **/config.json
+**/config.example.json

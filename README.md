@@ -30,7 +30,7 @@ See the [client `README.md`](./client/README.md) and [server `README.md`](./serv
 Install dependencies
 
 ```bash
-npm run install-all
+npm ci
 ```
 
 </p>

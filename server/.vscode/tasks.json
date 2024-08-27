@@ -3,34 +3,40 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "npm",
-      "label": "start",
-      "group": "test",
-      "script": "start"
-    },
-    {
-      "type": "npm",
-      "label": "test",
-      "group": {
-        "kind": "test",
-        "isDefault": true
-      },
-      "script": "test"
-    },
-    {
-      "type": "npm",
-      "label": "lint",
-      "group": "test",
-      "script": "lint"
-    },
-    {
-      "type": "npm",
-      "label": "build",
       "group": {
         "kind": "build",
         "isDefault": true
       },
-      "script": "build"
+      "label": "build",
+      "script": "build",
+      "type": "npm"
+    },
+    {
+      "group": "test",
+      "label": "start",
+      "script": "start",
+      "type": "npm"
+    },
+    {
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "label": "test",
+      "script": "test",
+      "type": "npm"
+    },
+    {
+      "group": "test",
+      "label": "lint",
+      "script": "lint",
+      "type": "npm"
+    },
+    {
+      "group": "test",
+      "label": "test-open",
+      "script": "test-open",
+      "type": "npm"
     }
   ]
 }

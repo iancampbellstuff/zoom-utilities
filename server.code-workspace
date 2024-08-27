@@ -1,11 +1,13 @@
 {
   "folders": [
     {
+      "name": "server",
       "path": "server"
     }
   ],
   "settings": {
     "jest.rootPath": ".",
+    "telemetry.enableTelemetry": false,
     "typescript.tsdk": "node_modules/typescript/lib",
     "workbench.iconTheme": "vs-minimal"
   }

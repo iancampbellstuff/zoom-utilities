@@ -4,6 +4,7 @@
 .eslintrc.js
 /.git
 /.quasar
+/build
 /coverage
 /dist
 /node_modules
@@ -14,3 +15,5 @@
 /src-pwa
 /src-ssr
 babel.config.js
+jest.config.mjs
+jest.setup.js

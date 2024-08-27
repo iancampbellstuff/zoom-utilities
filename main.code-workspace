@@ -1,13 +1,16 @@
 {
   "folders": [
     {
+      "name": "client",
       "path": "client"
     },
     {
-      "path": "server"
+      "name": "common",
+      "path": "common"
     },
     {
-      "path": "common"
+      "name": "server",
+      "path": "server"
     },
     {
       "name": "main",
