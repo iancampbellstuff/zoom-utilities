@@ -1,21 +1,29 @@
 {
-  // See https://code.visualstudio.com/docs/editor/tasks#vscode for reference.
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "npm",
+      "group": {
+        "isDefault": true,
+        "kind": "test"
+      },
       "label": "start",
-      "group": "test",
-      "script": "start"
+      "script": "start",
+      "type": "npm"
     },
     {
-      "type": "npm",
-      "label": "test",
       "group": {
-        "kind": "test",
-        "isDefault": true
+        "isDefault": true,
+        "kind": "test"
       },
-      "script": "test"
+      "label": "test",
+      "script": "test",
+      "type": "npm"
+    },
+    {
+      "group": "test",
+      "label": "test-open",
+      "script": "test-open",
+      "type": "npm"
     }
   ]
 }

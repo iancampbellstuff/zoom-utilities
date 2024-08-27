@@ -5,7 +5,22 @@
       "name": "Run npm start",
       "preLaunchTask": "start",
       "request": "launch",
-      "skipFiles": ["${workspaceRoot}/node_modules/**", "<node_internals>/**"],
+      "type": "chrome",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
+      "console": "integratedTerminal",
+      "name": "Run npm test",
+      "preLaunchTask": "test",
+      "request": "launch",
+      "type": "node"
+    },
+    {
+      "console": "integratedTerminal",
+      "name": "Run npm test-open",
+      "preLaunchTask": "test-open",
+      "request": "launch",
       "type": "node"
     }
   ]
