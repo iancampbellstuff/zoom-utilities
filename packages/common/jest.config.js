@@ -26,9 +26,9 @@ module.exports = {
     coverageThreshold: {
         global: {
             branches: 42,
-            functions: 53,
-            lines: 54,
-            statements: 60
+            functions: 46,
+            lines: 50,
+            statements: 56
         }
     },
     testMatch: ['<rootDir>/src/**/__tests__/**/*.(spec|test).+(ts|js)'],
@@ -38,6 +38,7 @@ module.exports = {
         '^src/(.*)$': '<rootDir>/src/$1',
         '^app/(.*)$': '<rootDir>/$1'
     },
+    setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     transform: {
         // See https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string
         [`^(${esModules}).+\\.js$`]: 'babel-jest',

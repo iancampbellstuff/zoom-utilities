@@ -6,4 +6,5 @@
 coverage
 dist
 jest.config.js
+jest.setup.js
 node_modules
