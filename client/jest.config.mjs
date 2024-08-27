@@ -7,9 +7,7 @@ export default {
   collectCoverageFrom: [
     '<rootDir>/src/**/*.vue',
     '<rootDir>/src/**/*.js',
-    '<rootDir>/src/**/*.ts',
-    '<rootDir>/src/**/*.jsx',
-    '<rootDir>/src/**/*.tsx'
+    '<rootDir>/src/**/*.ts'
   ],
   coverageDirectory: '<rootDir>/coverage',
   coveragePathIgnorePatterns: ['index.ts', '.d.ts$'],
@@ -21,7 +19,7 @@ export default {
       statements: 38
     }
   },
-  moduleFileExtensions: ['vue', 'js', 'jsx', 'ts', 'tsx'],
+  moduleFileExtensions: ['js', 'json', 'ts', 'vue'],
   modulePaths: ['<rootDir>/src/'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   testMatch: ['<rootDir>/src/**/*.(spec|test).+(ts|js)?(x)'],

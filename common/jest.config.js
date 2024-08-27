@@ -42,7 +42,7 @@ module.exports = {
     transform: {
         // See https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string
         [`^(${esModules}).+\\.js$`]: 'babel-jest',
-        '^.+\\.(ts|js)$': 'ts-jest'
+        '^.+\\.(ts)$': 'ts-jest'
     },
     transformIgnorePatterns: [`node_modules/(?!(${esModules}))`]
 };
