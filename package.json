@@ -15,6 +15,9 @@
     "node": "20.x",
     "npm": ">=10.x"
   },
+  "bin": {
+    "lerna": "node_modules/lerna/cli.js"
+  },
   "scripts": {
     "preinstall-all": "npm ci",
     "install-all": "lerna bootstrap --ci --loglevel debug --scope=@zoom-utilities/{client,common,server}",
