@@ -16,7 +16,6 @@
     "src-pwa": true
   },
   "jest.rootPath": ".",
-  "typescript.tsdk": "node_modules/typescript/lib",
   "search.exclude": {
     ".quasar": true,
     "coverage": true,
@@ -26,5 +25,6 @@
     "src-electron": true,
     "src-pwa": true
   },
+  "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.iconTheme": "vs-minimal"
 }

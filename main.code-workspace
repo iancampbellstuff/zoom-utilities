@@ -1,13 +1,16 @@
 {
   "folders": [
     {
-      "path": "client"
+      "name": "client",
+      "path": "packages/client"
     },
     {
-      "path": "server"
+      "name": "common",
+      "path": "packages/common"
     },
     {
-      "path": "common"
+      "name": "server",
+      "path": "packages/server"
     },
     {
       "name": "main",

@@ -11,7 +11,7 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "strictPropertyInitialization": false,
-    "typeRoots": ["../node_modules/@types", "@types", "node_modules/@types"],
+    "typeRoots": ["../../node_modules/@types", "@types", "node_modules/@types"],
     "types": ["compression", "express", "jest", "node"]
   },
   "include": ["src"]

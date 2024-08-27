@@ -7,23 +7,18 @@
   "license": "ISC",
   "private": true,
   "workspaces": [
-    "client",
-    "common",
-    "server"
+    "packages/*"
   ],
   "engines": {
     "node": "20.x",
     "npm": ">=10.x"
   },
   "scripts": {
-    "preinstall-all": "npm ci",
-    "install-all": "npx lerna run ci --loglevel debug --scope=@zoom-utilities/{client,common,server}",
-    "start": "npx lerna run start --stream --scope=@zoom-utilities/{client,server}",
-    "test": "npx lerna run test --stream --scope=@zoom-utilities/{client,common,server}"
+    "start": "npm start --workspace=@zoom-utilities/{client,server}",
+    "test": "npm test -ws"
   },
   "devDependencies": {
-    "husky": "^9.1.5",
-    "lerna": "^8.1.8"
+    "husky": "^9.1.5"
   },
   "husky": {
     "hooks": {

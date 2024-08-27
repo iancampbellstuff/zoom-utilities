@@ -4,17 +4,13 @@
   "editor.rulers": [130],
   "editor.snippetSuggestions": "top",
   "files.exclude": {
-    "client": true,
-    "common": true,
     "node_modules": true,
-    "server": true
+    "packages": true
   },
   "search.exclude": {
-    "client": true,
-    "common": true,
     "node_modules": true,
-    "server": true,
-    "package-lock.json": true
+    "package-lock.json": true,
+    "packages": true
   },
   "workbench.iconTheme": "vs-minimal"
 }
