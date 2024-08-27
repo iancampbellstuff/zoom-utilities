@@ -5,12 +5,16 @@
   "editor.snippetSuggestions": "top",
   "files.exclude": {
     "node_modules": true,
-    "packages": true
+    "client": true,
+    "common": true,
+    "server": true
   },
   "search.exclude": {
     "node_modules": true,
     "package-lock.json": true,
-    "packages": true
+    "client": true,
+    "common": true,
+    "server": true
   },
   "workbench.iconTheme": "vs-minimal"
 }

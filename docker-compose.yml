@@ -1,6 +1,6 @@
 secrets:
   config:
-    file: packages/server/config.json
+    file: server/config.json
 services:
   main:
     build:

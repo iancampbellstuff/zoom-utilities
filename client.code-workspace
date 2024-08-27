@@ -2,7 +2,7 @@
   "folders": [
     {
       "name": "client",
-      "path": "packages/client"
+      "path": "client"
     }
   ],
   "settings": {
