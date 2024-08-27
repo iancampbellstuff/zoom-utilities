@@ -1,6 +1,6 @@
 secrets:
   config:
-    file: server/config.json
+    file: packages/server/config.json
 services:
   main:
     build:
@@ -24,5 +24,3 @@ services:
       - '8080:8080'
     secrets:
       - config
-    volumes:
-      - .:/usr/src/app

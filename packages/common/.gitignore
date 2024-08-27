@@ -1,8 +1,8 @@
 .DS_Store
 .thumbs.db
-node_modules
 coverage
 dist
+node_modules
 
 # Log files
 npm-debug.log*

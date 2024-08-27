@@ -40,7 +40,7 @@ export class AccountHelper {
                 .readFileSync(process.env.CONFIG_FILE, 'utf8')
                 .trim();
             accountConfigs = JSON.parse(config);
-        } catch (error) {
+        } catch {
             accountConfigs = await requestModule<IAccountConfig[]>(
                 '../../config.json'
             );
