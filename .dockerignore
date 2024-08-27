@@ -18,6 +18,7 @@
 **/*.sln
 
 # Test and build directories
+**/build
 **/coverage
 **/dist
 
@@ -58,3 +59,4 @@
 # server
 #########################################
 **/config.json
+**/config.example.json

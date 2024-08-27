@@ -4,6 +4,7 @@
 .eslintrc.js
 /.git
 /.quasar
+/build
 /coverage
 /dist
 /node_modules
