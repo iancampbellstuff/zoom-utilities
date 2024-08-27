@@ -15,14 +15,11 @@
     "node": "20.x",
     "npm": ">=10.x"
   },
-  "bin": {
-    "lerna": "node_modules/lerna/cli.js"
-  },
   "scripts": {
     "preinstall-all": "npm ci",
-    "install-all": "lerna bootstrap --ci --loglevel debug --scope=@zoom-utilities/{client,common,server}",
-    "start": "lerna run start --stream --scope=@zoom-utilities/{client,server}",
-    "test": "lerna run test --stream --scope=@zoom-utilities/{client,common,server}"
+    "install-all": "npx lerna run ci --loglevel debug --scope=@zoom-utilities/{client,common,server}",
+    "start": "npx lerna run start --stream --scope=@zoom-utilities/{client,server}",
+    "test": "npx lerna run test --stream --scope=@zoom-utilities/{client,common,server}"
   },
   "devDependencies": {
     "husky": "^9.1.5",

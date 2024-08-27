@@ -6,22 +6,15 @@
   "version": "1.0.0",
   "license": "ISC",
   "private": true,
-  "bin": {
-    "eslint": "../node_modules/.bin/eslint",
-    "jest": "../node_modules/.bin/jest",
-    "rimraf": "../node_modules/.bin/rimraf",
-    "tsc": "../node_modules/.bin/tsc",
-    "ts-node-dev": "../node_modules/.bin/ts-node-dev"
-  },
   "scripts": {
-    "build": "tsc --project tsconfig.build.json",
-    "clean": "rimraf dist",
+    "build": "npx --no-install tsc --project tsconfig.build.json",
+    "clean": "npx --no-install rimraf dist",
     "lint-fix": "npm run lint -- --fix",
-    "lint": "eslint --ext .js,.ts ./",
+    "lint": "npx --no-install eslint --ext .js,.ts ./",
     "prebuild": "npm run lint && npm run clean",
-    "pretest": "npm run lint && rimraf coverage",
-    "start": "NODE_OPTIONS='--abort-on-uncaught-exception --trace-deprecation --trace-warnings' ts-node-dev --respawn --transpile-only src/index.ts",
-    "test-only": "jest --colors",
+    "pretest": "npm run lint && npx --no-install rimraf coverage",
+    "start": "NODE_OPTIONS='--abort-on-uncaught-exception --trace-deprecation --trace-warnings' npx --no-install ts-node-dev --respawn --transpile-only src/index.ts",
+    "test-only": "npx --no-install jest --colors",
     "test-watch": "npm test -- --watchAll",
     "test": "npm run test-only"
   },
