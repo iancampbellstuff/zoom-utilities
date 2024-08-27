@@ -1,19 +1,22 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "editorconfig.editorconfig",
+    "EditorConfig.EditorConfig",
     "esbenp.prettier-vscode",
+    "github.vscode-github-actions",
     "hollowtree.vue-snippets",
     "ionutvmi.path-autocomplete",
-    "orta.vscode-jest",
+    "ms-azuretools.vscode-docker",
+    "Orta.vscode-jest",
     "pflannery.vscode-versionlens",
-    "vue.volar",
-    "wayou.vscode-todo-highlight"
+    "Vue.volar",
+    "wayou.vscode-todo-highlight",
+    "william-voyek.vscode-nginx"
   ],
   "unwantedRecommendations": [
-    "octref.vetur",
-    "hookyqr.beautify",
     "dbaeumer.jshint",
-    "ms-vscode.vscode-typescript-tslint-plugin"
+    "hookyqr.beautify",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "octref.vetur"
   ]
 }
