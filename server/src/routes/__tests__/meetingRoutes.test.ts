@@ -3,9 +3,10 @@ import { Request, Response } from 'express';
 
 // code under test
 import {
-    IMeetingRequestParams,
-    IMeetingRequestQuery,
+    IZoomMeetingRequestParams,
+    IZoomMeetingRequestQuery,
     getMeetingRoutes,
+    requestLiveMeetings,
     requestMeeting,
     requestMeetings,
     requestPatchMeeting,
@@ -14,6 +15,7 @@ import {
 
 // types
 import {
+    IZoomLiveMeetingsResponse,
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload
@@ -48,10 +50,10 @@ describe('meetingRoutes', () => {
     describe('requestMeeting', () => {
         let meetingId: string;
         let request: Request<
-            IMeetingRequestParams,
+            IZoomMeetingRequestParams,
             null,
             null,
-            IMeetingRequestQuery
+            IZoomMeetingRequestQuery
         >;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
@@ -77,7 +79,7 @@ describe('meetingRoutes', () => {
         });
     });
     describe('requestMeetings', () => {
-        let request: Request<null, null, null, IMeetingRequestQuery>;
+        let request: Request<null, null, null, IZoomMeetingRequestQuery>;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
         let response: Response<IZoomMeeting[]>;
@@ -100,12 +102,36 @@ describe('meetingRoutes', () => {
             );
         });
     });
+    describe('requestLiveMeetings', () => {
+        let request: Request<null, null, null, IZoomMeetingRequestQuery>;
+        let send: jest.SpyInstance;
+        let status: jest.SpyInstance;
+        let response: Response<IZoomLiveMeetingsResponse>;
+        beforeEach(() => {
+            request = {} as any;
+            send = jest.fn();
+            status = jest.fn(() => ({ send }));
+            response = {
+                status
+            } as any;
+        });
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
+        it('should handle a request error', async () => {
+            await requestLiveMeetings(request, response);
+            expect(handleError).toHaveBeenCalledWith(
+                expect.any(Error),
+                response
+            );
+        });
+    });
     describe('requestPatchMeeting', () => {
         let request: Request<
-            IMeetingRequestParams,
+            IZoomMeetingRequestParams,
             null,
             IZoomMeetingPatch,
-            IMeetingRequestQuery
+            IZoomMeetingRequestQuery
         >;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;
@@ -134,7 +160,7 @@ describe('meetingRoutes', () => {
             null,
             null,
             IZoomMeetingPatchRequestPayload[],
-            IMeetingRequestQuery
+            IZoomMeetingRequestQuery
         >;
         let send: jest.SpyInstance;
         let status: jest.SpyInstance;

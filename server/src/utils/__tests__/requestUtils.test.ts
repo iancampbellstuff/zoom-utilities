@@ -18,6 +18,17 @@ describe('requestUtils', () => {
             const result = getUrl(path);
             expect(result).toEqual(combineURLs(BASE_ROUTE, path));
         });
+        it('should get a URL with query parameters', () => {
+            const result = getUrl(path, [
+                {
+                    key: 'test',
+                    value: 'value'
+                }
+            ]);
+            expect(result).toEqual(
+                combineURLs(BASE_ROUTE, path) + '?test=value'
+            );
+        });
         it('should get a URL with a preceding slash', () => {
             const result = getUrl(`/${path}`);
             expect(result).toEqual(combineURLs(BASE_ROUTE, path));

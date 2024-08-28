@@ -24,6 +24,10 @@ describe('routes', () => {
                     {
                         path: '/recordings',
                         component: expect.any(Function)
+                    },
+                    {
+                        path: '/accounts',
+                        component: expect.any(Function)
                     }
                 ]
             },

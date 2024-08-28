@@ -182,7 +182,7 @@ const columns: any = [
         label: 'Meeting Name',
         name: 'topic',
         required: true,
-        sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+        sort: (a: string, b: string) => a.localeCompare(b),
         sortable: true
     },
     {
@@ -228,7 +228,7 @@ onBeforeMount(() => {
                 userIds.value = ids;
                 store.setUserIds(userIds.value);
             })
-            .catch((error) => {
+            .catch(() => {
                 errorOccurred.value = true;
                 showErrorMessage();
             })
@@ -284,11 +284,11 @@ const onChangeUserId = (userId: string) => {
     errorOccurred.value = false;
     $q.loading.show();
     getRecordings(userId)
-        .then((recordings) => {
+        .then((recordings: IZoomMeetingRecordingsResponseItem[]) => {
             data.value = recordings;
             store.setRecordings(recordings);
         })
-        .catch((error) => {
+        .catch(() => {
             errorOccurred.value = true;
             showErrorMessage();
         })
@@ -306,7 +306,7 @@ const onRefresh = () => {
                 data.value = recordings;
                 store.setRecordings(recordings);
             })
-            .catch((error) => {
+            .catch(() => {
                 errorOccurred.value = true;
                 showErrorMessage();
             })

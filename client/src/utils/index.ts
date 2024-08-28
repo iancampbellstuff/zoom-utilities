@@ -6,6 +6,7 @@ export {
     createMeeting,
     deleteMeeting,
     deleteMeetings,
+    getAccountData,
     getMeeting,
     getMeetings,
     getRecordings,

@@ -25,10 +25,10 @@ module.exports = {
     ],
     coverageThreshold: {
         global: {
-            branches: 48,
-            functions: 45,
-            lines: 42,
-            statements: 46
+            branches: 49,
+            functions: 46,
+            lines: 45,
+            statements: 48
         }
     },
     testMatch: ['<rootDir>/src/**/__tests__/**/*.(spec|test).+(ts|js)'],

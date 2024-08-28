@@ -31,6 +31,7 @@ export default store((/* { ssrContext } */) => {
     return pinia;
 });
 
+export * from './accounts';
 export * from './meetings';
 export * from './passcode';
 export * from './recordings';
