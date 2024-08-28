@@ -16,7 +16,6 @@
     "npm": ">=10.x"
   },
   "scripts": {
-    "prestart": "git update-index --no-assume-unchanged server/config.json",
     "start": "npx --no-install npm-run-all --parallel start-client start-server",
     "start-client": "npm start -w @zoom-utilities/client",
     "start-server": "npm start -w @zoom-utilities/server",

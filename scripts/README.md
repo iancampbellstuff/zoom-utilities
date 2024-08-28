@@ -22,6 +22,14 @@ brew install nvm
 nvm use
 ```
 
+### server/config.json
+
+Ignore local changes to the `server/config.json` file:
+
+```sh
+git update-index --no-assume-unchanged server/config.json
+```
+
 ---
 
 ## Commands
