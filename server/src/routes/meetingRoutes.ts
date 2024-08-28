@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 import express from 'express';
 // types
 import {
+    IZoomLiveMeetingsResponse,
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload
@@ -12,16 +13,21 @@ import {
 import { getRequest } from '../../../common/src';
 import { AccountHelper, getUrl, handleError } from '../utils';
 
-export interface IMeetingRequestParams {
+export interface IZoomMeetingRequestParams {
     meetingId: string;
 }
 
-export interface IMeetingRequestQuery {
+export interface IZoomMeetingRequestQuery {
     userId: string;
 }
 
 export const requestMeeting = async (
-    req: Request<IMeetingRequestParams, null, null, IMeetingRequestQuery>,
+    req: Request<
+        IZoomMeetingRequestParams,
+        null,
+        null,
+        IZoomMeetingRequestQuery
+    >,
     res: Response<IZoomMeeting>
 ) => {
     try {
@@ -41,7 +47,7 @@ export const requestMeeting = async (
     }
 };
 export const requestMeetings = async (
-    req: Request<null, null, null, IMeetingRequestQuery>,
+    req: Request<null, null, null, IZoomMeetingRequestQuery>,
     res: Response<IZoomMeeting[]>
 ) => {
     try {
@@ -75,12 +81,36 @@ export const requestMeetings = async (
         handleError(error as AxiosError, res);
     }
 };
+export const requestLiveMeetings = async (
+    req: Request<null, null, null, IZoomMeetingRequestQuery>,
+    res: Response<IZoomLiveMeetingsResponse>
+) => {
+    try {
+        const { userId } = req.query;
+        const accountHelper = await AccountHelper.requestInstanceOf();
+        const token = await accountHelper.requestToken(userId);
+        const liveMeetingsResponse =
+            await getRequest<IZoomLiveMeetingsResponse>({
+                method: 'GET',
+                token,
+                url: getUrl(`users/${userId}/meetings`, [
+                    {
+                        key: 'type',
+                        value: 'live'
+                    }
+                ])
+            });
+        res.send(liveMeetingsResponse.data);
+    } catch (error) {
+        handleError(error as AxiosError, res);
+    }
+};
 export const requestPatchMeeting = async (
     req: Request<
-        IMeetingRequestParams,
+        IZoomMeetingRequestParams,
         null,
         IZoomMeetingPatch,
-        IMeetingRequestQuery
+        IZoomMeetingRequestQuery
     >,
     res: Response
 ) => {
@@ -107,7 +137,7 @@ export const requestPatchMeetings = async (
         null,
         null,
         IZoomMeetingPatchRequestPayload[],
-        IMeetingRequestQuery
+        IZoomMeetingRequestQuery
     >,
     res: Response
 ) => {
@@ -136,10 +166,10 @@ export const requestPatchMeetings = async (
 };
 export const requestDeleteMeeting = async (
     req: Request<
-        IMeetingRequestParams,
+        IZoomMeetingRequestParams,
         null,
         IZoomMeetingPatch,
-        IMeetingRequestQuery
+        IZoomMeetingRequestQuery
     >,
     res: Response
 ) => {
@@ -166,7 +196,7 @@ export const requestDeleteMeetings = async (
         null,
         null,
         IZoomMeetingPatchRequestPayload[],
-        IMeetingRequestQuery
+        IZoomMeetingRequestQuery
     >,
     res: Response
 ) => {
@@ -201,13 +231,20 @@ export const requestDeleteMeetings = async (
 export const getMeetingRoutes = () => {
     const router = express.Router();
     router.get(
+        '/live',
+        (
+            req: Request<null, null, null, IZoomMeetingRequestQuery>,
+            res: Response<IZoomLiveMeetingsResponse>
+        ) => void requestLiveMeetings(req, res)
+    );
+    router.get(
         '/:meetingId',
         (
             req: Request<
-                IMeetingRequestParams,
+                IZoomMeetingRequestParams,
                 null,
                 null,
-                IMeetingRequestQuery
+                IZoomMeetingRequestQuery
             >,
             res: Response<IZoomMeeting>
         ) => void requestMeeting(req, res)
@@ -215,7 +252,7 @@ export const getMeetingRoutes = () => {
     router.get(
         '/',
         (
-            req: Request<null, null, null, IMeetingRequestQuery>,
+            req: Request<null, null, null, IZoomMeetingRequestQuery>,
             res: Response<IZoomMeeting[]>
         ) => void requestMeetings(req, res)
     );
@@ -223,10 +260,10 @@ export const getMeetingRoutes = () => {
         '/:meetingId',
         (
             req: Request<
-                IMeetingRequestParams,
+                IZoomMeetingRequestParams,
                 null,
                 IZoomMeetingPatch,
-                IMeetingRequestQuery
+                IZoomMeetingRequestQuery
             >,
             res: Response
         ) => void requestPatchMeeting(req, res)
@@ -238,7 +275,7 @@ export const getMeetingRoutes = () => {
                 null,
                 null,
                 IZoomMeetingPatchRequestPayload[],
-                IMeetingRequestQuery
+                IZoomMeetingRequestQuery
             >,
             res: Response
         ) => void requestPatchMeetings(req, res)
@@ -247,10 +284,10 @@ export const getMeetingRoutes = () => {
         '/:meetingId',
         (
             req: Request<
-                IMeetingRequestParams,
+                IZoomMeetingRequestParams,
                 null,
                 IZoomMeetingPatch,
-                IMeetingRequestQuery
+                IZoomMeetingRequestQuery
             >,
             res: Response
         ) => void requestDeleteMeeting(req, res)
@@ -262,7 +299,7 @@ export const getMeetingRoutes = () => {
                 null,
                 null,
                 IZoomMeetingPatchRequestPayload[],
-                IMeetingRequestQuery
+                IZoomMeetingRequestQuery
             >,
             res: Response
         ) => void requestDeleteMeetings(req, res)

@@ -13,10 +13,10 @@ export default {
   coveragePathIgnorePatterns: ['index.ts', '.d.ts$'],
   coverageThreshold: {
     global: {
-      branches: 16,
-      functions: 13,
-      lines: 37,
-      statements: 38
+      branches: 21,
+      functions: 21,
+      lines: 46,
+      statements: 47
     }
   },
   moduleFileExtensions: ['js', 'json', 'ts', 'vue'],

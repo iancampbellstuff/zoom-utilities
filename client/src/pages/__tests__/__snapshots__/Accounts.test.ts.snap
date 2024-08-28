@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Accounts should render correctly 1`] = `
+<q-page
+  class="row items-start justify-evenly"
+  id="accounts"
+>
+  <q-form
+    class="q-gutter-lg"
+    id="form"
+  >
+    <q-toolbar-title
+      class="text-center"
+    >
+      Accounts
+    </q-toolbar-title>
+    <q-table
+      columns="[object Object],[object Object],[object Object]"
+      filter=""
+      filter-method="function (rows, searchValue) {
+      /* istanbul ignore next */
+      cov_1ihn90xftc().f[5]++;
+      var filteredRows =
+      /* istanbul ignore next */
+      (cov_1ihn90xftc().s[31]++, rows.filter(function (row) {
+        /* istanbul ignore next */
+        cov_1ihn90xftc().f[6]++;
+        var resultFound =
+        /* istanbul ignore next */
+        (cov_1ihn90xftc().s[32]++, true);
+        /* istanbul ignore next */
+        cov_1ihn90xftc().s[33]++;
+        if (searchValue !== '') {
+          /* istanbul ignore next */
+          cov_1ihn90xftc().b[5][0]++;
+          var rowValues =
+          /* istanbul ignore next */
+          (cov_1ihn90xftc().s[34]++, Object.entries(row).reduce(function (values, _a) {
+            /* istanbul ignore next */
+            cov_1ihn90xftc().f[7]++;
+            var key =
+              /* istanbul ignore next */
+              (cov_1ihn90xftc().s[35]++, _a[0]),
+              value =
+              /* istanbul ignore next */
+              (cov_1ihn90xftc().s[36]++, _a[1]);
+            /* istanbul ignore next */
+            cov_1ihn90xftc().s[37]++;
+            switch (key) {
+              case 'account_id':
+                /* istanbul ignore next */
+                cov_1ihn90xftc().b[6][0]++;
+              case 'topic':
+                /* istanbul ignore next */
+                cov_1ihn90xftc().b[6][1]++;
+                {
+                  /* istanbul ignore next */
+                  cov_1ihn90xftc().s[38]++;
+                  values.push(value.toString());
+                  /* istanbul ignore next */
+                  cov_1ihn90xftc().s[39]++;
+                  break;
+                }
+            }
+            /* istanbul ignore next */
+            cov_1ihn90xftc().s[40]++;
+            return values;
+          }, []));
+          /* istanbul ignore next */
+          cov_1ihn90xftc().s[41]++;
+          resultFound = false;
+          /* istanbul ignore next */
+          cov_1ihn90xftc().s[42]++;
+          for (var i =
+          /* istanbul ignore next */
+          (cov_1ihn90xftc().s[43]++, 0); i < rowValues.length; i++) {
+            var rowValue =
+            /* istanbul ignore next */
+            (cov_1ihn90xftc().s[44]++, rowValues[i]);
+            /* istanbul ignore next */
+            cov_1ihn90xftc().s[45]++;
+            if (rowValue.includes(searchValue)) {
+              /* istanbul ignore next */
+              cov_1ihn90xftc().b[7][0]++;
+              cov_1ihn90xftc().s[46]++;
+              resultFound = true;
+              /* istanbul ignore next */
+              cov_1ihn90xftc().s[47]++;
+              break;
+            } else
+            /* istanbul ignore next */
+            {
+              cov_1ihn90xftc().b[7][1]++;
+            }
+          }
+        } else
+        /* istanbul ignore next */
+        {
+          cov_1ihn90xftc().b[5][1]++;
+        }
+        cov_1ihn90xftc().s[48]++;
+        return resultFound;
+      }));
+      /* istanbul ignore next */
+      cov_1ihn90xftc().s[49]++;
+      return filteredRows;
+    }"
+      outlined=""
+      pagination="[object Object]"
+      row-key="account_id"
+      rows=""
+      standout=""
+      title="Accounts"
+    />
+  </q-form>
+</q-page>
+`;

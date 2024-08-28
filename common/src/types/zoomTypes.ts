@@ -64,10 +64,12 @@ export interface IZoomMeetingSettings {
     watermark: boolean;
 }
 export interface IZoomMeetingBase {
+    created_at: string;
     duration?: number;
     host_email: string;
     host_id: string;
     id: number;
+    join_url: string;
     password?: string;
     start_time?: string;
     timezone: string;
@@ -78,10 +80,8 @@ export interface IZoomMeetingBase {
 export interface IZoomMeeting extends IZoomMeetingBase {
     agenda: string;
     assistant_id: string;
-    created_at: string;
     encrypted_password?: string;
     h323_password?: string;
-    join_url: string;
     occurrences?: IZoomMeetingOccurrence[];
     pre_schedule?: boolean;
     pstn_password?: string;
@@ -90,6 +90,12 @@ export interface IZoomMeeting extends IZoomMeetingBase {
     settings: IZoomMeetingSettings;
     start_url: string;
     status: TZoomMeetingStatus;
+}
+export interface IZoomLiveMeetingsResponse {
+    meetings: IZoomMeetingBase[];
+    next_page_token: string;
+    page_size: number;
+    total_records: number;
 }
 //#endregion IZoomMeeting
 
@@ -274,3 +280,9 @@ export interface IZoomMeetingRecordingsResponseItem
 export type TZoomMeetingRecordingsResponseData =
     IZoomMeetingRecordingFileData[];
 //#endregion IZoomMeetingRecording
+
+export interface IZoomAccountDataResponseItem {
+    account_id: string;
+    in_meeting: boolean;
+    topic?: string;
+}

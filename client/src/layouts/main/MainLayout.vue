@@ -54,9 +54,10 @@
 </style>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 import {
+    useAccountsStore,
     useMeetingsStore,
     usePasscodeStore,
     useRecordingsStore
@@ -68,22 +69,16 @@ const router = useRouter();
 const meetingsStore = useMeetingsStore();
 const passcodeStore = usePasscodeStore();
 const recordingsStore = useRecordingsStore();
+const accountsStore = useAccountsStore();
 const tabName = ref(tabs[0].name);
-const path = ref<string>();
 
-onMounted(() => {
-    const route = useRoute();
-    path.value = route.path;
-});
 const onClearAllClick = () => {
-    [meetingsStore, passcodeStore, recordingsStore].forEach((store) => {
-        store.resetAll();
-    });
-    const pathValue = path.value?.trim();
-    if (pathValue && !['/', '/home'].includes(pathValue)) {
-        //TODO: Promises must be handled appropriately or explicitly marked as ignored with the `void` operator.eslint@typescript-eslint/no-floating-promises
-        void router.push('home');
-    }
+    [meetingsStore, passcodeStore, recordingsStore, accountsStore].forEach(
+        (store) => {
+            store.resetAll();
+        }
+    );
+    void router.push('home');
     toast('All fields have been cleared.');
 };
 const onTabClick = (tabName: string) => {

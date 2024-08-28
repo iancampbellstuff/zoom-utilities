@@ -2,6 +2,8 @@
 import {
     APP_PORT,
     getRequest,
+    IZoomAccountDataResponseItem,
+    IZoomLiveMeetingsResponse,
     IZoomMeeting,
     IZoomMeetingPatchRequestPayload,
     IZoomMeetingPostRequestPayload,
@@ -55,6 +57,17 @@ export const getMeetings = async (
         );
     }
     return meetings;
+};
+export const getLiveMeetings = async (userId: string) => {
+    const response = await getRequest<IZoomLiveMeetingsResponse>({
+        method: 'GET',
+        params: {
+            userId
+        },
+        url: getUrl('meetings/live')
+    });
+    const liveMeetings = response.data;
+    return liveMeetings;
 };
 export const createMeeting = async (
     meetingPostRequestPayload: IZoomMeetingPostRequestPayload,
@@ -143,4 +156,41 @@ export const getRecordings = async (userId: string) => {
             !!recording.recording_end
     );
     return recordings;
+};
+export const getAccountData = async () => {
+    const userIds = await getUserIds();
+    const accountData: IZoomAccountDataResponseItem[] = [];
+    for (const userId of userIds) {
+        const response = await getLiveMeetings(userId);
+        const { meetings } = response;
+        if (meetings.length) {
+            const accountDataItems: IZoomAccountDataResponseItem[] = meetings
+                .map((meeting) => {
+                    const { topic } = meeting;
+                    const accountDataItem: IZoomAccountDataResponseItem = {
+                        account_id: userId,
+                        in_meeting: true,
+                        topic
+                    };
+                    return accountDataItem;
+                })
+                .sort((a, b) => {
+                    if (a.topic && b.topic) {
+                        return a.topic.localeCompare(b.topic);
+                    } else if (a.topic) {
+                        return 1;
+                    } else {
+                        return -1;
+                    }
+                });
+            accountData.push(...accountDataItems);
+        } else {
+            const accountDataItem: IZoomAccountDataResponseItem = {
+                account_id: userId,
+                in_meeting: false
+            };
+            accountData.push(accountDataItem);
+        }
+    }
+    return accountData;
 };

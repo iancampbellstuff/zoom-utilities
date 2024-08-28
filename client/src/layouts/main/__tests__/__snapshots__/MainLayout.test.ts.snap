@@ -48,6 +48,14 @@ exports[`MainLayout should render correctly 1`] = `
           no-caps=""
           to="/recordings"
         />
+        <q-route-tab
+          exact=""
+          icon="login"
+          label="Accounts"
+          name="accounts"
+          no-caps=""
+          to="/accounts"
+        />
         
         <q-tab
           icon="clear"
