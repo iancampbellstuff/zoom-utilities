@@ -385,7 +385,7 @@ const columns: any = [
         label: 'Meeting Name',
         name: 'topic',
         required: true,
-        sort: (a: string, b: string) => parseInt(a, 10) - parseInt(b, 10),
+        sort: (a: string, b: string) => a.localeCompare(b),
         sortable: true
     },
     {
@@ -438,7 +438,7 @@ onBeforeMount(() => {
                 userIds.value = ids;
                 store.setUserIds(userIds.value);
             })
-            .catch((error) => {
+            .catch(() => {
                 errorOccurred.value = true;
                 showErrorMessage();
             })
@@ -505,7 +505,7 @@ const onChangeUserId = (userId: string) => {
             data.value = meetings;
             store.setMeetings(meetings);
         })
-        .catch((error) => {
+        .catch(() => {
             errorOccurred.value = true;
             showErrorMessage();
         })
@@ -529,7 +529,7 @@ const onRefresh = () => {
                 data.value = meetings;
                 store.setMeetings(meetings);
             })
-            .catch((error) => {
+            .catch(() => {
                 errorOccurred.value = true;
                 showErrorMessage();
             })
@@ -546,7 +546,7 @@ const onSave = (patchRequestPayload: IZoomMeetingPatchRequestPayload) => {
         .then(() => {
             toast('Meeting updated successfully.');
         })
-        .catch((error) => {
+        .catch(() => {
             errorOccurred.value = true;
             showErrorMessage();
         })
@@ -695,7 +695,7 @@ const onUpdate = () => {
                 selectedRows.value = [];
                 toast('Meeting(s) updated successfully.');
             })
-            .catch((error) => {
+            .catch(() => {
                 errorOccurred.value = true;
                 showErrorMessage();
             })
@@ -730,7 +730,7 @@ const onDelete = () => {
             selectedRows.value = [];
             toast('Meeting(s) deleted successfully.');
         })
-        .catch((error) => {
+        .catch(() => {
             errorOccurred.value = true;
             showErrorMessage();
         })
@@ -767,7 +767,7 @@ const onCreate = () => {
                 createRecordToTheCloud.value = false;
                 toast('Meeting created successfully.');
             })
-            .catch((error) => {
+            .catch(() => {
                 errorOccurred.value = true;
                 showErrorMessage();
             })
