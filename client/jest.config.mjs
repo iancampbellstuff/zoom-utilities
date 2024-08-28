@@ -13,8 +13,8 @@ export default {
   coveragePathIgnorePatterns: ['index.ts', '.d.ts$'],
   coverageThreshold: {
     global: {
-      branches: 21,
-      functions: 21,
+      branches: 22,
+      functions: 22,
       lines: 46,
       statements: 47
     }
