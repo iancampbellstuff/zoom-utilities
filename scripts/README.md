@@ -4,12 +4,22 @@ Helper scripts for the zoom-utilities monorepo.
 
 ## Setup
 
-- [Install Docker Desktop](https://docs.docker.com/desktop/install/mac-install/ 'https://docs.docker.com/desktop/install/mac-install/')
+### Docker Desktop
 
-- Or, install Docker Desktop with [Homebrew](https://docs.brew.sh/Installation 'https://docs.brew.sh/Installation'):
+[Install Docker Desktop](https://docs.docker.com/desktop/install/mac-install/ 'https://docs.docker.com/desktop/install/mac-install/'), or install Docker Desktop with [Homebrew](https://docs.brew.sh/Installation 'https://docs.brew.sh/Installation'):
 
 ```sh
 brew install --cask docker
+```
+
+### nvm
+
+Install `nvm` with [Homebrew](https://docs.brew.sh/Installation 'https://docs.brew.sh/Installation'), and set the Node.js version:
+
+```sh
+brew install nvm
+. $(brew --prefix nvm)/nvm.sh
+nvm use
 ```
 
 ---

@@ -16,8 +16,14 @@
     "npm": ">=10.x"
   },
   "scripts": {
-    "start": "npm start --workspace=@zoom-utilities/{client,server}",
+    "prestart": "git update-index --no-assume-unchanged server/config.json",
+    "start": "npx --no-install npm-run-all --parallel start-client start-server",
+    "start-client": "npm start -w @zoom-utilities/client",
+    "start-server": "npm start -w @zoom-utilities/server",
     "test": "npm test -ws",
     "test-open": "npm run -ws test-open"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

@@ -1,7 +1,6 @@
 .DS_Store
 .thumbs.db
 build
-config.json
 coverage
 dist
 node_modules

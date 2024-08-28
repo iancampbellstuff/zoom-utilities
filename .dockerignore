@@ -1,6 +1,7 @@
 **/.DS_Store
 **/.thumbs.db
 **/.git
+**/.nvmrc
 **/.vscode
 **/*.md
 **/node_modules
