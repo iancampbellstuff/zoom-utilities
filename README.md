@@ -38,6 +38,10 @@ npm ci
 Start the application in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
+npm start -- --electron
+npm start -- --pwa
+
+# "--pwa" is the default option
 npm start
 ```
 

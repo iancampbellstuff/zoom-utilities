@@ -35,6 +35,10 @@ A Quasar app for simplifying Zoom tasks in the [`@zoom-utilities`](../README.md)
 Start the application in development mode (hot-code reloading, error reporting, etc.)
 
 ```bash
+npm start -- --electron
+npm start -- --pwa
+
+# "--pwa" is the default option
 npm start
 ```
 
