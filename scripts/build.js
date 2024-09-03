@@ -1,30 +1,33 @@
 const { execSync } = require('child_process');
 
 /**
- * Start the zoom-utilities client.
+ * Build zoom-utilities.
  *
  * Example usage:
- * node start.js --electron
- * node start.js --pwa
- * node start.js # "--pwa" is the default option
+ * node build.js --electron
+ * node build.js --pwa
+ * node build.js # "--pwa" is the default option
  */
 
 const ARGS = process.argv.slice(2);
 const SCRIPT = {
-    ELECTRON: 'start-electron',
-    PWA: 'start-pwa'
+    CLIENT: 'build-client',
+    SERVER: 'build-server'
 };
-const SCRIPT_MAP = {
-    '--electron': SCRIPT.ELECTRON,
-    '--pwa': SCRIPT.PWA
+const CLIENT_SCRIPT_FLAG = {
+    ELECTRON: '--electron',
+    PWA: '--pwa'
 };
 
 const exit = (error) => {
     console.error(error);
     process.exit(1);
 };
-const runScript = (script) => {
-    const command = `npm run ${script}`;
+const runScript = (script, flag) => {
+    let command = `npm run ${script}`;
+    if (flag) {
+        command = [command, '--', '--', flag].join(' ');
+    }
     console.log(`Executing command ${command}...`);
     try {
         execSync(command, { stdio: 'inherit' });
@@ -33,19 +36,20 @@ const runScript = (script) => {
     }
 };
 const handleFlag = (flag) => {
-    const script = SCRIPT_MAP[flag];
-    if (!script) {
+    if (!Object.values(CLIENT_SCRIPT_FLAG).includes(flag)) {
         const message = `Error: Invalid flag ${flag}!`;
         const error = new EvalError(message);
         exit(error);
     }
-    runScript(script);
+    runScript(SCRIPT.SERVER);
+    runScript(SCRIPT.CLIENT, flag);
 };
-const start = () => {
+const build = () => {
     switch (ARGS.length) {
         case 0: {
-            const defaultScript = SCRIPT.PWA;
-            runScript(defaultScript);
+            Object.values(SCRIPT).forEach((script) => {
+                runScript(script);
+            });
             break;
         }
         case 1: {
@@ -61,4 +65,4 @@ const start = () => {
     }
 };
 
-start();
+build();

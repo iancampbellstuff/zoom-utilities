@@ -16,6 +16,9 @@
     "npm": ">=10.x"
   },
   "scripts": {
+    "build-client": "npm run build -w @zoom-utilities/client",
+    "build-server": "npm run build -w @zoom-utilities/server",
+    "build": "node scripts/build.js",
     "start-client": "npm start -w @zoom-utilities/client",
     "start-server": "npm start -w @zoom-utilities/server",
     "start": "node scripts/start.js",

@@ -1,18 +1,18 @@
 const { execSync } = require('child_process');
 
 /**
- * Start the zoom-utilities client.
+ * Build the zoom-utilities client.
  *
  * Example usage:
- * node start.js --electron
- * node start.js --pwa
- * node start.js # "--pwa" is the default option
+ * node build.js --electron
+ * node build.js --pwa
+ * node build.js # "--pwa" is the default option
  */
 
 const ARGS = process.argv.slice(2);
 const SCRIPT = {
-    ELECTRON: 'start-electron',
-    PWA: 'start-pwa'
+    ELECTRON: 'build-electron',
+    PWA: 'build-pwa'
 };
 const SCRIPT_MAP = {
     '--electron': SCRIPT.ELECTRON,
@@ -41,7 +41,7 @@ const handleFlag = (flag) => {
     }
     runScript(script);
 };
-const start = () => {
+const build = () => {
     switch (ARGS.length) {
         case 0: {
             const defaultScript = SCRIPT.PWA;
@@ -61,4 +61,4 @@ const start = () => {
     }
 };
 
-start();
+build();

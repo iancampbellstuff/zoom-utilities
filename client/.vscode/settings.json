@@ -11,9 +11,7 @@
     ".quasar": true,
     "coverage": true,
     "dist": true,
-    "node_modules": true,
-    "src-electron": true,
-    "src-pwa": true
+    "node_modules": true
   },
   "jest.rootPath": ".",
   "search.exclude": {
@@ -21,9 +19,7 @@
     "coverage": true,
     "dist": true,
     "node_modules": true,
-    "package-lock.json": true,
-    "src-electron": true,
-    "src-pwa": true
+    "package-lock.json": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "workbench.iconTheme": "vs-minimal"
