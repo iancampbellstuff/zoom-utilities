@@ -151,14 +151,14 @@
 </style>
 
 <script setup lang="ts">
+// externals
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
+// stores
 import { useRecordingsStore } from '../stores';
-import {
-    getFormattedDate,
-    IZoomMeetingRecordingsResponseItem,
-    truncate
-} from '../../../common/src';
+// types
+import { IZoomMeetingRecordingsResponseItem } from '@zoom-utilities/common/src/types';
+// utils
 import {
     copyInput,
     ELogLevel,
@@ -166,6 +166,7 @@ import {
     getUserIds,
     toast
 } from '../utils';
+import { getFormattedDate, truncate } from '@zoom-utilities/common/src/utils';
 
 interface IPaginationOptions {
     rowsPerPage: number;

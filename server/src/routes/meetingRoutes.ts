@@ -8,10 +8,10 @@ import {
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload
-} from '../../../common/src';
+} from '@zoom-utilities/common/src/types';
 // utils
-import { getRequest } from '../../../common/src';
 import { AccountHelper, getUrl, handleError } from '../utils';
+import { getRequest } from '@zoom-utilities/common/src/utils';
 
 export interface IZoomMeetingRequestParams {
     meetingId: string;

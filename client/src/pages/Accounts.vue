@@ -97,11 +97,16 @@
 </style>
 
 <script setup lang="ts">
+// externals
 import { useQuasar } from 'quasar';
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
+// stores
 import { useAccountsStore } from '../stores';
-import { IZoomAccountDataResponseItem, truncate } from '../../../common/src';
+// types
+import { IZoomAccountDataResponseItem } from '@zoom-utilities/common/src/types';
+// utils
 import { ELogLevel, getAccountData, toast } from '../utils';
+import { truncate } from '@zoom-utilities/common/src/utils';
 
 interface IPaginationOptions {
     rowsPerPage: number;

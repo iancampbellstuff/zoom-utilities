@@ -1,6 +1,5 @@
 // externals
 import { Request, Response } from 'express';
-
 // code under test
 import {
     IZoomMeetingRequestParams,
@@ -12,21 +11,18 @@ import {
     requestPatchMeeting,
     requestPatchMeetings
 } from '../meetingRoutes';
-
+// config
+import config from '../../../config.example.json';
 // types
 import {
     IZoomLiveMeetingsResponse,
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload
-} from '../../../../common/src';
-
+} from '@zoom-utilities/common/src/types';
 // utils
 import { AccountHelper } from '../../utils';
 import * as requestUtils from '../../utils/requestUtils';
-
-// config
-import config from '../../../config.example.json';
 
 describe('meetingRoutes', () => {
     let handleError: jest.SpyInstance;

@@ -6,7 +6,7 @@ import { BASE_ROUTE } from '../../constants';
 // code under test
 import { getUrl, handleError } from '../requestUtils';
 // utils
-import { combineURLs } from '../../../../common/src';
+import { combineURLs } from '@zoom-utilities/common/src/utils';
 
 describe('requestUtils', () => {
     describe('getUrl', () => {

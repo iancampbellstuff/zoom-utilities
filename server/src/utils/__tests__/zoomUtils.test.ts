@@ -1,8 +1,7 @@
 // code under test
 import { hasPassword } from '../zoomUtils';
-
 // types
-import { IZoomMeeting } from '../../../../common/src';
+import { IZoomMeeting } from '@zoom-utilities/common/src/types';
 
 describe('zoomUtils', () => {
     describe('hasPassword', () => {

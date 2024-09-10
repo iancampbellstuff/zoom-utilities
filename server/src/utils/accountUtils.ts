@@ -1,6 +1,8 @@
 // externals
 import axios, { AxiosResponse } from 'axios';
 import fs from 'fs';
+// constants
+import { OAUTH_ROUTE } from '../constants';
 // types
 import {
     IAccountConfig,
@@ -10,10 +12,8 @@ import {
     IZoomTokenResponse
 } from '../types';
 // utils
-import { getExpirationDate, isExpired } from '../../../common/src/utils';
+import { getExpirationDate, isExpired } from '@zoom-utilities/common/src/utils';
 import { requestModule } from './moduleUtils';
-// constants
-import { OAUTH_ROUTE } from '../constants';
 
 export class AccountHelper {
     private static INSTANCE: AccountHelper;
