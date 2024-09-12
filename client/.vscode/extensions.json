@@ -1,7 +1,7 @@
 {
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "EditorConfig.EditorConfig",
+    "editorconfig.editorconfig",
     "esbenp.prettier-vscode",
     "github.vscode-github-actions",
     "hollowtree.vue-snippets",
@@ -9,7 +9,7 @@
     "ms-azuretools.vscode-docker",
     "Orta.vscode-jest",
     "pflannery.vscode-versionlens",
-    "Vue.volar",
+    "vue.volar",
     "wayou.vscode-todo-highlight",
     "william-voyek.vscode-nginx"
   ],

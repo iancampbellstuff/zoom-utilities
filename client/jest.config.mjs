@@ -13,16 +13,16 @@ export default {
   coveragePathIgnorePatterns: ['index.ts', '.d.ts$'],
   coverageThreshold: {
     global: {
-      branches: 22,
+      statements: 47,
+      branches: 27,
       functions: 22,
-      lines: 46,
-      statements: 47
+      lines: 46
     }
   },
   moduleFileExtensions: ['js', 'json', 'ts', 'vue'],
   modulePaths: ['<rootDir>/src/'],
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-  testMatch: ['<rootDir>/src/**/*.(spec|test).+(ts|js)?(x)'],
+  testMatch: ['<rootDir>/src/**/*.(spec|test).ts'],
   transform: {
     [`^(${quasarEsModulesPackageNames}).+\\.js$`]: 'babel-jest',
     '^.+\\.(ts|js|html)$': [
@@ -33,6 +33,5 @@ export default {
         isolatedModules: true
       }
     ]
-  },
-  verbose: true
+  }
 };

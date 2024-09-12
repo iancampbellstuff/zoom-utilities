@@ -13,16 +13,8 @@ module.exports = {
     collectCoverage: true,
     coverageReporters: ['html', 'lcov', 'json', 'text'],
     coverageDirectory: '<rootDir>/coverage',
-    collectCoverageFrom: ['<rootDir>/src/**/*.js', '<rootDir>/src/**/*.ts'],
-    coveragePathIgnorePatterns: [
-        'constants.ts',
-        'coverage',
-        'dist',
-        'node_modules',
-        '.d.ts$',
-        'index.js',
-        'index.ts'
-    ],
+    collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+    coveragePathIgnorePatterns: ['constants.ts', '.d.ts$', 'index.ts'],
     coverageThreshold: {
         global: {
             branches: 42,
@@ -31,7 +23,7 @@ module.exports = {
             statements: 56
         }
     },
-    testMatch: ['<rootDir>/src/**/__tests__/**/*.(spec|test).+(ts|js)'],
+    testMatch: ['<rootDir>/src/**/*.(spec|test).ts'],
     moduleFileExtensions: ['js', 'json', 'ts'],
     moduleNameMapper: {
         '^~/(.*)$': '<rootDir>/$1',
@@ -41,7 +33,6 @@ module.exports = {
     setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
     transform: {
         // See https://jestjs.io/docs/en/configuration.html#transformignorepatterns-array-string
-        [`^(${esModules}).+\\.js$`]: 'babel-jest',
         '^.+\\.(ts)$': 'ts-jest'
     },
     transformIgnorePatterns: [`node_modules/(?!(${esModules}))`]
