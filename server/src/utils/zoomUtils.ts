@@ -1,5 +1,5 @@
 // types
-import { IZoomMeeting } from '@zoom-utilities/common/src/types';
+import { IZoomMeeting } from '../../../common/src/types';
 
 export const hasPassword = (meeting: IZoomMeeting): boolean => {
     const { encrypted_password, h323_password, password, pstn_password } =
@@ -9,7 +9,7 @@ export const hasPassword = (meeting: IZoomMeeting): boolean => {
         h323_password,
         password,
         pstn_password
-    ].every((passwordProperty: string) => {
+    ].every((passwordProperty: string | undefined) => {
         return !!passwordProperty?.trim();
     });
     return hasPassword;

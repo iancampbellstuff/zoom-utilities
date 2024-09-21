@@ -1,5 +1,5 @@
 // constants
-import { APP_PORT } from '@zoom-utilities/common/src/constants';
+import { APP_PORT } from '../../../common/src/constants';
 // types
 import {
     IZoomAccountDataResponseItem,
@@ -8,13 +8,9 @@ import {
     IZoomMeetingPatchRequestPayload,
     IZoomMeetingPostRequestPayload,
     IZoomMeetingRecordingsResponseItem
-} from '@zoom-utilities/common/src/types';
+} from '../../../common/src/types';
 // utils
-import {
-    combineURLs,
-    getRequest,
-    isExpired
-} from '@zoom-utilities/common/src/utils';
+import { combineURLs, getRequest, isExpired } from '../../../common/src/utils';
 
 export interface IMeetingFilters {
     hasPassword?: boolean;

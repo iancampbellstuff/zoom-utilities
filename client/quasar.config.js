@@ -198,6 +198,7 @@ module.exports = configure(function (ctx) {
                 // Windows only
                 // win32metadata: { ... }
                 extraResource: [
+                    '../node_modules',
                     '../server/config.json',
                     '../server/dist/common',
                     '../server/dist/server'

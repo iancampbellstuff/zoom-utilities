@@ -12,7 +12,7 @@ import {
     IZoomTokenResponse
 } from '../types';
 // utils
-import { getExpirationDate, isExpired } from '@zoom-utilities/common/src/utils';
+import { getExpirationDate, isExpired } from '../../../common/src/utils';
 import { requestModule } from './moduleUtils';
 
 export class AccountHelper {
@@ -34,10 +34,10 @@ export class AccountHelper {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     private constructor() {}
     private async requestAccountConfigs(): Promise<IAccountConfig[]> {
-        let accountConfigs = [];
+        let accountConfigs: IAccountConfig[] = [];
         try {
             const config = fs
-                .readFileSync(process.env.CONFIG_FILE, 'utf8')
+                .readFileSync(process.env.CONFIG_FILE!, 'utf8')
                 .trim();
             accountConfigs = JSON.parse(config);
         } catch {
@@ -47,8 +47,10 @@ export class AccountHelper {
         }
         return accountConfigs;
     }
-    private getAccountConfig(userId: string): IAccountConfig | null {
-        let accountConfig: IAccountConfig;
+    private getAccountConfig(
+        userId: string
+    ): IAccountConfig | null | undefined {
+        let accountConfig: IAccountConfig | undefined;
         for (const config of this.localConfig) {
             if (userId === config.userId) {
                 accountConfig = config;
@@ -86,7 +88,8 @@ export class AccountHelper {
                 expirationDate,
                 token
             };
-        } catch (error) {
+        } catch (err) {
+            const error = err as Error;
             response = {
                 error,
                 expirationDate: null,
@@ -101,14 +104,18 @@ export class AccountHelper {
         );
         return userIds;
     }
-    private getTokenMapValue(userId: string): ITokenMapValue {
+    private getTokenMapValue(userId: string): ITokenMapValue | undefined {
         const accountConfig = this.localConfig.find(
             (accountConfig) => accountConfig.userId === userId
         );
-        const tokenMapValue = this.tokenMap[accountConfig?.userId];
-        return tokenMapValue;
+        if (accountConfig) {
+            const tokenMapValue = this.tokenMap[accountConfig.userId];
+            return tokenMapValue;
+        }
     }
-    public async requestToken(userId: string): Promise<string | null> {
+    public async requestToken(
+        userId: string
+    ): Promise<string | null | undefined> {
         const tokenMapValue = this.getTokenMapValue(userId);
         if (tokenMapValue) {
             const { expirationDate, token } = tokenMapValue;

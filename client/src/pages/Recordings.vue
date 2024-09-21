@@ -157,7 +157,7 @@ import { useQuasar } from 'quasar';
 // stores
 import { useRecordingsStore } from '../stores';
 // types
-import { IZoomMeetingRecordingsResponseItem } from '@zoom-utilities/common/src/types';
+import { IZoomMeetingRecordingsResponseItem } from '../../../common/src/types';
 // utils
 import {
     copyInput,
@@ -166,7 +166,7 @@ import {
     getUserIds,
     toast
 } from '../utils';
-import { getFormattedDate, truncate } from '@zoom-utilities/common/src/utils';
+import { getFormattedDate, truncate } from '../../../common/src/utils';
 
 interface IPaginationOptions {
     rowsPerPage: number;

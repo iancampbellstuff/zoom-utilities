@@ -17,10 +17,10 @@ module.exports = {
     coveragePathIgnorePatterns: ['constants.ts', '.d.ts$', 'index.ts'],
     coverageThreshold: {
         global: {
+            statements: 56,
             branches: 42,
             functions: 46,
-            lines: 50,
-            statements: 56
+            lines: 50
         }
     },
     testMatch: ['<rootDir>/src/**/*.(spec|test).ts'],

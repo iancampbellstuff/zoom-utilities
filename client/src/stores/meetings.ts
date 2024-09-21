@@ -1,7 +1,7 @@
 // externals
 import { defineStore } from 'pinia';
 // types
-import { IZoomMeeting } from '@zoom-utilities/common/src/types';
+import { IZoomMeeting } from '../../../common/src/types';
 
 export interface IMeetingsState {
     currentUserId: string;

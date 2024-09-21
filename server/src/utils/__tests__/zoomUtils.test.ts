@@ -1,7 +1,7 @@
 // code under test
 import { hasPassword } from '../zoomUtils';
 // types
-import { IZoomMeeting } from '@zoom-utilities/common/src/types';
+import { IZoomMeeting } from '../../../../common/src/types';
 
 describe('zoomUtils', () => {
     describe('hasPassword', () => {
@@ -90,7 +90,7 @@ describe('zoomUtils', () => {
             expect(result).toBe(false);
         });
         it('should handle a falsy argument', () => {
-            meeting = undefined;
+            meeting = undefined as any;
             const result = hasPassword(meeting);
             expect(result).toBe(false);
         });

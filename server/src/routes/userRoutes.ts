@@ -3,10 +3,10 @@ import { AxiosError } from 'axios';
 import { Request, Response } from 'express';
 import express from 'express';
 // types
-import { IZoomMeetingPost } from '@zoom-utilities/common/src/types';
+import { IZoomMeetingPost } from '../../../common/src/types';
 // utils
 import { AccountHelper, getUrl, handleError } from '../utils';
-import { getRequest } from '@zoom-utilities/common/src/utils';
+import { getRequest } from '../../../common/src/utils';
 
 interface IUserRequestParams {
     userId: string;

@@ -22,6 +22,8 @@ export const getRequestConfig = (requestOptions: IRequestOptions) => {
     const requestConfig: AxiosRequestConfig = {
         data,
         headers: {
+            'Access-Control-Allow-Headers': '*',
+            'Access-Control-Allow-Origin': '*',
             'Content-Type': 'application/json'
         },
         method,

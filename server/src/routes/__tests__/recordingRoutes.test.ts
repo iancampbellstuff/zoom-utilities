@@ -9,7 +9,7 @@ import {
 // config
 import config from '../../../config.example.json';
 // types
-import { TZoomMeetingRecordingsResponseData } from '@zoom-utilities/common/src/types';
+import { TZoomMeetingRecordingsResponseData } from '../../../../common/src/types';
 // utils
 import { AccountHelper } from '../../utils';
 import * as requestUtils from '../../utils/requestUtils';

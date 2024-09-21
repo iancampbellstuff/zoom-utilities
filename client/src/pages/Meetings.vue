@@ -352,7 +352,7 @@ import {
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload
-} from '@zoom-utilities/common/src/types';
+} from '../../../common/src/types';
 // utils
 import {
     copyInput,
@@ -369,7 +369,7 @@ import {
     getFormattedMeetingId,
     mapToPatchRequestPayload,
     mapToPostRequestPayload
-} from '@zoom-utilities/common/src/utils';
+} from '../../../common/src/utils';
 
 interface IPaginationOptions {
     rowsPerPage: number;

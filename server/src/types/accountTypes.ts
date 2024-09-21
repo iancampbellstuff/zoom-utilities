@@ -9,8 +9,8 @@ export interface IAccountConfig {
 }
 
 export interface ITokenMapValue {
-    expirationDate: Date | string;
-    token: string;
+    expirationDate?: Date | string | null;
+    token?: string | null;
 }
 
 export interface ITokenMap {
@@ -18,7 +18,7 @@ export interface ITokenMap {
 }
 
 export interface ITokenResponse extends ITokenMapValue {
-    error: AxiosError | Error;
+    error?: AxiosError | Error | null;
 }
 
 export interface IZoomTokenResponse {

@@ -103,10 +103,10 @@ import { computed, onBeforeMount, onMounted, ref } from 'vue';
 // stores
 import { useAccountsStore } from '../stores';
 // types
-import { IZoomAccountDataResponseItem } from '@zoom-utilities/common/src/types';
+import { IZoomAccountDataResponseItem } from '../../../common/src/types';
 // utils
 import { ELogLevel, getAccountData, toast } from '../utils';
-import { truncate } from '@zoom-utilities/common/src/utils';
+import { truncate } from '../../../common/src/utils';
 
 interface IPaginationOptions {
     rowsPerPage: number;

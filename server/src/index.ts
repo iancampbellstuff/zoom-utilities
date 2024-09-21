@@ -1,3 +1,5 @@
+// constants
+import { APP_PORT } from '../../common/src/constants';
 // externals
 import compression from 'compression';
 import cors from 'cors';
@@ -5,14 +7,18 @@ import express from 'express';
 // routes
 import { getRouterMap } from './routes';
 
-const APP_PORT = 4000;
-
+const { json, urlencoded } = express;
 const getApp = () => {
     const app = express();
     app.use(compression());
-    app.use(express.urlencoded({ extended: true }));
-    app.use(express.json());
-    app.use(cors({ origin: '*' }));
+    app.use(urlencoded({ extended: true }));
+    app.use(json());
+    app.use(
+        cors({
+            optionsSuccessStatus: 200,
+            origin: '*'
+        })
+    );
     return app;
 };
 const init = () => {
@@ -21,10 +27,11 @@ const init = () => {
     for (const [path, router] of Object.entries(routerMap)) {
         app.use(path, router);
     }
-    app.listen(APP_PORT, function () {
+    app.listen(APP_PORT, () => {
         console.log('Server started...');
     });
 };
 
 // start server
+export default init;
 init();

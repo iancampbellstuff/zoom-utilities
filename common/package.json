@@ -10,13 +10,16 @@
     "build": "npx --no-install tsc --project tsconfig.build.json",
     "clean": "npx --no-install rimraf dist",
     "lint-fix": "npm run lint -- --fix",
-    "lint": "npx --no-install eslint --ext .js,.ts ./",
+    "lint": "npx --no-install eslint@8 --ext .js,.ts ./",
     "prebuild": "npm run lint && npm run clean",
     "pretest": "npm run lint && npx --no-install rimraf coverage",
     "test-only": "npx --no-install jest --colors --coverage",
     "test-open": "npm test && open coverage/index.html",
     "test-watch": "npm test -- --watchAll",
     "test": "npm run test-only"
+  },
+  "dependencies": {
+    "axios": "^0.28.1"
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
@@ -33,9 +36,6 @@
     "ts-jest": "^29.2.5",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.9.5"
-  },
-  "dependencies": {
-    "axios": "^0.28.1"
   },
   "engines": {
     "node": "20.x",

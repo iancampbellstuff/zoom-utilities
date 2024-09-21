@@ -6,9 +6,6 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "outDir": "dist",
-    "paths": {
-      "@zoom-utilities/common/*": ["../common/src/*"]
-    },
     "resolveJsonModule": true,
     "sourceMap": true,
     "strictPropertyInitialization": false,

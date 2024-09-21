@@ -12,7 +12,7 @@
     "build": "node scripts/build.js",
     "clean": "npx --no-install quasar clean && npx --no-install rimraf dist",
     "format": "npx --no-install prettier --write \"**/*.{js,ts,vue,scss,html,md,json}\" --ignore-path .gitignore",
-    "lint": "npx --no-install eslint --ext .js,.ts,.vue ./",
+    "lint": "npx --no-install eslint@8 --ext .js,.ts,.vue ./",
     "prebuild": "npm run lint && npm run clean",
     "pretest": "npm run lint && npx --no-install rimraf coverage",
     "serve": "npx --no-install quasar serve dist/ --port 8080",

@@ -1,7 +1,7 @@
 // code under test
 import { LOCAL_BASE_ROUTE, getUrl } from '../serverUtils';
 // utils
-import { combineURLs } from '@zoom-utilities/common/src/utils';
+import { combineURLs } from '../../../../common/src/utils';
 
 describe('serverUtils', () => {
     describe('getUrl', () => {

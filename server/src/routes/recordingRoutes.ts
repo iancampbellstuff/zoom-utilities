@@ -8,13 +8,10 @@ import {
     IZoomMeetingRecordingResponse,
     IZoomMeetingRecordingsResponseItem,
     TZoomMeetingRecordingsResponseData
-} from '@zoom-utilities/common/src/types';
+} from '../../../common/src/types';
 // utils
 import { AccountHelper, getUrl, handleError } from '../utils';
-import {
-    getFormattedTimestamp,
-    getRequest
-} from '@zoom-utilities/common/src/utils';
+import { getFormattedTimestamp, getRequest } from '../../../common/src/utils';
 
 export interface IRecordingsRequestQuery {
     search?: string;

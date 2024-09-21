@@ -1,13 +1,16 @@
+// externals
 import { app, BrowserWindow } from 'electron';
-import path from 'path';
 import os from 'os';
+import path from 'path';
+// server
+import startServer from '../../server/src';
 
 // needed in case process is undefined under Linux
 const platform = process.platform || os.platform();
 
 let mainWindow: BrowserWindow | undefined;
 
-function createWindow() {
+const createWindow = () => {
     /**
      * Initial window options
      */
@@ -17,19 +20,20 @@ function createWindow() {
         height: 600,
         useContentSize: true,
         webPreferences: {
-            // contextIsolation: true,
+            contextIsolation: false,
             nodeIntegration: true,
-            // nodeIntegrationInSubFrames: true,
-            // nodeIntegrationInWorker: true,
-            // sandbox: false,
+            nodeIntegrationInSubFrames: true,
+            nodeIntegrationInWorker: true,
             preload: path.resolve(
                 __dirname,
-                process.env.QUASAR_ELECTRON_PRELOAD
-            )
+                process.env.QUASAR_ELECTRON_PRELOAD!
+            ),
+            sandbox: false,
+            webSecurity: false
         }
     });
 
-    mainWindow.loadURL(process.env.APP_URL);
+    mainWindow.loadURL(process.env.APP_URL!);
 
     if (process.env.DEBUGGING) {
         // if on DEV or Production with debug enabled
@@ -44,9 +48,19 @@ function createWindow() {
     mainWindow.on('closed', () => {
         mainWindow = undefined;
     });
-}
+};
 
-app.whenReady().then(createWindow);
+const start = () => {
+    try {
+        startServer();
+        createWindow();
+    } catch (error) {
+        console.error(error);
+        app.quit();
+    }
+};
+
+app.whenReady().then(start);
 
 app.on('window-all-closed', () => {
     if (platform !== 'darwin') {
@@ -54,8 +68,9 @@ app.on('window-all-closed', () => {
     }
 });
 
+// Re-activate Application when in macOS dock
 app.on('activate', () => {
     if (mainWindow === undefined) {
-        createWindow();
+        start();
     }
 });

@@ -4,7 +4,7 @@ import { Response } from 'express';
 // constants
 import { BASE_ROUTE } from '../constants';
 // utils
-import { combineURLs } from '@zoom-utilities/common/src/utils';
+import { combineURLs } from '../../../common/src/utils';
 
 export interface IUrlQueryParam {
     key: string;

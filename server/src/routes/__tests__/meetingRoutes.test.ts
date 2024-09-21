@@ -19,7 +19,7 @@ import {
     IZoomMeeting,
     IZoomMeetingPatch,
     IZoomMeetingPatchRequestPayload
-} from '@zoom-utilities/common/src/types';
+} from '../../../../common/src/types';
 // utils
 import { AccountHelper } from '../../utils';
 import * as requestUtils from '../../utils/requestUtils';

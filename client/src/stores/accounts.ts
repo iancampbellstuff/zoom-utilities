@@ -1,7 +1,7 @@
 // externals
 import { defineStore } from 'pinia';
 // types
-import { IZoomAccountDataResponseItem } from '@zoom-utilities/common/src/types';
+import { IZoomAccountDataResponseItem } from '../../../common/src/types';
 
 export interface IAccountsState {
     accountData: IZoomAccountDataResponseItem[];
