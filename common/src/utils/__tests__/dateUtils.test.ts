@@ -41,7 +41,7 @@ describe('dateUtils', () => {
             expect(result).toBe(true);
         });
         it('should handle a falsy timestamp', () => {
-            date = null;
+            date = null as any;
             const result = isExpired(date);
             expect(result).toBe(false);
         });

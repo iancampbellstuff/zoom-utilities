@@ -1,6 +1,5 @@
 // code under test
 import { AccountHelper } from '../accountUtils';
-
 // config
 import config from '../../../config.example.json';
 

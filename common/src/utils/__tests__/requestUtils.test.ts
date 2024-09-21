@@ -21,18 +21,18 @@ describe('requestUtils', () => {
             expect(result).toBe(`${baseURL}/${relativeURL}`);
         });
         it('should handle a falsy base URL', () => {
-            baseURL = undefined;
+            baseURL = undefined as any;
             const result = combineURLs(baseURL, relativeURL);
             expect(result).toBe('');
         });
         it('should handle a falsy relative URL', () => {
-            relativeURL = null;
+            relativeURL = null as any;
             const result = combineURLs(baseURL, relativeURL);
             expect(result).toEqual(baseURL);
         });
         it('should handle falsy arguments', () => {
-            baseURL = undefined;
-            relativeURL = undefined;
+            baseURL = undefined as any;
+            relativeURL = undefined as any;
             const result = combineURLs(baseURL, relativeURL);
             expect(result).toBe('');
         });
@@ -53,6 +53,8 @@ describe('requestUtils', () => {
             expect(result).toEqual({
                 data,
                 headers: {
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Allow-Origin': '*',
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
@@ -61,11 +63,13 @@ describe('requestUtils', () => {
             });
         });
         it('should handle a falsy argument', () => {
-            requestOptions = undefined;
+            requestOptions = undefined as any;
             const result = getRequestConfig(requestOptions);
             expect(result).toEqual({
                 data: undefined,
                 headers: {
+                    'Access-Control-Allow-Headers': '*',
+                    'Access-Control-Allow-Origin': '*',
                     'Content-Type': 'application/json'
                 },
                 method: undefined,

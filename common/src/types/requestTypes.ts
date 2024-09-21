@@ -9,6 +9,6 @@ export interface IRequestOptions<T = any> {
     data?: T;
     method: Method;
     params?: IRequestParamsOptions;
-    token?: string;
+    token?: string | null;
     url: string;
 }

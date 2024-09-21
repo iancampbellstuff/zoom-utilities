@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false
+    "allowJs": true,
+    "noImplicitAny": false,
+    "types": ["node"]
   },
   "extends": "./tsconfig.json",
-  "exclude": ["src/**/*.test.ts"]
+  "exclude": ["src/**/*.test.ts"],
+  "include": ["package.json", "src"]
 }

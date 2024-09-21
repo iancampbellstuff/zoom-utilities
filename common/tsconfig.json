@@ -1,12 +1,16 @@
 {
   "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "outDir": "dist",
+    "resolveJsonModule": true,
+    "sourceMap": true,
     "strictPropertyInitialization": false,
-    "typeRoots": ["../node_modules/@types", "@types", "node_modules/@types"],
+    "typeRoots": ["../node_modules/@types"],
     "types": ["jest", "node"]
   },
-  "include": ["src"]
+  "include": ["package.json", "src"]
 }

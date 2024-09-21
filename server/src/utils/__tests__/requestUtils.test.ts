@@ -6,7 +6,7 @@ import { BASE_ROUTE } from '../../constants';
 // code under test
 import { getUrl, handleError } from '../requestUtils';
 // utils
-import { combineURLs } from '../../../../common/src';
+import { combineURLs } from '../../../../common/src/utils';
 
 describe('requestUtils', () => {
     describe('getUrl', () => {
@@ -34,7 +34,8 @@ describe('requestUtils', () => {
             expect(result).toEqual(combineURLs(BASE_ROUTE, path));
         });
         it('should handle a falsy argument', () => {
-            const result = getUrl(null);
+            path = null as any;
+            const result = getUrl(path);
             expect(result).toEqual(BASE_ROUTE);
         });
     });
@@ -45,7 +46,7 @@ describe('requestUtils', () => {
             test: 'data'
         };
         const getAxiosError = (
-            errorMessage: string,
+            errorMessage: string | undefined,
             status: number,
             data: any
         ): AxiosError => {
@@ -90,18 +91,18 @@ describe('requestUtils', () => {
             expect(send).toHaveBeenCalledWith('An unknown error occurred!');
         });
         it('should handle a falsy axios error argument', () => {
-            handleError(null, response);
+            handleError(null!, response);
             expect(status).toHaveBeenCalledWith(500);
             expect(send).toHaveBeenCalledWith('An unknown error occurred!');
         });
         it('should handle a falsy response argument', () => {
             const axiosError = getAxiosError(errorMessage, statusCode, data);
-            handleError(axiosError, null);
+            handleError(axiosError, null!);
             expect(status).not.toHaveBeenCalled();
             expect(send).not.toHaveBeenCalled();
         });
         it('should handle falsy arguments', () => {
-            handleError(null, null);
+            handleError(null!, null!);
             expect(status).not.toHaveBeenCalled();
             expect(send).not.toHaveBeenCalled();
         });

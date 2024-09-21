@@ -342,16 +342,18 @@
 </style>
 
 <script setup lang="ts">
+// externals
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { useQuasar } from 'quasar';
+// stores
 import { useMeetingsStore } from '../stores';
+// types
 import {
     IZoomMeeting,
     IZoomMeetingPatch,
-    IZoomMeetingPatchRequestPayload,
-    mapToPatchRequestPayload,
-    mapToPostRequestPayload
-} from '../../../common/src';
+    IZoomMeetingPatchRequestPayload
+} from '../../../common/src/types';
+// utils
 import {
     copyInput,
     createMeeting,
@@ -363,7 +365,11 @@ import {
     updateMeeting,
     updateMeetings
 } from '../utils';
-import { getFormattedMeetingId } from '../../../common/src/utils';
+import {
+    getFormattedMeetingId,
+    mapToPatchRequestPayload,
+    mapToPostRequestPayload
+} from '../../../common/src/utils';
 
 interface IPaginationOptions {
     rowsPerPage: number;

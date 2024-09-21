@@ -1,5 +1,7 @@
+// externals
 import { defineStore } from 'pinia';
-import { IZoomMeeting } from '../../../common/src';
+// types
+import { IZoomMeeting } from '../../../common/src/types';
 
 export interface IMeetingsState {
     currentUserId: string;

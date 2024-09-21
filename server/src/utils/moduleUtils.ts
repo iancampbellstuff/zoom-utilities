@@ -1,6 +1,6 @@
 class ImportError extends Error {}
 
-export const requestModule = async <T = any>(modulePath) => {
+export const requestModule = async <T = any>(modulePath: string) => {
     try {
         let module = await import(modulePath);
         if (module.default) {

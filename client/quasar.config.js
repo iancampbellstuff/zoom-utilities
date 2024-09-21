@@ -189,7 +189,7 @@ module.exports = configure(function (ctx) {
             bundler: 'packager', // 'packager' or 'builder'
 
             packager: {
-                // https://github.com/electron-userland/electron-packager/blob/master/docs/api.md#options
+                // https://electron.github.io/packager/main/interfaces/Options.html
                 // OS X / Mac App Store
                 // appBundleId: '',
                 // appCategoryType: '',
@@ -197,12 +197,18 @@ module.exports = configure(function (ctx) {
                 // protocol: 'myapp://path',
                 // Windows only
                 // win32metadata: { ... }
+                extraResource: [
+                    '../node_modules',
+                    '../server/config.json',
+                    '../server/dist/common',
+                    '../server/dist/server'
+                ]
             },
 
             builder: {
                 // https://www.electron.build/configuration/configuration
 
-                appId: 'quasar-project'
+                appId: 'zoom-utilities'
             },
 
             // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain

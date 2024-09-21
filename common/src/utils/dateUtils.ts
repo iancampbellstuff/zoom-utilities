@@ -15,7 +15,7 @@ export const parseTimestamp = (timestamp?: Date | string) => {
     );
     return Number.isNaN(parsed) ? -1 : parsed;
 };
-export const isExpired = (timestamp?: Date | string) => {
+export const isExpired = (timestamp?: Date | string | null) => {
     let isExpired = false;
     if (timestamp) {
         const nowTimestamp = getNowTimestamp();

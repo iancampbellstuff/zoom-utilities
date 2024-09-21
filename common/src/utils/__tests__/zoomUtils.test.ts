@@ -158,7 +158,7 @@ describe('zoomUtils', () => {
             });
         });
         it('should handle a falsy argument', () => {
-            meeting = undefined;
+            meeting = undefined as any;
             const result = mapToPatchRequestPayload(meeting);
             expect(result).toEqual({
                 id: undefined,

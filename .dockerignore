@@ -50,12 +50,6 @@
 **/src-bex/www
 **/src-bex/js/core
 
-# Electron related directories and files
-**/src-electron
-
-# PWA related directories and files
-**/src-pwa
-
 #########################################
 # server
 #########################################

@@ -11,8 +11,6 @@
 /src-bex/www
 /src-capacitor
 /src-cordova
-/src-electron
-/src-pwa
 /src-ssr
 babel.config.js
 jest.config.mjs

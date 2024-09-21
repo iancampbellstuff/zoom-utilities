@@ -1,22 +1,18 @@
 // externals
 import { Request, Response } from 'express';
-
 // code under test
 import {
     getRecordingRoutes,
     IRecordingsRequestQuery,
     requestRecordings
 } from '../recordingRoutes';
-
+// config
+import config from '../../../config.example.json';
 // types
-import { TZoomMeetingRecordingsResponseData } from '../../../../common/src';
-
+import { TZoomMeetingRecordingsResponseData } from '../../../../common/src/types';
 // utils
 import { AccountHelper } from '../../utils';
 import * as requestUtils from '../../utils/requestUtils';
-
-// config
-import config from '../../../config.example.json';
 
 describe('recordingRoutes', () => {
     let handleError: jest.SpyInstance;

@@ -27,7 +27,7 @@ const runScript = (script) => {
     const command = `npm run ${script}`;
     console.log(`Executing command ${command}...`);
     try {
-        execSync(command, { shell: true, stdio: 'inherit' });
+        execSync(command, { stdio: 'inherit' });
     } catch (error) {
         exit(error);
     }

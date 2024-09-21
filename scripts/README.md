@@ -27,7 +27,7 @@ nvm use
 Ignore local changes to the `server/config.json` file:
 
 ```sh
-git update-index --no-assume-unchanged server/config.json
+git update-index --assume-unchanged server/config.json
 ```
 
 ---
@@ -62,6 +62,28 @@ This script stops the running container and deletes the image.
 ```
 
 ## Scripts
+
+### `build.js`
+
+This script conditionally builds zoom-utilites as either an Electron App or a PWA.
+
+```sh
+node build.js --electron
+node build.js --pwa
+
+# "--pwa" is the default option
+node build.js
+```
+
+This script is executed by the [`package.json`](../package.json) script `npm run build` as follows:
+
+```sh
+npm run build -- --electron
+npm run build -- --pwa
+
+# "--pwa" is the default option
+npm run build
+```
 
 ### `start.js`
 
